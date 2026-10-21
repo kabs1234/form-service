@@ -10,6 +10,7 @@ import { FormHeading } from '@/components/form-renderer/form-heading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useDraftAutosave } from '@/hooks/use-draft-autosave';
+import { useFormTracker } from '@/hooks/use-form-tracker';
 import { getErrorMessage, submitFormResponse } from '@/lib/api-client';
 import { buildInitialAnswers, clearDraft, readDraft } from '@/lib/answers-draft';
 import { createAnswersResolver } from '@/lib/answers-resolver';
@@ -27,12 +28,15 @@ export function PublicForm({ form, onSubmitted }: PublicFormProps) {
     resolver,
   });
 
+  const tracker = useFormTracker(form.slug);
+
   useDraftAutosave(form.slug, subscribe);
 
   async function submitAnswers(answers: Answers): Promise<void> {
     try {
       await submitFormResponse(form.slug, answers);
       clearDraft(form.slug);
+      tracker.trackSubmit();
       onSubmitted();
     } catch (error: unknown) {
       setError('root.server', { message: getErrorMessage(error) });
@@ -51,7 +55,17 @@ export function PublicForm({ form, onSubmitted }: PublicFormProps) {
               name={field.id}
               control={control}
               render={({ field: { value, onChange }, fieldState: { error } }) => (
-                <FormField field={field} value={value} onChange={onChange} error={error?.message} />
+                <div onFocus={() => tracker.trackFieldFocus(field.id)}>
+                  <FormField
+                    field={field}
+                    value={value}
+                    onChange={(newValue) => {
+                      onChange(newValue);
+                      tracker.trackAnswerChange(field.id);
+                    }}
+                    error={error?.message}
+                  />
+                </div>
               )}
             />
           ))}

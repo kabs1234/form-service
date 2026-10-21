@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import type { EventInput } from '@shared/event';
 import { formSchema, publicFormSchema } from '@shared/form';
 import type { Form, FormInput, FormSummary, PublicForm } from '@shared/form';
 import { formResponseSchema } from '@shared/response';
@@ -123,4 +124,15 @@ export function submitFormResponse(slug: string, answers: Answers): Promise<{ id
     schema: createdResponseSchema,
     init: buildJsonInit('POST', { answers }),
   });
+}
+
+export async function sendFormEvent(slug: string, event: EventInput): Promise<void> {
+  try {
+    await fetch(`${buildPublicFormPath(slug)}/events`, {
+      ...buildJsonInit('POST', event),
+      keepalive: true,
+    });
+  } catch {
+    return;
+  }
 }
