@@ -4,3 +4,4 @@ data
 *.tsbuildinfo
 .env
 .DS_Store
+.playwright-mcp
