@@ -4,13 +4,12 @@ import type { FormInput } from '@shared/form';
 import type { Answers, AnswerValue } from '@shared/response';
 
 import { FormField } from '@/components/form-renderer/form-field';
+import { FormHeading } from '@/components/form-renderer/form-heading';
 import { Button } from '@/components/ui/button';
 
 type FormPreviewProps = {
   readonly form: FormInput;
 };
-
-const UNTITLED_FORM = 'Untitled form';
 
 export function FormPreview({ form }: FormPreviewProps) {
   const [answers, setAnswers] = useState<Answers>({});
@@ -21,12 +20,7 @@ export function FormPreview({ form }: FormPreviewProps) {
 
   return (
     <div className="grid gap-6">
-      <div className="grid gap-1">
-        <h2 className="text-xl font-semibold">{form.title || UNTITLED_FORM}</h2>
-        {form.description && (
-          <p className="whitespace-pre-line text-muted-foreground">{form.description}</p>
-        )}
-      </div>
+      <FormHeading title={form.title} description={form.description} />
       {form.fields.length === 0 ? (
         <p className="text-sm text-muted-foreground">Add a question to see it here.</p>
       ) : (
