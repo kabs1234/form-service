@@ -1,6 +1,8 @@
 import type { Field } from '@shared/form';
 import type { AnswerValue, FormResponse } from '@shared/response';
 
+import { APP_LOCALE } from '@/lib/locale';
+
 export const DELETED_FIELD_LABEL = '(deleted field)';
 const EMPTY_ANSWER = '—';
 
@@ -52,7 +54,7 @@ export function formatAnswer(response: FormResponse, fieldId: string): string {
 }
 
 export function formatSubmittedAt(submittedAt: string): string {
-  return new Date(submittedAt).toLocaleString(undefined, {
+  return new Date(submittedAt).toLocaleString(APP_LOCALE, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });
