@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { formAnalyticsSchema } from '@shared/analytics';
+import type { FormAnalytics } from '@shared/analytics';
 import type { EventInput } from '@shared/event';
 import { formSchema, publicFormSchema } from '@shared/form';
 import type { Form, FormInput, FormSummary, PublicForm } from '@shared/form';
@@ -113,6 +115,10 @@ export function regenerateFormSlug(id: string): Promise<Form> {
 
 export function listFormResponses(id: string): Promise<FormResponse[]> {
   return requestJson(`${buildFormPath(id)}/responses`, { schema: z.array(formResponseSchema) });
+}
+
+export function fetchFormAnalytics(id: string): Promise<FormAnalytics> {
+  return requestJson(`${buildFormPath(id)}/analytics`, { schema: formAnalyticsSchema });
 }
 
 export function fetchPublicForm(slug: string): Promise<PublicForm> {
