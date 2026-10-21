@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from 'express'
 
 import { createApiRouter } from './api'
 import { DIST_DIR, INDEX_HTML_PATH } from './paths'
+import { loadStorage } from './storage'
 
 const DEFAULT_PORT = 3000
 
@@ -17,6 +18,8 @@ function sendSpaIndex(request: Request, response: Response, next: NextFunction):
   }
   response.sendFile(INDEX_HTML_PATH)
 }
+
+await loadStorage()
 
 const app = express()
 
