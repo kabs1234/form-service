@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { formSchema } from '@shared/form';
-import type { Form, FormInput, FormSummary } from '@shared/form';
+import { formSchema, publicFormSchema } from '@shared/form';
+import type { Form, FormInput, FormSummary, PublicForm } from '@shared/form';
+import type { Answers } from '@shared/response';
 
 type JsonMethod = 'POST' | 'PUT';
 
@@ -11,6 +12,8 @@ type RequestOptions<TData> = {
 };
 
 const formSummarySchema = formSchema.extend({ responseCount: z.number().int() });
+
+const createdResponseSchema = z.object({ id: z.string() });
 
 const errorBodySchema = z.object({
   error: z.string(),
@@ -71,6 +74,10 @@ function buildFormPath(id: string): string {
   return `/api/forms/${encodeURIComponent(id)}`;
 }
 
+function buildPublicFormPath(slug: string): string {
+  return `/api/public/${encodeURIComponent(slug)}`;
+}
+
 export function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : 'Something went wrong';
 }
@@ -99,5 +106,16 @@ export function regenerateFormSlug(id: string): Promise<Form> {
   return requestJson(`${buildFormPath(id)}/regenerate-slug`, {
     schema: formSchema,
     init: { method: 'POST' },
+  });
+}
+
+export function fetchPublicForm(slug: string): Promise<PublicForm> {
+  return requestJson(buildPublicFormPath(slug), { schema: publicFormSchema });
+}
+
+export function submitFormResponse(slug: string, answers: Answers): Promise<{ id: string }> {
+  return requestJson(`${buildPublicFormPath(slug)}/responses`, {
+    schema: createdResponseSchema,
+    init: buildJsonInit('POST', { answers }),
   });
 }
