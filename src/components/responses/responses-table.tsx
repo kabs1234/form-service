@@ -30,7 +30,7 @@ export function ResponsesTable({ fields, responses }: ResponsesTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Submitted</TableHead>
+            <TableHead>Отправлено</TableHead>
 
             {columns.map((column) => (
               <TableHead

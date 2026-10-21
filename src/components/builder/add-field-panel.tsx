@@ -14,9 +14,9 @@ export function AddFieldPanel({ onAdd }: AddFieldPanelProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Add a question</CardTitle>
+        <CardTitle>Добавить вопрос</CardTitle>
 
-        <CardDescription>Pick the kind of answer you expect from students.</CardDescription>
+        <CardDescription>Выберите, какой ответ вы ждёте от студентов.</CardDescription>
       </CardHeader>
 
       <CardContent className="grid grid-cols-2 gap-2 sm:grid-cols-4">

@@ -39,7 +39,7 @@ function hasJsonBody(response: Response): boolean {
 }
 
 async function readErrorMessage(response: Response): Promise<string> {
-  const fallbackMessage = `Request failed with status ${response.status}`;
+  const fallbackMessage = `Ошибка запроса (код ${response.status})`;
   if (!hasJsonBody(response)) {
     return fallbackMessage;
   }
@@ -83,7 +83,7 @@ function buildPublicFormPath(slug: string): string {
 }
 
 export function getErrorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : 'Something went wrong';
+  return error instanceof Error ? error.message : 'Что-то пошло не так';
 }
 
 export function isMissingResourceError(error: unknown): boolean {

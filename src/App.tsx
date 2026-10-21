@@ -29,7 +29,7 @@ export default function App() {
       <Route path={RoutePath.AdminFormResponses} element={<FormResponsesPage />} />
       <Route path={RoutePath.AdminFormAnalytics} element={<FormAnalyticsPage />} />
       <Route path={RoutePath.PublicForm} element={<PublicFormPage />} />
-      <Route path={RoutePath.NotFound} element={<Placeholder title="Page not found" />} />
+      <Route path={RoutePath.NotFound} element={<Placeholder title="Страница не найдена" />} />
     </Routes>
   );
 }

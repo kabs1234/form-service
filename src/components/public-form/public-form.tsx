@@ -75,11 +75,11 @@ export function PublicForm({ form, onSubmitted }: PublicFormProps) {
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <Button type="submit" disabled={formState.isSubmitting}>
-                {formState.isSubmitting ? 'Sending…' : 'Submit'}
+                {formState.isSubmitting ? 'Отправляем…' : 'Отправить'}
               </Button>
 
               <p className="text-sm text-muted-foreground">
-                Your answers are saved in this browser until you submit.
+                Ответы сохраняются в этом браузере до отправки.
               </p>
             </div>
           </div>

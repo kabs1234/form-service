@@ -4,7 +4,7 @@ import type { Field, FieldType, Form, FormInput } from '@shared/form';
 export type FormDetails = Pick<FormInput, 'title' | 'description'>;
 
 const FIELD_ID_BYTES = 6;
-const DEFAULT_OPTIONS = ['Option 1', 'Option 2'];
+const DEFAULT_OPTIONS = ['Вариант 1', 'Вариант 2'];
 const PLACEHOLDER_FIELD_TYPES: readonly FieldType[] = [
   'text',
   'textarea',
@@ -14,14 +14,14 @@ const PLACEHOLDER_FIELD_TYPES: readonly FieldType[] = [
 ];
 
 export const FIELD_TYPE_LABELS: Readonly<Record<FieldType, string>> = {
-  text: 'Short text',
-  textarea: 'Long text',
+  text: 'Короткий текст',
+  textarea: 'Длинный текст',
   email: 'Email',
-  number: 'Number',
-  select: 'Dropdown',
-  radio: 'Single choice',
-  checkbox: 'Multiple choice',
-  date: 'Date',
+  number: 'Число',
+  select: 'Выпадающий список',
+  radio: 'Один вариант',
+  checkbox: 'Несколько вариантов',
+  date: 'Дата',
 };
 
 export const EMPTY_FORM_INPUT: FormInput = {

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from './zod';
 
 export const FUNNEL_STEPS = ['view', 'start', 'submit'] as const;
 

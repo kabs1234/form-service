@@ -26,15 +26,15 @@ export function ConversionCard({ analytics }: AnalyticsCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardDescription>Conversion rate</CardDescription>
+        <CardDescription>Конверсия</CardDescription>
         <CardTitle className="text-4xl tabular-nums">
           {formatPercent(analytics.conversionRate)}
         </CardTitle>
       </CardHeader>
 
       <CardContent className="text-sm text-muted-foreground">
-        {submitStep.sessions} of {viewStep.sessions} students who opened the form submitted it.{' '}
-        {analytics.abandonedSessions} started answering and quit.
+        Отправили форму {submitStep.sessions} из {viewStep.sessions} открывших. Начали заполнять и
+        бросили: {analytics.abandonedSessions}.
       </CardContent>
     </Card>
   );
@@ -44,9 +44,9 @@ export function FunnelCard({ analytics }: AnalyticsCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Funnel</CardTitle>
+        <CardTitle>Воронка</CardTitle>
         <CardDescription>
-          Unique visits at each step. Percentages show conversion from the previous step.
+          Уникальные посещения на каждом шаге. Проценты — конверсия из предыдущего шага.
         </CardDescription>
       </CardHeader>
 
@@ -61,19 +61,17 @@ function DropOffHeadline({ analytics, fields }: DropOffCardProps) {
   const topFields = findTopDropOffFields(analytics.dropOffFields);
   const [topField] = topFields;
   if (!topField) {
-    return (
-      <p className="text-sm text-muted-foreground">Nobody has quit after starting to answer yet.</p>
-    );
+    return <p className="text-sm text-muted-foreground">Пока никто не бросил заполнение.</p>;
   }
 
   return (
     <p className="text-sm">
-      <span className="font-semibold">{formatPercent(topField.shareOfAbandoned)}</span> of students
-      who quit stopped at{' '}
+      <span className="font-semibold">{formatPercent(topField.shareOfAbandoned)}</span> бросивших
+      заполнение остановились на {topFields.length > 1 ? 'каждом из полей' : 'поле'}{' '}
       <span className="font-semibold">
         {joinQuotedLabels(topFields.map((field) => findFieldLabel(fields, field.fieldId)))}
       </span>
-      {topFields.length > 1 && ' each'}.
+      .
     </p>
   );
 }
@@ -82,10 +80,10 @@ export function DropOffCard({ analytics, fields }: DropOffCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Last field before quitting</CardTitle>
+        <CardTitle>Последнее поле перед уходом</CardTitle>
         <CardDescription>
-          For students who started but didn’t submit: the field they were on when they left. This
-          includes students who may still be filling in the form.
+          Для студентов, которые начали, но не отправили форму: поле, на котором они остановились.
+          Сюда входят и те, кто, возможно, ещё заполняет форму.
         </CardDescription>
       </CardHeader>
 

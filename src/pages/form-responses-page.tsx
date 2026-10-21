@@ -39,18 +39,18 @@ async function loadFormWithResponses(formId: string): Promise<FormWithResponses>
 
 function ResponsesHeader({ form, responseCount }: ResponsesHeaderProps) {
   return (
-    <FormPageHeader title={form.title} summary={`Responses: ${responseCount}`}>
+    <FormPageHeader title={form.title} summary={`Ответов: ${responseCount}`}>
       <Button variant="outline" size="sm" asChild>
         <Link to={buildFormEditPath(form.id)}>
           <PencilIcon />
-          Edit
+          Редактировать
         </Link>
       </Button>
 
       <Button variant="outline" size="sm" asChild>
         <Link to={buildFormAnalyticsPath(form.id)}>
           <ChartColumnIcon />
-          Analytics
+          Аналитика
         </Link>
       </Button>
     </FormPageHeader>
@@ -60,19 +60,19 @@ function ResponsesHeader({ form, responseCount }: ResponsesHeaderProps) {
 function EmptyResponses({ form }: EmptyResponsesProps) {
   return (
     <div className="grid justify-items-center gap-3 rounded-lg border border-dashed px-4 py-16 text-center">
-      <p className="font-medium">No responses yet</p>
+      <p className="font-medium">Ответов пока нет</p>
 
       {form.published ? (
         <>
           <p className="text-sm text-muted-foreground">
-            Share the public link with students. Submissions will appear here.
+            Отправьте публичную ссылку студентам. Их ответы появятся здесь.
           </p>
 
           <CopyLinkButton url={buildPublicFormUrl(form.slug)} />
         </>
       ) : (
         <p className="text-sm text-muted-foreground">
-          This form is a draft. Publish it in the builder to get a shareable link.
+          Это черновик. Опубликуйте форму в конструкторе, чтобы получить ссылку.
         </p>
       )}
     </div>
@@ -84,17 +84,19 @@ function FormResponses({ formId }: FormResponsesProps) {
   const state = useApiData(load);
 
   if (state.status === 'loading') {
-    return <PageMessage title="Loading responses…" />;
+    return <PageMessage title="Загружаем ответы…" />;
   }
 
   if (state.status === 'failed') {
     return (
       <PageMessage
-        title={isMissingResourceError(state.error) ? 'Form not found' : 'Could not load responses'}
+        title={
+          isMissingResourceError(state.error) ? 'Форма не найдена' : 'Не удалось загрузить ответы'
+        }
         description={state.message}
       >
         <Button variant="outline" asChild>
-          <Link to={RoutePath.AdminFormList}>Back to forms</Link>
+          <Link to={RoutePath.AdminFormList}>К списку форм</Link>
         </Button>
       </PageMessage>
     );

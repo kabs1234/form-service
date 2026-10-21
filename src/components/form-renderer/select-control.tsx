@@ -9,7 +9,7 @@ import {
 import { buildControlId } from '@/lib/control-ids';
 import { getFilledOptions, readTextValue } from '@/lib/field-control-utils';
 
-const DEFAULT_PLACEHOLDER = 'Choose an option';
+const DEFAULT_PLACEHOLDER = 'Выберите вариант';
 
 export function SelectControl({ field, value, onChange, isInvalid }: FieldControlProps) {
   return (

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from './zod';
 
 export const FIELD_TYPES = [
   'text',
@@ -33,30 +33,33 @@ function hasUniqueValues(values: readonly string[]): boolean {
 const idSchema = z.string().min(1).max(MAX_ID_LENGTH);
 
 const optionsSchema = z
-  .array(z.string().trim().min(1, 'Option cannot be empty').max(MAX_LABEL_LENGTH))
+  .array(z.string().trim().min(1, 'Вариант не может быть пустым').max(MAX_LABEL_LENGTH))
   .max(MAX_OPTIONS)
-  .refine(hasUniqueValues, 'Options must be unique');
+  .refine(hasUniqueValues, 'Варианты не должны повторяться');
 
 export const fieldSchema = z
   .object({
     id: idSchema,
     type: z.enum(FIELD_TYPES),
-    label: z.string().trim().min(1, 'Label is required').max(MAX_LABEL_LENGTH),
+    label: z.string().trim().min(1, 'Введите текст вопроса').max(MAX_LABEL_LENGTH),
     required: z.boolean(),
     placeholder: z.string().trim().max(MAX_LABEL_LENGTH).optional(),
     options: optionsSchema.optional(),
   })
   .refine((field) => !isChoiceFieldType(field.type) || (field.options?.length ?? 0) > 0, {
-    message: 'Add at least one option',
+    message: 'Добавьте хотя бы один вариант',
     path: ['options'],
   });
 
 const fieldsSchema = z
   .array(fieldSchema)
-  .refine((fields) => hasUniqueValues(fields.map((field) => field.id)), 'Field ids must be unique');
+  .refine(
+    (fields) => hasUniqueValues(fields.map((field) => field.id)),
+    'Идентификаторы полей должны быть уникальными',
+  );
 
 export const formInputSchema = z.object({
-  title: z.string().trim().min(1, 'Title is required').max(MAX_TITLE_LENGTH),
+  title: z.string().trim().min(1, 'Введите название формы').max(MAX_TITLE_LENGTH),
   description: z.string().trim().max(MAX_DESCRIPTION_LENGTH).optional(),
   fields: fieldsSchema,
   published: z.boolean(),

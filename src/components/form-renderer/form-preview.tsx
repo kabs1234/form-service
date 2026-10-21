@@ -22,7 +22,7 @@ export function FormPreview({ form }: FormPreviewProps) {
     <div className="grid gap-6">
       <FormHeading title={form.title} description={form.description} />
       {form.fields.length === 0 ? (
-        <p className="text-sm text-muted-foreground">Add a question to see it here.</p>
+        <p className="text-sm text-muted-foreground">Добавьте вопрос, и он появится здесь.</p>
       ) : (
         form.fields.map((field) => (
           <FormField
@@ -34,7 +34,7 @@ export function FormPreview({ form }: FormPreviewProps) {
         ))
       )}
       <Button type="button" className="justify-self-start" disabled>
-        Submit
+        Отправить
       </Button>
     </div>
   );

@@ -22,8 +22,8 @@ function LoadedPublicForm({ form }: LoadedPublicFormProps) {
   if (isSubmitted) {
     return (
       <PageMessage
-        title="Thank you! Your answers were sent"
-        description={`We received your response to “${form.title}”. You can close this page.`}
+        title="Спасибо! Ваши ответы отправлены"
+        description={`Мы получили ваши ответы на форму «${form.title}». Эту страницу можно закрыть.`}
       />
     );
   }
@@ -40,17 +40,17 @@ function PublicFormLoader({ slug }: PublicFormLoaderProps) {
   const state = useApiData(loadForm);
 
   if (state.status === 'loading') {
-    return <PageMessage title="Loading form…" />;
+    return <PageMessage title="Загружаем форму…" />;
   }
 
   if (state.status === 'failed') {
     return isMissingResourceError(state.error) ? (
       <PageMessage
-        title="This form isn’t available"
-        description="The link may be mistyped, or the form is no longer accepting answers. Check the link with whoever shared it."
+        title="Форма недоступна"
+        description="Возможно, в ссылке опечатка или форма больше не принимает ответы. Уточните ссылку у того, кто её отправил."
       />
     ) : (
-      <PageMessage title="Could not load the form" description={state.message} />
+      <PageMessage title="Не удалось загрузить форму" description={state.message} />
     );
   }
 

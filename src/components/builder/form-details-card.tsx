@@ -16,17 +16,17 @@ export function FormDetailsCard({ details, errors, onChange }: FormDetailsCardPr
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Form details</CardTitle>
+        <CardTitle>О форме</CardTitle>
       </CardHeader>
 
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="form-title">Title</Label>
+          <Label htmlFor="form-title">Название</Label>
 
           <Input
             id="form-title"
             value={details.title}
-            placeholder="e.g. Summer internship 2026"
+            placeholder="Например, Летняя стажировка 2026"
             aria-invalid={Boolean(errors.title)}
             onChange={(evt) => onChange({ ...details, title: evt.target.value })}
           />
@@ -35,12 +35,12 @@ export function FormDetailsCard({ details, errors, onChange }: FormDetailsCardPr
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="form-description">Description (optional)</Label>
+          <Label htmlFor="form-description">Описание (необязательно)</Label>
 
           <Textarea
             id="form-description"
             value={details.description ?? ''}
-            placeholder="What is this form for, and what happens after students apply?"
+            placeholder="Для чего эта форма и что будет после того, как студент подаст заявку?"
             onChange={(evt) => onChange({ ...details, description: evt.target.value })}
           />
         </div>

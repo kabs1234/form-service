@@ -15,7 +15,7 @@ const HIGHLIGHT_COLOR = 'var(--color-sessions)';
 const MUTED_COLOR = 'var(--muted-foreground)';
 
 const chartConfig = {
-  sessions: { label: 'Students', color: 'var(--primary)' },
+  sessions: { label: 'Студенты', color: 'var(--primary)' },
 } satisfies ChartConfig;
 
 type HorizontalBarChartProps = {

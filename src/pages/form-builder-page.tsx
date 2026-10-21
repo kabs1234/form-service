@@ -17,17 +17,19 @@ function SavedFormBuilder({ formId }: SavedFormBuilderProps) {
   const state = useApiData(loadForm);
 
   if (state.status === 'loading') {
-    return <PageMessage title="Loading form…" />;
+    return <PageMessage title="Загружаем форму…" />;
   }
 
   if (state.status === 'failed') {
     return (
       <PageMessage
-        title={isMissingResourceError(state.error) ? 'Form not found' : 'Could not load the form'}
+        title={
+          isMissingResourceError(state.error) ? 'Форма не найдена' : 'Не удалось загрузить форму'
+        }
         description={state.message}
       >
         <Button variant="outline" asChild>
-          <Link to={RoutePath.AdminFormList}>Back to forms</Link>
+          <Link to={RoutePath.AdminFormList}>К списку форм</Link>
         </Button>
       </PageMessage>
     );

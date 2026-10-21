@@ -18,7 +18,7 @@ function isClientError(error: unknown): error is ClientError {
 }
 
 function sendUnknownEndpoint(_request: Request, response: Response): void {
-  response.status(HttpStatus.NotFound).json({ error: 'Not found' });
+  response.status(HttpStatus.NotFound).json({ error: 'Не найдено' });
 }
 
 export function sendApiError(
@@ -33,7 +33,7 @@ export function sendApiError(
   }
 
   console.error(error);
-  response.status(HttpStatus.InternalServerError).json({ error: 'Internal server error' });
+  response.status(HttpStatus.InternalServerError).json({ error: 'Внутренняя ошибка сервера' });
 }
 
 export function createApiRouter(): Router {

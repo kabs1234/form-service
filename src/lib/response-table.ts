@@ -3,7 +3,7 @@ import type { AnswerValue, FormResponse } from '@shared/response';
 
 import { APP_LOCALE } from '@/lib/locale';
 
-export const DELETED_FIELD_LABEL = '(deleted field)';
+export const DELETED_FIELD_LABEL = '(удалённое поле)';
 const EMPTY_ANSWER = '—';
 
 export type ResponseColumn = {

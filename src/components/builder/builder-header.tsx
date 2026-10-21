@@ -24,7 +24,7 @@ type BuilderHeaderProps = {
   readonly onSave: () => void;
 };
 
-const LEAVE_CONFIRMATION = 'Leave without saving? Your changes will be lost.';
+const LEAVE_CONFIRMATION = 'Уйти без сохранения? Изменения будут потеряны.';
 
 export function BuilderHeader({
   title,
@@ -48,7 +48,7 @@ export function BuilderHeader({
         <Button variant="ghost" size="sm" asChild>
           <Link to={RoutePath.AdminFormList} onClick={handleBackClick}>
             <ArrowLeftIcon />
-            Forms
+            Формы
           </Link>
         </Button>
 
@@ -74,11 +74,11 @@ export function BuilderHeader({
             onCheckedChange={(isChecked) => (isChecked ? onPublish() : onUnpublish())}
           />
 
-          <Label htmlFor="form-published">{isPublished ? 'Published' : 'Draft'}</Label>
+          <Label htmlFor="form-published">{isPublished ? 'Опубликована' : 'Черновик'}</Label>
         </div>
 
         <Button type="button" disabled={isSaving || !hasUnsavedChanges} onClick={onSave}>
-          {isSaving ? 'Saving…' : 'Save'}
+          {isSaving ? 'Сохраняем…' : 'Сохранить'}
         </Button>
       </div>
     </header>

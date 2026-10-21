@@ -9,9 +9,9 @@ type CopyLinkButtonProps = {
 };
 
 const COPY_LABELS: Readonly<Record<CopyStatus, string>> = {
-  idle: 'Copy link',
-  copied: 'Copied',
-  failed: 'Copy failed',
+  idle: 'Скопировать ссылку',
+  copied: 'Скопировано',
+  failed: 'Не удалось скопировать',
 };
 
 export function CopyLinkButton({ url }: CopyLinkButtonProps) {

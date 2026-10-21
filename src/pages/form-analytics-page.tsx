@@ -34,18 +34,18 @@ async function loadFormWithAnalytics(formId: string): Promise<FormWithAnalytics>
 
 function AnalyticsHeader({ form }: FormProps) {
   return (
-    <FormPageHeader title={form.title} summary="Analytics">
+    <FormPageHeader title={form.title} summary="Аналитика">
       <Button variant="outline" size="sm" asChild>
         <Link to={buildFormEditPath(form.id)}>
           <PencilIcon />
-          Edit
+          Редактировать
         </Link>
       </Button>
 
       <Button variant="outline" size="sm" asChild>
         <Link to={buildFormResponsesPath(form.id)}>
           <InboxIcon />
-          Responses
+          Ответы
         </Link>
       </Button>
     </FormPageHeader>
@@ -55,19 +55,19 @@ function AnalyticsHeader({ form }: FormProps) {
 function EmptyAnalytics({ form }: FormProps) {
   return (
     <div className="grid justify-items-center gap-3 rounded-lg border border-dashed px-4 py-16 text-center">
-      <p className="font-medium">No visits yet</p>
+      <p className="font-medium">Посещений пока нет</p>
 
       {form.published ? (
         <>
           <p className="text-sm text-muted-foreground">
-            Share the public link with students. The funnel appears after the first visit.
+            Отправьте публичную ссылку студентам. Воронка появится после первого посещения.
           </p>
 
           <CopyLinkButton url={buildPublicFormUrl(form.slug)} />
         </>
       ) : (
         <p className="text-sm text-muted-foreground">
-          This form is a draft. Publish it in the builder to start collecting visits.
+          Это черновик. Опубликуйте форму в конструкторе, чтобы начать собирать статистику.
         </p>
       )}
     </div>
@@ -79,17 +79,21 @@ function FormAnalyticsView({ formId }: FormAnalyticsProps) {
   const state = useApiData(load);
 
   if (state.status === 'loading') {
-    return <PageMessage title="Loading analytics…" />;
+    return <PageMessage title="Загружаем аналитику…" />;
   }
 
   if (state.status === 'failed') {
     return (
       <PageMessage
-        title={isMissingResourceError(state.error) ? 'Form not found' : 'Could not load analytics'}
+        title={
+          isMissingResourceError(state.error)
+            ? 'Форма не найдена'
+            : 'Не удалось загрузить аналитику'
+        }
         description={state.message}
       >
         <Button variant="outline" asChild>
-          <Link to={RoutePath.AdminFormList}>Back to forms</Link>
+          <Link to={RoutePath.AdminFormList}>К списку форм</Link>
         </Button>
       </PageMessage>
     );

@@ -17,7 +17,7 @@ export function FormPageHeader({ title, summary, children }: FormPageHeaderProps
       <Button variant="ghost" size="sm" className="justify-self-start" asChild>
         <Link to={RoutePath.AdminFormList}>
           <ArrowLeftIcon />
-          Forms
+          Формы
         </Link>
       </Button>
 

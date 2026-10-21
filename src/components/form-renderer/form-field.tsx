@@ -8,7 +8,7 @@ type FormFieldProps = Omit<FieldControlProps, 'isInvalid'> & {
   readonly error?: string;
 };
 
-const UNTITLED_QUESTION = 'Untitled question';
+const UNTITLED_QUESTION = 'Вопрос без названия';
 
 export function FormField({ field, value, onChange, error }: FormFieldProps) {
   return (

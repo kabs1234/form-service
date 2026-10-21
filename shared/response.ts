@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import { z } from './zod';
 
 import type { Field, FieldType } from './form';
 
 const MAX_ANSWER_LENGTH = 5000;
-const REQUIRED_MESSAGE = 'This field is required';
+const REQUIRED_MESSAGE = 'Обязательное поле';
 const NUMBER_PATTERN = /^-?\d+(\.\d+)?$/;
 
 const answerValueSchema = z.union([z.string(), z.array(z.string())]);
@@ -26,7 +26,7 @@ type AnswerRule = {
   readonly message: string;
 };
 
-const ANY_TEXT_RULE: AnswerRule = { isValid: () => true, message: 'Invalid answer' };
+const ANY_TEXT_RULE: AnswerRule = { isValid: () => true, message: 'Некорректный ответ' };
 
 function getAnswerRule(type: TextFieldType, options: readonly string[]): AnswerRule {
   switch (type) {
@@ -34,14 +34,17 @@ function getAnswerRule(type: TextFieldType, options: readonly string[]): AnswerR
     case 'textarea':
       return ANY_TEXT_RULE;
     case 'email':
-      return { isValid: (value) => z.regexes.email.test(value), message: 'Enter a valid email' };
+      return {
+        isValid: (value) => z.regexes.email.test(value),
+        message: 'Введите корректный email',
+      };
     case 'number':
-      return { isValid: (value) => NUMBER_PATTERN.test(value), message: 'Enter a number' };
+      return { isValid: (value) => NUMBER_PATTERN.test(value), message: 'Введите число' };
     case 'date':
-      return { isValid: (value) => z.regexes.date.test(value), message: 'Enter a valid date' };
+      return { isValid: (value) => z.regexes.date.test(value), message: 'Введите корректную дату' };
     case 'select':
     case 'radio':
-      return { isValid: (value) => options.includes(value), message: 'Choose one of the options' };
+      return { isValid: (value) => options.includes(value), message: 'Выберите один из вариантов' };
   }
 }
 
@@ -50,7 +53,7 @@ function createEmptyOrValidCheck(rule: AnswerRule): (value: string) => boolean {
 }
 
 function buildTextAnswerSchema(field: Field, rule: AnswerRule): z.ZodType<string> {
-  const text = z.string(REQUIRED_MESSAGE).trim().max(MAX_ANSWER_LENGTH, 'Answer is too long');
+  const text = z.string(REQUIRED_MESSAGE).trim().max(MAX_ANSWER_LENGTH, 'Слишком длинный ответ');
   const presentText = field.required ? text.min(1, REQUIRED_MESSAGE) : text;
   const checkedText = presentText.refine(createEmptyOrValidCheck(rule), rule.message);
   return field.required ? checkedText : checkedText.default('');
@@ -58,7 +61,7 @@ function buildTextAnswerSchema(field: Field, rule: AnswerRule): z.ZodType<string
 
 function buildCheckboxAnswerSchema(field: Field): z.ZodType<string[]> {
   const selection = z.array(
-    z.enum(field.options ?? [], 'Choose from the options'),
+    z.enum(field.options ?? [], 'Выберите из предложенных вариантов'),
     REQUIRED_MESSAGE,
   );
   return field.required ? selection.min(1, REQUIRED_MESSAGE) : selection.default([]);

@@ -19,12 +19,12 @@ export function OptionsEditor({ editorId, options, errors, onChange }: OptionsEd
   const canRemoveOption = options.length > 1;
 
   function addOption(): void {
-    onChange([...options, `Option ${options.length + 1}`]);
+    onChange([...options, `Вариант ${options.length + 1}`]);
   }
 
   return (
     <fieldset className="grid gap-2">
-      <legend className="mb-2 text-sm font-medium">Options</legend>
+      <legend className="mb-2 text-sm font-medium">Варианты ответа</legend>
 
       {options.map((option, index) => {
         const position = index + 1;
@@ -34,7 +34,7 @@ export function OptionsEditor({ editorId, options, errors, onChange }: OptionsEd
           <div key={`${editorId}-option-${index}`} className="grid gap-1">
             <div className="flex gap-2">
               <Input
-                aria-label={`Option ${position}`}
+                aria-label={`Вариант ${position}`}
                 value={option}
                 aria-invalid={Boolean(error)}
                 onChange={(evt) =>
@@ -46,7 +46,7 @@ export function OptionsEditor({ editorId, options, errors, onChange }: OptionsEd
                 type="button"
                 variant="ghost"
                 size="icon"
-                aria-label={`Remove option ${position}`}
+                aria-label={`Удалить вариант ${position}`}
                 disabled={!canRemoveOption}
                 onClick={() => onChange(removeItemAt(options, index))}
               >
@@ -69,7 +69,7 @@ export function OptionsEditor({ editorId, options, errors, onChange }: OptionsEd
         onClick={addOption}
       >
         <PlusIcon />
-        Add option
+        Добавить вариант
       </Button>
     </fieldset>
   );

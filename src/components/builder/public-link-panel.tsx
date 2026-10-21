@@ -31,12 +31,12 @@ export function PublicLinkPanel({ form, isRegenerating, onRegenerate }: PublicLi
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Public link</CardTitle>
+        <CardTitle>Публичная ссылка</CardTitle>
 
         <CardDescription>
           {form.published
-            ? 'Anyone with this link can fill in the form.'
-            : 'Students see "form not found" at this link until you publish the form.'}
+            ? 'Любой, у кого есть ссылка, может заполнить форму.'
+            : 'Пока форма не опубликована, по этой ссылке студенты увидят «Форма недоступна».'}
         </CardDescription>
       </CardHeader>
 
@@ -44,7 +44,7 @@ export function PublicLinkPanel({ form, isRegenerating, onRegenerate }: PublicLi
         <Input
           readOnly
           value={url}
-          aria-label="Public link"
+          aria-label="Публичная ссылка"
           className="font-mono text-xs"
           onFocus={(evt) => evt.target.select()}
         />
@@ -55,7 +55,7 @@ export function PublicLinkPanel({ form, isRegenerating, onRegenerate }: PublicLi
           <Button variant="outline" size="sm" asChild>
             <a href={url} target="_blank" rel="noreferrer">
               <ExternalLinkIcon />
-              Open
+              Открыть
             </a>
           </Button>
 
@@ -63,24 +63,24 @@ export function PublicLinkPanel({ form, isRegenerating, onRegenerate }: PublicLi
             <AlertDialogTrigger asChild>
               <Button type="button" variant="outline" size="sm" disabled={isRegenerating}>
                 <RefreshCwIcon />
-                {isRegenerating ? 'Generating…' : 'Generate new link'}
+                {isRegenerating ? 'Создаём…' : 'Новая ссылка'}
               </Button>
             </AlertDialogTrigger>
 
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Generate a new link?</AlertDialogTitle>
+                <AlertDialogTitle>Создать новую ссылку?</AlertDialogTitle>
 
                 <AlertDialogDescription>
-                  The current link stops working immediately, so anyone you already sent it to will
-                  see "form not found". Responses collected so far are kept.
+                  Текущая ссылка сразу перестанет работать: все, кому вы её уже отправили, увидят
+                  «Форма недоступна». Собранные ответы сохранятся.
                 </AlertDialogDescription>
               </AlertDialogHeader>
 
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Отмена</AlertDialogCancel>
 
-                <AlertDialogAction onClick={onRegenerate}>Generate new link</AlertDialogAction>
+                <AlertDialogAction onClick={onRegenerate}>Создать новую ссылку</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

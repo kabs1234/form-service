@@ -62,14 +62,14 @@ export function FieldEditor({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Question {position}</CardTitle>
+        <CardTitle>Вопрос {position}</CardTitle>
 
         <CardAction className="flex gap-1">
           <Button
             type="button"
             variant="ghost"
             size="icon-sm"
-            aria-label="Move question up"
+            aria-label="Переместить вопрос выше"
             disabled={isFirst}
             onClick={onMoveUp}
           >
@@ -80,7 +80,7 @@ export function FieldEditor({
             type="button"
             variant="ghost"
             size="icon-sm"
-            aria-label="Move question down"
+            aria-label="Переместить вопрос ниже"
             disabled={isLast}
             onClick={onMoveDown}
           >
@@ -92,7 +92,7 @@ export function FieldEditor({
             variant="ghost"
             size="icon-sm"
             className="text-destructive"
-            aria-label="Delete question"
+            aria-label="Удалить вопрос"
             onClick={onDelete}
           >
             <Trash2Icon />
@@ -103,13 +103,13 @@ export function FieldEditor({
       <CardContent className="grid gap-4">
         <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_11rem]">
           <div className="grid gap-2">
-            <Label htmlFor={`${editorId}-label`}>Question</Label>
+            <Label htmlFor={`${editorId}-label`}>Вопрос</Label>
 
             <Input
               id={`${editorId}-label`}
               autoFocus={isNew}
               value={field.label}
-              placeholder="e.g. Which university do you study at?"
+              placeholder="Например, в каком университете вы учитесь?"
               aria-invalid={Boolean(errors.label)}
               onChange={(evt) => onChange({ ...field, label: evt.target.value })}
             />
@@ -118,7 +118,7 @@ export function FieldEditor({
           </div>
 
           <div className="grid content-start gap-2">
-            <Label htmlFor={`${editorId}-type`}>Answer type</Label>
+            <Label htmlFor={`${editorId}-type`}>Тип ответа</Label>
 
             <Select value={field.type} onValueChange={handleTypeChange}>
               <SelectTrigger id={`${editorId}-type`} className="w-full">
@@ -143,12 +143,12 @@ export function FieldEditor({
 
         {canHavePlaceholder(field.type) && (
           <div className="grid gap-2">
-            <Label htmlFor={`${editorId}-placeholder`}>Hint inside the field (optional)</Label>
+            <Label htmlFor={`${editorId}-placeholder`}>Подсказка внутри поля (необязательно)</Label>
 
             <Input
               id={`${editorId}-placeholder`}
               value={field.placeholder ?? ''}
-              placeholder="e.g. Kazakh National University"
+              placeholder="Например, КазНУ им. аль-Фараби"
               onChange={(evt) => onChange({ ...field, placeholder: evt.target.value })}
             />
           </div>
@@ -170,7 +170,7 @@ export function FieldEditor({
             onCheckedChange={(isRequired) => onChange({ ...field, required: isRequired })}
           />
 
-          <Label htmlFor={`${editorId}-required`}>Required</Label>
+          <Label htmlFor={`${editorId}-required`}>Обязательный вопрос</Label>
         </div>
       </CardContent>
     </Card>

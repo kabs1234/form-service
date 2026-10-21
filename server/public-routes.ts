@@ -77,7 +77,7 @@ async function recordEvent(request: Request<SlugParams>, response: Response): Pr
   }
 
   if (!hasKnownField(result.data, form)) {
-    response.status(HttpStatus.BadRequest).json({ error: 'Field does not belong to this form' });
+    response.status(HttpStatus.BadRequest).json({ error: 'Поле не относится к этой форме' });
     return;
   }
 

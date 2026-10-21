@@ -7,9 +7,9 @@ import { DELETED_FIELD_LABEL } from '@/lib/response-table';
 const MAX_AXIS_LABEL_LENGTH = 16;
 
 const FUNNEL_STEP_LABELS: Readonly<Record<FunnelStepName, string>> = {
-  view: 'Opened the form',
-  start: 'Began answering',
-  submit: 'Submitted',
+  view: 'Открыли форму',
+  start: 'Начали заполнять',
+  submit: 'Отправили',
 };
 
 const percentFormat = new Intl.NumberFormat(APP_LOCALE, {
@@ -61,7 +61,7 @@ export function findTopDropOffFields(dropOffFields: readonly DropOffField[]): Dr
 }
 
 export function joinQuotedLabels(labels: readonly string[]): string {
-  return listFormat.format(labels.map((label) => `“${label}”`));
+  return listFormat.format(labels.map((label) => `«${label}»`));
 }
 
 export function buildDropOffBars(

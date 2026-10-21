@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from './zod';
 
 export const EVENT_TYPES = ['view', 'start', 'field_focus', 'submit'] as const;
 

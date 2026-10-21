@@ -30,10 +30,10 @@ export function FormListItem({ form }: FormListItemProps) {
 
         <CardDescription className="flex items-center gap-2">
           <Badge variant={form.published ? 'default' : 'secondary'}>
-            {form.published ? 'Published' : 'Draft'}
+            {form.published ? 'Опубликована' : 'Черновик'}
           </Badge>
 
-          <span>Responses: {form.responseCount}</span>
+          <span>Ответов: {form.responseCount}</span>
         </CardDescription>
       </CardHeader>
 
@@ -41,27 +41,27 @@ export function FormListItem({ form }: FormListItemProps) {
         {form.published ? (
           <CopyLinkButton url={buildPublicFormUrl(form.slug)} />
         ) : (
-          <span className="text-xs text-muted-foreground">Publish to get a shareable link</span>
+          <span className="text-xs text-muted-foreground">Опубликуйте, чтобы получить ссылку</span>
         )}
 
         <Button variant="outline" size="sm" asChild>
           <Link to={buildFormEditPath(form.id)}>
             <PencilIcon />
-            Edit
+            Редактировать
           </Link>
         </Button>
 
         <Button variant="outline" size="sm" asChild>
           <Link to={buildFormResponsesPath(form.id)}>
             <InboxIcon />
-            Responses
+            Ответы
           </Link>
         </Button>
 
         <Button variant="outline" size="sm" asChild>
           <Link to={buildFormAnalyticsPath(form.id)}>
             <ChartColumnIcon />
-            Analytics
+            Аналитика
           </Link>
         </Button>
       </CardContent>

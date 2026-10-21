@@ -2,7 +2,7 @@ import type { FormInput } from '@shared/form';
 
 type FormHeadingProps = Pick<FormInput, 'title' | 'description'>;
 
-const UNTITLED_FORM = 'Untitled form';
+const UNTITLED_FORM = 'Форма без названия';
 
 export function FormHeading({ title, description }: FormHeadingProps) {
   return (

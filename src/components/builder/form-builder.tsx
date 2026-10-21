@@ -21,15 +21,15 @@ type SaveStatusInput = Pick<
   'savedForm' | 'isSaving' | 'hasErrors' | 'requestError' | 'hasUnsavedChanges'
 >;
 
-const UNTITLED_FORM = 'Untitled form';
+const UNTITLED_FORM = 'Форма без названия';
 
 function getSaveStatus(builder: SaveStatusInput): SaveStatus {
   if (builder.isSaving) {
-    return { text: 'Saving…', isError: false };
+    return { text: 'Сохраняем…', isError: false };
   }
 
   if (builder.hasErrors) {
-    return { text: 'Fix the highlighted fields to save', isError: true };
+    return { text: 'Исправьте выделенные поля, чтобы сохранить', isError: true };
   }
 
   if (builder.requestError) {
@@ -37,10 +37,13 @@ function getSaveStatus(builder: SaveStatusInput): SaveStatus {
   }
 
   if (builder.hasUnsavedChanges) {
-    return { text: 'Unsaved changes', isError: false };
+    return { text: 'Есть несохранённые изменения', isError: false };
   }
 
-  return { text: builder.savedForm ? 'All changes saved' : 'Not saved yet', isError: false };
+  return {
+    text: builder.savedForm ? 'Все изменения сохранены' : 'Ещё не сохранено',
+    isError: false,
+  };
 }
 
 export function FormBuilder({ initialForm }: FormBuilderProps) {
@@ -64,7 +67,7 @@ export function FormBuilder({ initialForm }: FormBuilderProps) {
       />
 
       <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-2">
-        <section aria-label="Form editor" className="grid content-start gap-4">
+        <section aria-label="Редактор формы" className="grid content-start gap-4">
           <FormDetailsCard details={draft} errors={errors} onChange={builder.updateDetails} />
 
           {savedForm && (
@@ -97,9 +100,9 @@ export function FormBuilder({ initialForm }: FormBuilderProps) {
           <AddFieldPanel onAdd={builder.addField} />
         </section>
 
-        <aside aria-label="Live preview" className="lg:sticky lg:top-20 lg:self-start">
+        <aside aria-label="Предпросмотр" className="lg:sticky lg:top-20 lg:self-start">
           <p className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            Live preview
+            Предпросмотр
           </p>
 
           <div className="rounded-xl border bg-card p-6 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">

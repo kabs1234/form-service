@@ -10,9 +10,11 @@ export const HttpStatus = {
 } as const;
 
 export function sendValidationError(response: Response, error: ZodError): void {
-  response.status(HttpStatus.BadRequest).json({ error: 'Invalid input', issues: error.issues });
+  response
+    .status(HttpStatus.BadRequest)
+    .json({ error: 'Некорректные данные', issues: error.issues });
 }
 
 export function sendFormNotFound(response: Response): void {
-  response.status(HttpStatus.NotFound).json({ error: 'Form not found' });
+  response.status(HttpStatus.NotFound).json({ error: 'Форма не найдена' });
 }

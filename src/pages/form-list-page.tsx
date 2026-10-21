@@ -19,7 +19,7 @@ function NewFormButton() {
     <Button asChild>
       <Link to={RoutePath.AdminFormNew}>
         <PlusIcon />
-        New form
+        Новая форма
       </Link>
     </Button>
   );
@@ -29,18 +29,18 @@ export function FormListPage() {
   const state = useApiData(listForms);
 
   if (state.status === 'loading') {
-    return <PageMessage title="Loading forms…" />;
+    return <PageMessage title="Загружаем формы…" />;
   }
 
   if (state.status === 'failed') {
-    return <PageMessage title="Could not load forms" description={state.message} />;
+    return <PageMessage title="Не удалось загрузить формы" description={state.message} />;
   }
 
   if (state.data.length === 0) {
     return (
       <PageMessage
-        title="No forms yet"
-        description="Create an application form, publish it, and share the link with students."
+        title="Форм пока нет"
+        description="Создайте анкету, опубликуйте её и отправьте ссылку студентам."
       >
         <NewFormButton />
       </PageMessage>
@@ -51,10 +51,10 @@ export function FormListPage() {
     <main className="mx-auto grid max-w-3xl gap-6 px-4 py-10">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Forms</h1>
+          <h1 className="text-2xl font-semibold">Формы</h1>
 
           <p className="text-sm text-muted-foreground">
-            Build application forms, share the link, and see where students drop off.
+            Создавайте анкеты, делитесь ссылкой и смотрите, где студенты бросают заполнение.
           </p>
         </div>
 
