@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
-import { ArrowLeftIcon, ChartColumnIcon, PencilIcon } from 'lucide-react';
+import { ChartColumnIcon, PencilIcon } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 
 import type { Form } from '@shared/form';
 import type { FormResponse } from '@shared/response';
 
 import { CopyLinkButton } from '@/components/copy-link-button';
+import { FormPageHeader } from '@/components/form-page-header';
 import { PageMessage } from '@/components/page-message';
 import { ResponsesTable } from '@/components/responses/responses-table';
 import { Button } from '@/components/ui/button';
@@ -38,38 +39,21 @@ async function loadFormWithResponses(formId: string): Promise<FormWithResponses>
 
 function ResponsesHeader({ form, responseCount }: ResponsesHeaderProps) {
   return (
-    <div className="grid gap-4">
-      <Button variant="ghost" size="sm" className="justify-self-start" asChild>
-        <Link to={RoutePath.AdminFormList}>
-          <ArrowLeftIcon />
-          Forms
+    <FormPageHeader title={form.title} summary={`Responses: ${responseCount}`}>
+      <Button variant="outline" size="sm" asChild>
+        <Link to={buildFormEditPath(form.id)}>
+          <PencilIcon />
+          Edit
         </Link>
       </Button>
 
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="min-w-0">
-          <h1 className="truncate text-2xl font-semibold">{form.title}</h1>
-
-          <p className="text-sm text-muted-foreground">Responses: {responseCount}</p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" asChild>
-            <Link to={buildFormEditPath(form.id)}>
-              <PencilIcon />
-              Edit
-            </Link>
-          </Button>
-
-          <Button variant="outline" size="sm" asChild>
-            <Link to={buildFormAnalyticsPath(form.id)}>
-              <ChartColumnIcon />
-              Analytics
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </div>
+      <Button variant="outline" size="sm" asChild>
+        <Link to={buildFormAnalyticsPath(form.id)}>
+          <ChartColumnIcon />
+          Analytics
+        </Link>
+      </Button>
+    </FormPageHeader>
   );
 }
 
