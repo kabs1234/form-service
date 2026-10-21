@@ -1,7 +1,7 @@
 import express from 'express'
 import type { NextFunction, Request, Response } from 'express'
 
-import { createApiRouter } from './api'
+import { createApiRouter, sendApiError } from './api'
 import { DIST_DIRECTORY, INDEX_HTML_PATH } from './paths'
 import { loadStorage } from './storage'
 
@@ -24,7 +24,7 @@ await loadStorage()
 const app = express()
 
 app.use(express.json())
-app.use('/api', createApiRouter())
+app.use('/api', createApiRouter(), sendApiError)
 app.use(express.static(DIST_DIRECTORY))
 app.use(sendSpaIndex)
 

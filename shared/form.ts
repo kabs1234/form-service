@@ -72,3 +72,5 @@ export const formSchema = formInputSchema.extend({
 export type Field = z.infer<typeof fieldSchema>
 export type FormInput = z.infer<typeof formInputSchema>
 export type Form = z.infer<typeof formSchema>
+export type FormSummary = Form & { readonly responseCount: number }
+export type PublicForm = Pick<Form, 'slug' | 'title' | 'description' | 'fields'>
