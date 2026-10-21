@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router';
+
 export const RoutePath = {
   Root: '/',
   AdminFormList: '/admin',
@@ -8,3 +10,19 @@ export const RoutePath = {
   PublicForm: '/f/:slug',
   NotFound: '*',
 } as const;
+
+export function buildFormEditPath(id: string): string {
+  return generatePath(RoutePath.AdminFormEdit, { id });
+}
+
+export function buildFormResponsesPath(id: string): string {
+  return generatePath(RoutePath.AdminFormResponses, { id });
+}
+
+export function buildFormAnalyticsPath(id: string): string {
+  return generatePath(RoutePath.AdminFormAnalytics, { id });
+}
+
+export function buildPublicFormUrl(slug: string): string {
+  return new URL(generatePath(RoutePath.PublicForm, { slug }), window.location.origin).href;
+}
