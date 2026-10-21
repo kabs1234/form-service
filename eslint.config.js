@@ -42,6 +42,15 @@ export default defineConfig([
     },
   },
   {
+    files: ['src/components/ui/chart.tsx'],
+    rules: {
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+    },
+  },
+  {
     files: ['server/**/*.ts', 'vite.config.ts'],
     languageOptions: {
       globals: globals.node,
