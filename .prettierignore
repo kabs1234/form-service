@@ -1,0 +1,5 @@
+.claude
+dist
+data
+docs/ai-log
+package-lock.json
