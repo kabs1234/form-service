@@ -1,17 +1,17 @@
-import { Navigate, Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router';
 
-import { RoutePath } from './routes'
+import { RoutePath } from './routes';
 
 type PlaceholderProps = {
-  readonly title: string
-}
+  readonly title: string;
+};
 
 function Placeholder({ title }: PlaceholderProps) {
   return (
     <main className="mx-auto max-w-3xl p-8">
       <h1 className="text-2xl font-semibold">{title}</h1>
     </main>
-  )
+  );
 }
 
 export default function App() {
@@ -26,5 +26,5 @@ export default function App() {
       <Route path={RoutePath.PublicForm} element={<Placeholder title="Public form" />} />
       <Route path={RoutePath.NotFound} element={<Placeholder title="Page not found" />} />
     </Routes>
-  )
+  );
 }

@@ -7,4 +7,4 @@ export const RoutePath = {
   AdminFormAnalytics: '/admin/forms/:id/analytics',
   PublicForm: '/f/:slug',
   NotFound: '*',
-} as const
+} as const;
