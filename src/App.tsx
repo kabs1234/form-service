@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import { FormBuilderPage } from '@/pages/form-builder-page';
 import { FormListPage } from '@/pages/form-list-page';
+import { FormResponsesPage } from '@/pages/form-responses-page';
 import { PublicFormPage } from '@/pages/public-form-page';
 import { RoutePath } from '@/routes';
 
@@ -24,7 +25,7 @@ export default function App() {
       <Route path={RoutePath.AdminFormList} element={<FormListPage />} />
       <Route path={RoutePath.AdminFormNew} element={<FormBuilderPage />} />
       <Route path={RoutePath.AdminFormEdit} element={<FormBuilderPage />} />
-      <Route path={RoutePath.AdminFormResponses} element={<Placeholder title="Responses" />} />
+      <Route path={RoutePath.AdminFormResponses} element={<FormResponsesPage />} />
       <Route path={RoutePath.AdminFormAnalytics} element={<Placeholder title="Analytics" />} />
       <Route path={RoutePath.PublicForm} element={<PublicFormPage />} />
       <Route path={RoutePath.NotFound} element={<Placeholder title="Page not found" />} />

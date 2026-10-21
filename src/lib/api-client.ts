@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 import { formSchema, publicFormSchema } from '@shared/form';
 import type { Form, FormInput, FormSummary, PublicForm } from '@shared/form';
-import type { Answers } from '@shared/response';
+import { formResponseSchema } from '@shared/response';
+import type { Answers, FormResponse } from '@shared/response';
 
 type JsonMethod = 'POST' | 'PUT';
 
@@ -107,6 +108,10 @@ export function regenerateFormSlug(id: string): Promise<Form> {
     schema: formSchema,
     init: { method: 'POST' },
   });
+}
+
+export function listFormResponses(id: string): Promise<FormResponse[]> {
+  return requestJson(`${buildFormPath(id)}/responses`, { schema: z.array(formResponseSchema) });
 }
 
 export function fetchPublicForm(slug: string): Promise<PublicForm> {
