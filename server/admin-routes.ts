@@ -5,9 +5,17 @@ import type { Request, Response } from 'express';
 
 import { formInputSchema } from '../shared/form';
 import type { Form, FormSummary } from '../shared/form';
+import { buildFormAnalytics } from './analytics';
 import { HttpStatus, sendFormNotFound, sendValidationError } from './http';
 import { generateUniqueSlug } from './slug';
-import { countResponses, findFormById, listForms, listResponses, saveForm } from './storage';
+import {
+  countResponses,
+  findFormById,
+  listEvents,
+  listForms,
+  listResponses,
+  saveForm,
+} from './storage';
 
 type FormParams = { id: string };
 
@@ -98,6 +106,17 @@ function listFormResponses(request: Request<FormParams>, response: Response): vo
   response.json(listResponses(form.id));
 }
 
+async function getFormAnalytics(request: Request<FormParams>, response: Response): Promise<void> {
+  const form = findFormById(request.params.id);
+  if (!form) {
+    sendFormNotFound(response);
+    return;
+  }
+
+  const events = await listEvents(form.id);
+  response.json(buildFormAnalytics(events));
+}
+
 export function createAdminRouter(): Router {
   const router = Router();
 
@@ -107,6 +126,7 @@ export function createAdminRouter(): Router {
   router.put('/:id', updateForm);
   router.post('/:id/regenerate-slug', regenerateSlug);
   router.get('/:id/responses', listFormResponses);
+  router.get('/:id/analytics', getFormAnalytics);
 
   return router;
 }
