@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router'
 
-import { ROUTE_PATHS } from './routes'
+import { RoutePath } from './routes'
 
 type PlaceholderProps = {
   readonly title: string
@@ -17,14 +17,14 @@ function Placeholder({ title }: PlaceholderProps) {
 export default function App() {
   return (
     <Routes>
-      <Route path={ROUTE_PATHS.root} element={<Navigate to={ROUTE_PATHS.adminFormList} replace />} />
-      <Route path={ROUTE_PATHS.adminFormList} element={<Placeholder title="Forms" />} />
-      <Route path={ROUTE_PATHS.adminFormNew} element={<Placeholder title="New form" />} />
-      <Route path={ROUTE_PATHS.adminFormEdit} element={<Placeholder title="Edit form" />} />
-      <Route path={ROUTE_PATHS.adminFormResponses} element={<Placeholder title="Responses" />} />
-      <Route path={ROUTE_PATHS.adminFormAnalytics} element={<Placeholder title="Analytics" />} />
-      <Route path={ROUTE_PATHS.publicForm} element={<Placeholder title="Public form" />} />
-      <Route path={ROUTE_PATHS.notFound} element={<Placeholder title="Page not found" />} />
+      <Route path={RoutePath.Root} element={<Navigate to={RoutePath.AdminFormList} replace />} />
+      <Route path={RoutePath.AdminFormList} element={<Placeholder title="Forms" />} />
+      <Route path={RoutePath.AdminFormNew} element={<Placeholder title="New form" />} />
+      <Route path={RoutePath.AdminFormEdit} element={<Placeholder title="Edit form" />} />
+      <Route path={RoutePath.AdminFormResponses} element={<Placeholder title="Responses" />} />
+      <Route path={RoutePath.AdminFormAnalytics} element={<Placeholder title="Analytics" />} />
+      <Route path={RoutePath.PublicForm} element={<Placeholder title="Public form" />} />
+      <Route path={RoutePath.NotFound} element={<Placeholder title="Page not found" />} />
     </Routes>
   )
 }

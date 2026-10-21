@@ -9,11 +9,11 @@ import { formSchema } from '../shared/form'
 import type { Form } from '../shared/form'
 import { formResponseSchema } from '../shared/response'
 import type { FormResponse } from '../shared/response'
-import { DATA_DIR } from './paths'
+import { DATA_DIRECTORY } from './paths'
 
-const DATABASE_PATH = path.join(DATA_DIR, 'db.json')
-const DATABASE_TEMP_PATH = `${DATABASE_PATH}.tmp`
-const EVENTS_PATH = path.join(DATA_DIR, 'events.jsonl')
+const DATABASE_PATH = path.join(DATA_DIRECTORY, 'db.json')
+const DATABASE_TEMPORARY_PATH = `${DATABASE_PATH}.tmp`
+const EVENTS_PATH = path.join(DATA_DIRECTORY, 'events.jsonl')
 const JSON_INDENT = 2
 
 const databaseSchema = z.object({
@@ -47,24 +47,24 @@ async function readDatabaseFile(): Promise<Database> {
 
 async function writeDatabaseFile(): Promise<void> {
   const content = JSON.stringify(database, null, JSON_INDENT)
-  await fs.writeFile(DATABASE_TEMP_PATH, content, 'utf8')
-  await fs.rename(DATABASE_TEMP_PATH, DATABASE_PATH)
+  await fs.writeFile(DATABASE_TEMPORARY_PATH, content, 'utf8')
+  await fs.rename(DATABASE_TEMPORARY_PATH, DATABASE_PATH)
 }
 
 function continueAfterFailedWrite(): void {}
 
 function persistDatabase(): Promise<void> {
-  const write = writeQueue.then(writeDatabaseFile)
-  writeQueue = write.catch(continueAfterFailedWrite)
-  return write
+  const pendingWrite = writeQueue.then(writeDatabaseFile)
+  writeQueue = pendingWrite.catch(continueAfterFailedWrite)
+  return pendingWrite
 }
 
 function replaceById<TItem extends { readonly id: string }>(
   items: readonly TItem[],
   item: TItem,
 ): TItem[] {
-  const exists = items.some((existing) => existing.id === item.id)
-  return exists ? items.map((existing) => (existing.id === item.id ? item : existing)) : [...items, item]
+  const hasExistingItem = items.some((existing) => existing.id === item.id)
+  return hasExistingItem ? items.map((existing) => (existing.id === item.id ? item : existing)) : [...items, item]
 }
 
 function parseEventLine(line: string): AnalyticsEvent | undefined {
@@ -90,7 +90,7 @@ async function readEventsFile(): Promise<string> {
 }
 
 export async function loadStorage(): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true })
+  await fs.mkdir(DATA_DIRECTORY, { recursive: true })
   database = await readDatabaseFile()
 }
 
