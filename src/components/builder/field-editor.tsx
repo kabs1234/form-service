@@ -101,7 +101,7 @@ export function FieldEditor({
       </CardHeader>
 
       <CardContent className="grid gap-4">
-        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_11rem]">
+        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_14rem]">
           <div className="grid gap-2">
             <Label htmlFor={`${editorId}-label`}>Вопрос</Label>
 
@@ -121,7 +121,7 @@ export function FieldEditor({
             <Label htmlFor={`${editorId}-type`}>Тип ответа</Label>
 
             <Select value={field.type} onValueChange={handleTypeChange}>
-              <SelectTrigger id={`${editorId}-type`} className="w-full">
+              <SelectTrigger id={`${editorId}-type`} className="w-full min-w-0">
                 <SelectValue />
               </SelectTrigger>
 

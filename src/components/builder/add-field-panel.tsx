@@ -12,14 +12,14 @@ type AddFieldPanelProps = {
 
 export function AddFieldPanel({ onAdd }: AddFieldPanelProps) {
   return (
-    <Card>
+    <Card className="bg-transparent ring-0 outline-1 -outline-offset-1 outline-input outline-dashed">
       <CardHeader>
         <CardTitle>Добавить вопрос</CardTitle>
 
         <CardDescription>Выберите, какой ответ вы ждёте от студентов.</CardDescription>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <CardContent className="grid grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-2">
         {FIELD_TYPES.map((type) => {
           const Icon = FIELD_TYPE_ICONS[type];
 

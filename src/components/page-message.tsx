@@ -8,12 +8,12 @@ type PageMessageProps = {
 
 export function PageMessage({ title, description, children }: PageMessageProps) {
   return (
-    <main className="mx-auto grid max-w-md gap-3 px-4 py-24 text-center">
-      <h1 className="text-xl font-semibold">{title}</h1>
+    <main className="mx-auto grid max-w-xl gap-4 px-4 py-24">
+      <h1 className="text-2xl leading-tight">{title}</h1>
 
-      {description && <p className="text-muted-foreground">{description}</p>}
+      {description && <p className="leading-relaxed text-muted-foreground">{description}</p>}
 
-      {children && <div className="flex justify-center gap-2">{children}</div>}
+      {children && <div className="flex flex-wrap gap-2 pt-2">{children}</div>}
     </main>
   );
 }

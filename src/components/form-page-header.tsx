@@ -13,8 +13,8 @@ type FormPageHeaderProps = {
 
 export function FormPageHeader({ title, summary, children }: FormPageHeaderProps) {
   return (
-    <div className="grid gap-4">
-      <Button variant="ghost" size="sm" className="justify-self-start" asChild>
+    <div className="grid gap-4 border-b pb-6">
+      <Button variant="ghost" size="sm" className="-ml-2.5 justify-self-start" asChild>
         <Link to={RoutePath.AdminFormList}>
           <ArrowLeftIcon />
           Формы
@@ -23,9 +23,9 @@ export function FormPageHeader({ title, summary, children }: FormPageHeaderProps
 
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-semibold">{title}</h1>
+          <h1 className="truncate text-2xl leading-tight">{title}</h1>
 
-          <p className="text-sm text-muted-foreground">{summary}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{summary}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">{children}</div>

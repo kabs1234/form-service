@@ -54,7 +54,7 @@ function AnalyticsHeader({ form }: FormProps) {
 
 function EmptyAnalytics({ form }: FormProps) {
   return (
-    <div className="grid justify-items-center gap-3 rounded-lg border border-dashed px-4 py-16 text-center">
+    <div className="grid justify-items-center gap-3 rounded-sm border border-dashed border-input px-4 py-16 text-center">
       <p className="font-medium">Посещений пока нет</p>
 
       {form.published ? (

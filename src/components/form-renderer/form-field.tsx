@@ -12,8 +12,12 @@ const UNTITLED_QUESTION = 'Вопрос без названия';
 
 export function FormField({ field, value, onChange, error }: FormFieldProps) {
   return (
-    <div className="grid gap-2">
-      <Label id={buildLabelId(field.id)} htmlFor={buildControlId(field.id)}>
+    <div className="grid gap-2.5">
+      <Label
+        id={buildLabelId(field.id)}
+        htmlFor={buildControlId(field.id)}
+        className="text-base leading-snug"
+      >
         {field.label || UNTITLED_QUESTION}
 
         {field.required && (

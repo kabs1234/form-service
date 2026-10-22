@@ -24,19 +24,21 @@ export function ConversionCard({ analytics }: AnalyticsCardProps) {
   const [viewStep, , submitStep] = analytics.funnel;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardDescription>Конверсия</CardDescription>
-        <CardTitle className="text-4xl tabular-nums">
-          {formatPercent(analytics.conversionRate)}
-        </CardTitle>
-      </CardHeader>
+    <section
+      aria-label="Конверсия"
+      className="grid gap-3 py-2 sm:grid-cols-[auto_1fr] sm:items-end sm:gap-8"
+    >
+      <p className="font-heading text-6xl leading-none font-medium text-ink tabular-nums sm:text-7xl">
+        {formatPercent(analytics.conversionRate)}
+      </p>
 
-      <CardContent className="text-sm text-muted-foreground">
-        Отправили форму {submitStep.sessions} из {viewStep.sessions} открывших. Начали заполнять и
-        бросили: {analytics.abandonedSessions}.
-      </CardContent>
-    </Card>
+      <p className="max-w-[48ch] leading-relaxed">
+        открывших форму отправили её: {submitStep.sessions} из {viewStep.sessions}.{' '}
+        <span className="text-muted-foreground">
+          Начали заполнять и бросили: {analytics.abandonedSessions}.
+        </span>
+      </p>
+    </section>
   );
 }
 
@@ -65,10 +67,10 @@ function DropOffHeadline({ analytics, fields }: DropOffCardProps) {
   }
 
   return (
-    <p className="text-sm">
-      <span className="font-semibold">{formatPercent(topField.shareOfAbandoned)}</span> бросивших
-      заполнение остановились на {topFields.length > 1 ? 'каждом из полей' : 'поле'}{' '}
-      <span className="font-semibold">
+    <p className="text-base leading-relaxed">
+      <span className="font-semibold tabular-nums">{formatPercent(topField.shareOfAbandoned)}</span>{' '}
+      бросивших заполнение остановились на {topFields.length > 1 ? 'каждом из полей' : 'поле'}{' '}
+      <span className="highlighter font-semibold">
         {joinQuotedLabels(topFields.map((field) => findFieldLabel(fields, field.fieldId)))}
       </span>
       .

@@ -4,7 +4,7 @@ import type { Field } from '@shared/form';
 import { APP_LOCALE } from '@/lib/locale';
 import { DELETED_FIELD_LABEL } from '@/lib/response-table';
 
-const MAX_AXIS_LABEL_LENGTH = 16;
+const MAX_AXIS_LABEL_LENGTH = 20;
 
 const FUNNEL_STEP_LABELS: Readonly<Record<FunnelStepName, string>> = {
   view: 'Открыли форму',

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import '@fontsource-variable/geist';
+@import '@fontsource-variable/golos-text';
+@import '@fontsource-variable/unbounded';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -82,8 +83,11 @@
     }
   }
 
-  --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
+  --font-heading: 'Unbounded Variable', var(--font-sans);
+  --font-sans: 'Golos Text Variable', system-ui, sans-serif;
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-highlighter: var(--highlighter);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -125,38 +129,54 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Notebook palette: paper, violet ink, red pen, highlighter */
+  --paper: #f6f7f4;
+  --sheet: #ffffff;
+  --ink: #3b2a8f;
+  --graphite: #23252b;
+  --red-pen: #c2362f;
+  --highlighter: #f4d24b;
+
+  --background: var(--paper);
+  --foreground: var(--graphite);
+  --card: var(--sheet);
+  --card-foreground: var(--graphite);
+  --popover: var(--sheet);
+  --popover-foreground: var(--graphite);
+  --primary: var(--ink);
+  --primary-foreground: #ffffff;
+  --secondary: #ecebf4;
+  --secondary-foreground: var(--ink);
+  --muted: #eceeea;
+  --muted-foreground: #5d616b;
+  --accent: #ecebf4;
+  --accent-foreground: var(--ink);
+  --destructive: var(--red-pen);
+  --border: #dcdfd8;
+  --input: #cdd1c9;
+  --ring: var(--ink);
+  --chart-1: var(--ink);
+  --chart-2: #8f86c4;
+  --chart-3: #b9bdc4;
+  --chart-4: #5d616b;
+  --chart-5: var(--graphite);
+  --radius: 0.375rem;
+  --sidebar: var(--paper);
+  --sidebar-foreground: var(--graphite);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ecebf4;
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: #dcdfd8;
+  --sidebar-ring: var(--ink);
+
+  --sheet-padding: 1.25rem;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --sheet-padding: 2.5rem;
+  }
 }
 
 .dark {
@@ -200,7 +220,38 @@
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    @apply font-sans;
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
   }
+  html {
+    @apply font-sans antialiased;
+  }
+  h1,
+  h2 {
+    @apply font-heading;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+}
+
+/* A white sheet of paper lying on the paper-coloured page */
+@utility sheet {
+  background-color: var(--sheet);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2rem var(--sheet-padding) 2.5rem;
+}
+
+/* Highlighter stroke behind text: used only for the top drop-off field */
+@utility highlighter {
+  background: linear-gradient(
+    transparent 12%,
+    var(--highlighter) 12%,
+    var(--highlighter) 88%,
+    transparent 88%
+  );
+  padding-inline: 0.15em;
+  box-decoration-break: clone;
 }

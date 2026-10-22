@@ -19,7 +19,7 @@ export function FormPreview({ form }: FormPreviewProps) {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="sheet grid gap-8">
       <FormHeading title={form.title} description={form.description} />
       {form.fields.length === 0 ? (
         <p className="text-sm text-muted-foreground">Добавьте вопрос, и он появится здесь.</p>

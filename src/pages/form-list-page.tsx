@@ -16,7 +16,7 @@ function sortByRecentUpdate(forms: readonly FormSummary[]): FormSummary[] {
 
 function NewFormButton() {
   return (
-    <Button asChild>
+    <Button size="lg" className="px-4" asChild>
       <Link to={RoutePath.AdminFormNew}>
         <PlusIcon />
         Новая форма
@@ -48,20 +48,20 @@ export function FormListPage() {
   }
 
   return (
-    <main className="mx-auto grid max-w-3xl gap-6 px-4 py-10">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-semibold">Формы</h1>
+    <main className="mx-auto grid max-w-5xl gap-8 px-4 py-10 sm:py-14">
+      <div className="grid gap-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-4">
+          <h1 className="text-3xl leading-tight">Формы</h1>
 
-          <p className="text-sm text-muted-foreground">
-            Создавайте анкеты, делитесь ссылкой и смотрите, где студенты бросают заполнение.
-          </p>
+          <NewFormButton />
         </div>
 
-        <NewFormButton />
+        <p className="max-w-[60ch] text-muted-foreground">
+          Создавайте анкеты, делитесь ссылкой и смотрите, где студенты бросают заполнение.
+        </p>
       </div>
 
-      <ul className="grid gap-3">
+      <ul className="divide-y rounded-sm border bg-sheet">
         {sortByRecentUpdate(state.data).map((form) => (
           <li key={form.id}>
             <FormListItem form={form} />

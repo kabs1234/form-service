@@ -8,7 +8,6 @@ import { ErrorText } from '@/components/error-text';
 import { FormField } from '@/components/form-renderer/form-field';
 import { FormHeading } from '@/components/form-renderer/form-heading';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { useDraftAutosave } from '@/hooks/use-draft-autosave';
 import { useFormTracker } from '@/hooks/use-form-tracker';
 import { getErrorMessage, submitFormResponse } from '@/lib/api-client';
@@ -44,47 +43,43 @@ export function PublicForm({ form, onSubmitted }: PublicFormProps) {
   }
 
   return (
-    <Card>
-      <CardContent>
-        <form noValidate className="grid gap-6" onSubmit={handleSubmit(submitAnswers)}>
-          <FormHeading title={form.title} description={form.description} />
+    <form noValidate className="sheet grid gap-8" onSubmit={handleSubmit(submitAnswers)}>
+      <FormHeading title={form.title} description={form.description} />
 
-          {form.fields.map((field) => (
-            <Controller
-              key={field.id}
-              name={field.id}
-              control={control}
-              render={({ field: { value, onChange }, fieldState: { error } }) => (
-                <div onFocus={() => tracker.trackFieldFocus(field.id)}>
-                  <FormField
-                    field={field}
-                    value={value}
-                    onChange={(newValue) => {
-                      onChange(newValue);
-                      tracker.trackAnswerChange(field.id);
-                    }}
-                    error={error?.message}
-                  />
-                </div>
-              )}
-            />
-          ))}
-
-          <div className="grid gap-2">
-            <ErrorText message={formState.errors.root?.server?.message} />
-
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <Button type="submit" disabled={formState.isSubmitting}>
-                {formState.isSubmitting ? 'Отправляем…' : 'Отправить'}
-              </Button>
-
-              <p className="text-sm text-muted-foreground">
-                Ответы сохраняются в этом браузере до отправки.
-              </p>
+      {form.fields.map((field) => (
+        <Controller
+          key={field.id}
+          name={field.id}
+          control={control}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div onFocus={() => tracker.trackFieldFocus(field.id)}>
+              <FormField
+                field={field}
+                value={value}
+                onChange={(newValue) => {
+                  onChange(newValue);
+                  tracker.trackAnswerChange(field.id);
+                }}
+                error={error?.message}
+              />
             </div>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+          )}
+        />
+      ))}
+
+      <div className="grid gap-2">
+        <ErrorText message={formState.errors.root?.server?.message} />
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <Button type="submit" size="lg" className="px-5" disabled={formState.isSubmitting}>
+            {formState.isSubmitting ? 'Отправляем…' : 'Отправить'}
+          </Button>
+
+          <p className="text-sm text-muted-foreground">
+            Ответы сохраняются в этом браузере до отправки.
+          </p>
+        </div>
+      </div>
+    </form>
   );
 }

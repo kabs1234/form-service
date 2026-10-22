@@ -2,9 +2,8 @@ import type { MouseEvent } from 'react';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
+import { PublishState } from '@/components/publish-state';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { RoutePath } from '@/routes';
 
@@ -44,42 +43,43 @@ export function BuilderHeader({
 
   return (
     <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-        <Button variant="ghost" size="sm" asChild>
+      <div className="mx-auto grid max-w-6xl gap-2 px-4 py-3 md:flex md:items-center md:gap-4">
+        <Button variant="ghost" size="sm" className="-ml-2.5 justify-self-start" asChild>
           <Link to={RoutePath.AdminFormList} onClick={handleBackClick}>
             <ArrowLeftIcon />
             Формы
           </Link>
         </Button>
 
-        <div className="min-w-0 flex-1">
-          <h1 className="truncate font-semibold">{title}</h1>
+        <div className="min-w-0 md:flex-1">
+          <h1 className="truncate text-base">{title}</h1>
 
-          <p
-            aria-live="polite"
-            className={cn(
-              'truncate text-xs',
-              saveStatus.isError ? 'text-destructive' : 'text-muted-foreground',
-            )}
-          >
-            {saveStatus.text}
+          <p className="flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
+            <PublishState isPublished={isPublished} />
+
+            <span
+              aria-live="polite"
+              className={cn('min-w-0 truncate', saveStatus.isError && 'text-destructive')}
+            >
+              {saveStatus.text}
+            </span>
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Switch
-            id="form-published"
-            checked={isPublished}
+          <Button
+            type="button"
+            variant="outline"
             disabled={isSaving}
-            onCheckedChange={(isChecked) => (isChecked ? onPublish() : onUnpublish())}
-          />
+            onClick={isPublished ? onUnpublish : onPublish}
+          >
+            {isPublished ? 'Снять с публикации' : 'Опубликовать'}
+          </Button>
 
-          <Label htmlFor="form-published">{isPublished ? 'Опубликована' : 'Черновик'}</Label>
+          <Button type="button" disabled={isSaving || !hasUnsavedChanges} onClick={onSave}>
+            {isSaving ? 'Сохраняем…' : 'Сохранить'}
+          </Button>
         </div>
-
-        <Button type="button" disabled={isSaving || !hasUnsavedChanges} onClick={onSave}>
-          {isSaving ? 'Сохраняем…' : 'Сохранить'}
-        </Button>
       </div>
     </header>
   );

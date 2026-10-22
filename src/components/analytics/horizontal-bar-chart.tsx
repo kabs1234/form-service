@@ -8,11 +8,11 @@ import type { ChartBar } from '@/lib/analytics-view';
 
 const ROW_HEIGHT = 44;
 const BAR_SIZE = 28;
-const BAR_RADIUS = 4;
-const AXIS_LABEL_WIDTH = 140;
+const BAR_RADIUS = 2;
+const AXIS_LABEL_WIDTH = 160;
 const VALUE_LABEL_SPACE = 72;
 const HIGHLIGHT_COLOR = 'var(--color-sessions)';
-const MUTED_COLOR = 'var(--muted-foreground)';
+const MUTED_COLOR = 'var(--chart-3)';
 
 const chartConfig = {
   sessions: { label: 'Студенты', color: 'var(--primary)' },

@@ -101,11 +101,9 @@ export function FormBuilder({ initialForm }: FormBuilderProps) {
         </section>
 
         <aside aria-label="Предпросмотр" className="lg:sticky lg:top-20 lg:self-start">
-          <p className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-            Предпросмотр
-          </p>
+          <p className="mb-3 text-sm text-muted-foreground">Так форму увидят студенты</p>
 
-          <div className="rounded-xl border bg-card p-6 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
+          <div className="lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
             <FormPreview form={draft} />
           </div>
         </aside>

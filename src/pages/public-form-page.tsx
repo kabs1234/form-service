@@ -21,15 +21,20 @@ function LoadedPublicForm({ form }: LoadedPublicFormProps) {
 
   if (isSubmitted) {
     return (
-      <PageMessage
-        title="Спасибо! Ваши ответы отправлены"
-        description={`Мы получили ваши ответы на форму «${form.title}». Эту страницу можно закрыть.`}
-      />
+      <main className="mx-auto max-w-2xl px-3 py-8 sm:px-4 sm:py-14">
+        <div className="sheet grid gap-3" role="status">
+          <h1 className="text-2xl leading-tight">Спасибо! Ваши ответы отправлены</h1>
+
+          <p className="max-w-[60ch] leading-relaxed text-muted-foreground">
+            Мы получили ваши ответы на форму «{form.title}». Эту страницу можно закрыть.
+          </p>
+        </div>
+      </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10">
+    <main className="mx-auto max-w-2xl px-3 py-8 sm:px-4 sm:py-14">
       <PublicForm form={form} onSubmitted={() => setIsSubmitted(true)} />
     </main>
   );
