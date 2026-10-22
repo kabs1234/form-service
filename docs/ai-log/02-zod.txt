@@ -1,0 +1,175 @@
+
+> Do step 2
+
+● Skill(clean-code-ts)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Imports are extensionless, no semicolons. zod is listed in the project's
+  stack, so I'll install it (v4, no engines restriction).
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(shared\form.ts)
+  ⎿  Wrote 74 lines to shared\form.ts
+       1 import { z } from 'zod'
+       2
+       3 export const FIELD_TYPES = [
+       4   'text',
+       5   'textarea',
+       6   'email',
+       7   'number',
+       8   'select',
+       9   'radio',
+      10   'checkbox',
+     … +73 lines (ctrl+o to expand)
+
+● Write(shared\response.ts)
+  ⎿  Error: The user doesn't want to proceed with this tool use. The tool use
+     was rejected (eg. if it was a file edit, the new_string was NOT written to
+     the file). The user provided the following reason for the rejection:  I
+     think returning undefined and comparing things to undefined is wrong
+
+● Write(shared\event.ts)
+  ⎿  Wrote 32 lines to shared\event.ts
+      1 import { z } from 'zod'
+      2
+      3 export const EVENT_TYPES = ['view', 'start', 'field_focus', 'subm
+        it'] as const
+      4
+      6
+      7 export type EventType = (typeof EVENT_TYPES)[number]
+      8
+      9 const sessionIdSchema = z.string().min(1).max(MAX_SESSION_ID_LENG
+        TH)
+     … +23 lines (ctrl+o to expand)
+
+● I've removed the normalizeAnswer-to-undefined trick so answers now travel as
+  plain strings/string[], with missing optional fields defaulting to '' or [],
+  keeping client and server schemas aligned. Now I'll check whether zod exposes
+  the regexes I need to reuse.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(shared\response.ts)
+  ⎿  Wrote 75 lines to shared\response.ts
+      1 import { z } from 'zod'
+      2
+      3 import type { Field, FieldType } from './form'
+      4
+      5 const MAX_ANSWER_LENGTH = 5000
+      6 const REQUIRED_MESSAGE = 'This field is required'
+      7 const NUMBER_PATTERN = /^-?\d+(\.\d+)?$/
+      8
+      9 const answerValueSchema = z.union([z.string(), z.array(z.string()
+        )])
+     … +81 lines (ctrl+o to expand)
+
+● Now a typecheck and a quick smoke test of the schemas:
+
+  Made 2 scratchpad edits +46, ran 1 shell command (ctrl+o to expand)
+
+● Step 2 is done: the shared zod schemas are in shared/, and zod 4.6.7 is
+  installed (its package has no engines restriction, so Node 20.0 is fine). tsc
+  -b passes for both the app and server configs. A smoke test of valid, invalid,
+  missing-key and unknown-key inputs gave the expected results. I haven't
+  committed anything, so you can review first.
+
+  shared/form.ts: the form definition
+
+  - FIELD_TYPES: the eight field types as one as const list. It drives z.enum
+    and the FieldType type, so the list exists in only one place.
+  - fieldSchema: one field. Labels and options are trimmed. A refine rule
+    requires at least one option for select, radio and checkbox fields. Options
+    must be unique, or a student couldn't tell two identical ones apart.
+  - fieldsSchema: the field list. Field IDs must be unique because answers are
+    keyed by field ID.
+  - formInputSchema: what the admin sends on create and update (title,
+    description, fields, published). The client never sends id, slug or
+    timestamps; the server creates them. That stops a client from picking its
+    own slug.
+  - formSchema: the stored form, built by adding those server-owned fields to
+    formInputSchema with .extend(...).
+
+  shared/response.ts: validating a submission
+
+  buildAnswersSchema(fields) builds a zod schema from a form's field list. The
+  public form will use it through react-hook-form, and the server will run it
+  again on submit, so both sides check the same rules.
+  - Answers are always strings, and checkbox answers are string[]. That's
+    exactly what HTML inputs produce, so the schema's input and output have the
+    same shape. That's why the client's parsed result passes the server's check
+    again (the smoke test showed this).
+  - Empty means '' or []. A required field rejects empty values with "This field
+    is required". An optional field accepts them. If an optional key is missing
+    entirely, it defaults to '' or [], so every stored response has the same
+    keys.
+  - Per-type rules live in answerRuleFor, one switch over the field type:
+    - email: zod's built-in email regex
+    - number: a number pattern
+    - date: YYYY-MM-DD
+    - select/radio: the answer must be one of the options
+
+    Checkbox answers must each be one of the options.
+  - z.strictObject rejects answers keyed by a field the form doesn't have, so
+    nobody can store junk keys.
+
+  shared/event.ts: analytics events
+
+  - eventInputSchema is a discriminated union, meaning zod picks the variant by
+    the type value. A field_focus event must include a fieldId; view, start and
+    submit events have none. The server will also check that the fieldId belongs
+    to the form, because that needs the form itself.
+  - analyticsEventSchema is the stored event: the input plus formId and ts, both
+    added by the server. It lets us validate each line read back from
+    events.jsonl.
+
+  Two decisions to check
+
+  1. Number answers are stored as validated strings, e.g. "21", not as numbers.
+     Nothing calculates with them, and this keeps "same schema, same shape on
+     both sides" true. The alternative is converting to a number in the schema.
+     Then the server would have to accept both strings and numbers, because the
+     client sends what the schema outputs. Tell me if you'd prefer that.
+  2. The Response and Event types are named FormResponse and AnalyticsEvent.
+     Plain Response and Event would clash with the browser's built-in Response
+     and Event types.
+
+  Next is step 3, the storage module. Before that, export this session with
+  /export into docs/ai-log/. I can also commit this step, e.g. feat(shared): add
+  zod schemas for forms, responses and events.
+
+> /conventional-commit
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● I'd make two commits:
+
+  Proposed commits (2):
+
+  [1] build(deps): add zod
+
+  Files: package.json, package-lock.json
+
+  [2] feat(shared): add zod schemas for forms, responses and events
+
+  Shared by client and server: form definition with field rules,
+  a per-form answers schema built from the field list, and analytics
+  event input with a field_focus/step discriminated union.
+
+  Files: shared/form.ts, shared/response.ts, shared/event.ts
+
+  Continue? [y/n]
+
+> y
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I made both commits on main, and the working tree is clean:
+
+  - e95f5d1 build(deps): add zod
+  - 2079425 feat(shared): add zod schemas for forms, responses and events
+
+  Before step 3 (the storage module), export this session with /export into
+  docs/ai-log/.

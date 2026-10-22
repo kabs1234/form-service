@@ -1,0 +1,1903 @@
+
+> We did all 8 steps, but did not mention that output language must've been
+  russian and it's on me. Can you change things according to that information,
+  please?
+
+● I'll start by finding every user-facing string in the app.
+
+  Searched for 3 patterns (ctrl+o to expand)
+
+● The grep misses multi-line JSX text and lowercase strings, so I'll read each
+  UI file directly.
+
+  Searched for 2 patterns, read 20 files (ctrl+o to expand)
+
+● Zod 4 ships a Russian locale, which covers its built-in messages (length
+  limits and so on). Now the remaining components:
+
+  Read 10 files (ctrl+o to expand)
+
+● Remaining small files:
+
+  Searched for 1 pattern, read 8 files (ctrl+o to expand)
+
+● I have the full picture. Quick check for anything left in the server admin
+  routes and hooks:
+
+  Searched for 2 patterns (ctrl+o to expand)
+
+● I've mapped everything out: I'll translate UI text and API error messages to
+  Russian, switch zod to its Russian locale for validation messages, and leave
+  code, comments, and logs in English. Starting now with the shared zod setup.
+
+● Write(shared\zod.ts)
+  ⎿  PreToolUse:Write says: Blocked write to zod.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Write hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\form.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to form.ts — loading the clean-code-ts
+     skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● Update(shared\response.ts)
+  ⎿  PreToolUse:Edit says: Blocked write to response.ts — loading the
+     clean-code-ts skill first.
+  ⎿  Error: PreToolUse:Edit hook error: The clean-code-ts skill has not been
+     loaded in this session, so this TypeScript write is blocked.
+
+     Invoke the clean-code-ts skill first (Skill tool, skill: "clean-code-ts"),
+     apply its rules to the code you were about to write, then retry this edit.
+
+     Do not work around this by writing the file under a different extension or
+     by proposing the code as chat text.
+
+● A project hook requires the clean-code-ts skill to be loaded before any
+  TypeScript edits. Loading it now:
+
+● Skill(clean-code-ts)
+  ⎿  Successfully loaded skill
+
+● Skill loaded. These edits only change text, but the new shared/zod.ts module
+  also follows its rules. Retrying:
+
+● Write(shared\zod.ts)
+  ⎿  Wrote 5 lines to shared\zod.ts
+      1 import { z } from 'zod';
+      2
+      3 z.config(z.locales.ru());
+      4
+      5 export { z };
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      1 -import { z } from 'zod';                                        
+      1 +import { z } from './zod';                                      
+      2  
+      3  export const FIELD_TYPES = [
+      4    'text',
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      33  const idSchema = z.string().min(1).max(MAX_ID_LENGTH);
+      34  
+      35  const optionsSchema = z
+      36 -  .array(z.string().trim().min(1, 'Option cannot be empty').max
+         -(MAX_LABEL_LENGTH))                                            
+      36 +  .array(z.string().trim().min(1, 'Вариант не может быть пустым
+         +').max(MAX_LABEL_LENGTH))                                      
+      37    .max(MAX_OPTIONS)
+      38    .refine(hasUniqueValues, 'Options must be unique');
+      39  
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      35  const optionsSchema = z
+      36    .array(z.string().trim().min(1, 'Вариант не может быть пустым
+          ').max(MAX_LABEL_LENGTH))
+      37    .max(MAX_OPTIONS)
+      38 -  .refine(hasUniqueValues, 'Options must be unique');          
+      38 +  .refine(hasUniqueValues, 'Варианты не должны повторяться');  
+      39  
+      40  export const fieldSchema = z
+      41    .object({
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      41    .object({
+      42      id: idSchema,
+      43      type: z.enum(FIELD_TYPES),
+      44 -    label: z.string().trim().min(1, 'Label is required').max(MA
+         -X_LABEL_LENGTH),                                               
+      44 +    label: z.string().trim().min(1, 'Введите текст вопроса').ma
+         +x(MAX_LABEL_LENGTH),                                           
+      45      required: z.boolean(),
+      46      placeholder: z.string().trim().max(MAX_LABEL_LENGTH).option
+          al(),
+      47      options: optionsSchema.optional(),
+
+● Update(shared\form.ts)  ⎿  Added 1 line, removed 1 line
+      47      options: optionsSchema.optional(),
+      48    })
+      49    .refine((field) => !isChoiceFieldType(field.type) || (field.o
+          ptions?.length ?? 0) > 0, {
+      50 -    message: 'Add at least one option',                        
+      50 +    message: 'Добавьте хотя бы один вариант',                  
+      51      path: ['options'],
+      52    });
+      53  
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      53  
+      54  const fieldsSchema = z
+      55    .array(fieldSchema)
+      56 -  .refine((fields) => hasUniqueValues(fields.map((field) => fie
+         -ld.id)), 'Field ids must be unique');                          
+      56 +  .refine((fields) => hasUniqueValues(fields.map((field) => fie
+         +ld.id)), 'Идентификаторы полей должны быть уникальными');      
+      57  
+      58  export const formInputSchema = z.object({
+      59    title: z.string().trim().min(1, 'Title is required').max(MAX_
+          TITLE_LENGTH),
+
+● Update(shared\form.ts)
+  ⎿  Added 1 line, removed 1 line
+      56    .refine((fields) => hasUniqueValues(fields.map((field) => fie
+          ld.id)), 'Идентификаторы полей должны быть уникальными');
+      57  
+      58  export const formInputSchema = z.object({
+      59 -  title: z.string().trim().min(1, 'Title is required').max(MAX_
+         -TITLE_LENGTH),                                                 
+      59 +  title: z.string().trim().min(1, 'Введите название формы').max
+         +(MAX_TITLE_LENGTH),                                            
+      60    description: z.string().trim().max(MAX_DESCRIPTION_LENGTH).op
+          tional(),
+      61    fields: fieldsSchema,
+      62    published: z.boolean(),
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      1 -import { z } from 'zod';                                        
+      1 +import { z } from './zod';                                      
+      2  
+      3  import type { Field, FieldType } from './form';
+      4  
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      3  import type { Field, FieldType } from './form';
+      4  
+      5  const MAX_ANSWER_LENGTH = 5000;
+      6 -const REQUIRED_MESSAGE = 'This field is required';              
+      6 +const REQUIRED_MESSAGE = 'Обязательное поле';                   
+      7  const NUMBER_PATTERN = /^-?\d+(\.\d+)?$/;
+      8  
+      9  const answerValueSchema = z.union([z.string(), z.array(z.string(
+         ))]);
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      26    readonly message: string;
+      27  };
+      28  
+      29 -const ANY_TEXT_RULE: AnswerRule = { isValid: () => true, messag
+         -e: 'Invalid answer' };                                         
+      29 +const ANY_TEXT_RULE: AnswerRule = { isValid: () => true, messag
+         +e: 'Некорректный ответ' };                                     
+      30  
+      31  function getAnswerRule(type: TextFieldType, options: readonly s
+          tring[]): AnswerRule {
+      32    switch (type) {
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      34      case 'textarea':
+      35        return ANY_TEXT_RULE;
+      36      case 'email':
+      37 -      return { isValid: (value) => z.regexes.email.test(value),
+         - message: 'Enter a valid email' };                             
+      37 +      return { isValid: (value) => z.regexes.email.test(value),
+         + message: 'Введите корректный email' };                        
+      38      case 'number':
+      39        return { isValid: (value) => NUMBER_PATTERN.test(value), 
+          message: 'Enter a number' };
+      40      case 'date':
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      36      case 'email':
+      37        return { isValid: (value) => z.regexes.email.test(value),
+           message: 'Введите корректный email' };
+      38      case 'number':
+      39 -      return { isValid: (value) => NUMBER_PATTERN.test(value), 
+         -message: 'Enter a number' };                                   
+      39 +      return { isValid: (value) => NUMBER_PATTERN.test(value), 
+         +message: 'Введите число' };                                    
+      40      case 'date':
+      41        return { isValid: (value) => z.regexes.date.test(value), 
+          message: 'Enter a valid date' };
+      42      case 'select':
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      38      case 'number':
+      39        return { isValid: (value) => NUMBER_PATTERN.test(value), 
+          message: 'Введите число' };
+      40      case 'date':
+      41 -      return { isValid: (value) => z.regexes.date.test(value), 
+         -message: 'Enter a valid date' };                               
+      41 +      return { isValid: (value) => z.regexes.date.test(value), 
+         +message: 'Введите корректную дату' };                          
+      42      case 'select':
+      43      case 'radio':
+      44        return { isValid: (value) => options.includes(value), mes
+          sage: 'Choose one of the options' };
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      41        return { isValid: (value) => z.regexes.date.test(value), 
+          message: 'Введите корректную дату' };
+      42      case 'select':
+      43      case 'radio':
+      44 -      return { isValid: (value) => options.includes(value), mes
+         -sage: 'Choose one of the options' };                           
+      44 +      return { isValid: (value) => options.includes(value), mes
+         +sage: 'Выберите один из вариантов' };                          
+      45    }
+      46  }
+      47  
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      50  }
+      51  
+      52  function buildTextAnswerSchema(field: Field, rule: AnswerRule):
+           z.ZodType<string> {
+      53 -  const text = z.string(REQUIRED_MESSAGE).trim().max(MAX_ANSWER
+         -_LENGTH, 'Answer is too long');                                
+      53 +  const text = z.string(REQUIRED_MESSAGE).trim().max(MAX_ANSWER
+         +_LENGTH, 'Слишком длинный ответ');                             
+      54    const presentText = field.required ? text.min(1, REQUIRED_MES
+          SAGE) : text;
+      55    const checkedText = presentText.refine(createEmptyOrValidChec
+          k(rule), rule.message);
+      56    return field.required ? checkedText : checkedText.default('')
+          ;
+
+● Update(shared\response.ts)
+  ⎿  Added 1 line, removed 1 line
+      58  
+      59  function buildCheckboxAnswerSchema(field: Field): z.ZodType<str
+          ing[]> {
+      60    const selection = z.array(
+      61 -    z.enum(field.options ?? [], 'Choose from the options'),    
+      61 +    z.enum(field.options ?? [], 'Выберите из предложенных вариа
+         +нтов'),                                                        
+      62      REQUIRED_MESSAGE,
+      63    );
+      64    return field.required ? selection.min(1, REQUIRED_MESSAGE) : 
+          selection.default([]);
+
+● Next, the server error messages and the remaining shared files:
+
+  Read 2 files (ctrl+o to expand)
+
+● Update(server\http.ts)
+  ⎿  Added 1 line, removed 1 line
+      10  } as const;
+      11  
+      12  export function sendValidationError(response: Response, error: 
+          ZodError): void {
+      13 -  response.status(HttpStatus.BadRequest).json({ error: 'Invalid
+         - input', issues: error.issues });                              
+      13 +  response.status(HttpStatus.BadRequest).json({ error: 'Некорре
+         +ктные данные', issues: error.issues });                        
+      14  }
+      15  
+      16  export function sendFormNotFound(response: Response): void {
+
+● Update(server\http.ts)
+  ⎿  Added 1 line, removed 1 line
+      14  }
+      15  
+      16  export function sendFormNotFound(response: Response): void {
+      17 -  response.status(HttpStatus.NotFound).json({ error: 'Form not 
+         -found' });                                                     
+      17 +  response.status(HttpStatus.NotFound).json({ error: 'Форма не 
+         +найдена' });                                                   
+      18  }
+
+● Update(server\api.ts)
+  ⎿  Added 1 line, removed 1 line
+      18  }
+      19  
+      20  function sendUnknownEndpoint(_request: Request, response: Respo
+          nse): void {
+      21 -  response.status(HttpStatus.NotFound).json({ error: 'Not found
+         -' });                                                          
+      21 +  response.status(HttpStatus.NotFound).json({ error: 'Не найден
+         +о' });                                                         
+      22  }
+      23  
+      24  export function sendApiError(
+
+● Update(server\api.ts)
+  ⎿  Added 1 line, removed 1 line
+      33    }
+      34  
+      35    console.error(error);
+      36 -  response.status(HttpStatus.InternalServerError).json({ error:
+         - 'Internal server error' });                                   
+      36 +  response.status(HttpStatus.InternalServerError).json({ error:
+         + 'Внутренняя ошибка сервера' });                               
+      37  }
+      38  
+      39  export function createApiRouter(): Router {
+
+● Update(server\public-routes.ts)
+  ⎿  Added 1 line, removed 1 line
+      77    }
+      78  
+      79    if (!hasKnownField(result.data, form)) {
+      80 -    response.status(HttpStatus.BadRequest).json({ error: 'Field
+         - does not belong to this form' });                             
+      80 +    response.status(HttpStatus.BadRequest).json({ error: 'Поле 
+         +не относится к этой форме' });                                 
+      81      return;
+      82    }
+      83  
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 1 line, removed 1 line
+      39  }
+      40  
+      41  async function readErrorMessage(response: Response): Promise<st
+          ring> {
+      42 -  const fallbackMessage = `Request failed with status ${respons
+         -e.status}`;                                                    
+      42 +  const fallbackMessage = `Ошибка запроса (код ${response.statu
+         +s})`;                                                          
+      43    if (!hasJsonBody(response)) {
+      44      return fallbackMessage;
+      45    }
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 1 line, removed 1 line
+      83  }
+      84  
+      85  export function getErrorMessage(error: unknown): string {
+      86 -  return error instanceof Error ? error.message : 'Something we
+         -nt wrong';                                                     
+      86 +  return error instanceof Error ? error.message : 'Что-то пошло
+         + не так';                                                      
+      87  }
+      88  
+      89  export function isMissingResourceError(error: unknown): boolean
+           {
+
+● Update(index.html)  ⎿  Added 1 line, removed 1 line
+      1  <!doctype html>
+      2 -<html lang="en">                                                
+      2 +<html lang="ru">                                                
+      3    <head>
+      4      <meta charset="UTF-8" />
+      5      <meta name="viewport" content="width=device-width, initial-s
+         cale=1.0" />
+
+● Update(index.html)
+  ⎿  Added 1 line, removed 1 line
+      3    <head>
+      4      <meta charset="UTF-8" />
+      5      <meta name="viewport" content="width=device-width, initial-s
+         cale=1.0" />
+      6 -    <title>Form Service</title>                                 
+      6 +    <title>Конструктор форм</title>                             
+      7    </head>
+      8    <body>
+      9      <div id="root"></div>
+
+● Now the pages:
+
+● Update(shared\event.ts)
+  ⎿  Added 1 line, removed 1 line
+      1 -import { z } from 'zod';                                        
+      1 +import { z } from './zod';                                      
+      2  
+      3  export const EVENT_TYPES = ['view', 'start', 'field_focus', 'sub
+         mit'] as const;
+      4  
+
+● Update(shared\analytics.ts)
+  ⎿  Added 1 line, removed 1 line
+      1 -import { z } from 'zod';                                        
+      1 +import { z } from './zod';                                      
+      2  
+      3  export const FUNNEL_STEPS = ['view', 'start', 'submit'] as const
+         ;
+      4  
+
+● Update(src\App.tsx)
+  ⎿  Added 1 line, removed 1 line
+      29        <Route path={RoutePath.AdminFormResponses} element={<Form
+          ResponsesPage />} />
+      30        <Route path={RoutePath.AdminFormAnalytics} element={<Form
+          AnalyticsPage />} />
+      31        <Route path={RoutePath.PublicForm} element={<PublicFormPa
+          ge />} />
+      32 -      <Route path={RoutePath.NotFound} element={<Placeholder ti
+         -tle="Page not found" />} />                                    
+      32 +      <Route path={RoutePath.NotFound} element={<Placeholder ti
+         +tle="Страница не найдена" />} />                               
+      33      </Routes>
+      34    );
+      35  }
+
+● Update(src\pages\public-form-page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      22    if (isSubmitted) {
+      23      return (
+      24        <PageMessage
+      25 -        title="Thank you! Your answers were sent"              
+      26 -        description={`We received your response to “${form.titl
+         -e}”. You can close this page.`}                                
+      25 +        title="Спасибо! Ваши ответы отправлены"                
+      26 +        description={`Мы получили ваши ответы на форму «${form.
+         +title}». Эту страницу можно закрыть.`}                         
+      27        />
+      28      );
+      29    }
+
+● Update(src\pages\public-form-page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      40    const state = useApiData(loadForm);
+      41  
+      42    if (state.status === 'loading') {
+      43 -    return <PageMessage title="Loading form…" />;              
+      43 +    return <PageMessage title="Загружаем форму…" />;           
+      44    }
+      45  
+      46    if (state.status === 'failed') {
+
+● Update(src\pages\public-form-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      46    if (state.status === 'failed') {
+      47      return isMissingResourceError(state.error) ? (
+      48        <PageMessage
+      49 -        title="This form isn’t available"                      
+      50 -        description="The link may be mistyped, or the form is n
+         -o longer accepting answers. Check the link with whoever shared 
+         -it."                                                           
+      49 +        title="Форма недоступна"                               
+      50 +        description="Возможно, в ссылке опечатка или форма боль
+         +ше не принимает ответы. Уточните ссылку у того, кто её отправил
+         +."                                                             
+      51        />
+      52      ) : (
+      53 -      <PageMessage title="Could not load the form" description=
+         -{state.message} />                                             
+      53 +      <PageMessage title="Не удалось загрузить форму" descripti
+         +on={state.message} />                                          
+      54      );
+      55    }
+      56  
+
+● Update(src\pages\form-responses-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      39  
+      40  function ResponsesHeader({ form, responseCount }: ResponsesHead
+          erProps) {
+      41    return (
+      42 -    <FormPageHeader title={form.title} summary={`Responses: ${r
+         -esponseCount}`}>                                               
+      42 +    <FormPageHeader title={form.title} summary={`Ответов: ${res
+         +ponseCount}`}>                                                 
+      43        <Button variant="outline" size="sm" asChild>
+      44          <Link to={buildFormEditPath(form.id)}>
+      45            <PencilIcon />
+      46 -          Edit                                                 
+      46 +          Редактировать                                        
+      47          </Link>
+      48        </Button>
+      49  
+      50        <Button variant="outline" size="sm" asChild>
+      51          <Link to={buildFormAnalyticsPath(form.id)}>
+      52            <ChartColumnIcon />
+      53 -          Analytics                                            
+      53 +          Аналитика                                            
+      54          </Link>
+      55        </Button>
+      56      </FormPageHeader>
+
+● Update(src\pages\form-responses-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      60  function EmptyResponses({ form }: EmptyResponsesProps) {
+      61    return (
+      62      <div className="grid justify-items-center gap-3 rounded-lg 
+          border border-dashed px-4 py-16 text-center">
+      63 -      <p className="font-medium">No responses yet</p>          
+      63 +      <p className="font-medium">Ответов пока нет</p>          
+      64  
+      65        {form.published ? (
+      66          <>
+      67            <p className="text-sm text-muted-foreground">
+      68 -            Share the public link with students. Submissions wi
+         -ll appear here.                                                
+      68 +            Отправьте публичную ссылку студентам. Их ответы поя
+         +вятся здесь.                                                   
+      69            </p>
+      70  
+      71            <CopyLinkButton url={buildPublicFormUrl(form.slug)} /
+          >
+      72          </>
+      73        ) : (
+      74          <p className="text-sm text-muted-foreground">
+      75 -          This form is a draft. Publish it in the builder to ge
+         -t a shareable link.                                            
+      75 +          Это черновик. Опубликуйте форму в конструкторе, чтобы
+         + получить ссылку.                                              
+      76          </p>
+      77        )}
+      78      </div>
+
+● Update(src\pages\form-responses-page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      84    const state = useApiData(load);
+      85  
+      86    if (state.status === 'loading') {
+      87 -    return <PageMessage title="Loading responses…" />;         
+      87 +    return <PageMessage title="Загружаем ответы…" />;          
+      88    }
+      89  
+      90    if (state.status === 'failed') {
+
+● Update(src\pages\form-responses-page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+       90    if (state.status === 'failed') {
+       91      return (
+       92        <PageMessage
+       93 -        title={isMissingResourceError(state.error) ? 'Form not
+          - found' : 'Could not load responses'}                         
+       93 +        title={isMissingResourceError(state.error) ? 'Форма не
+          + найдена' : 'Не удалось загрузить ответы'}                    
+       94          description={state.message}
+       95        >
+       96          <Button variant="outline" asChild>
+       97 -          <Link to={RoutePath.AdminFormList}>Back to forms</Li
+          -nk>                                                           
+       97 +          <Link to={RoutePath.AdminFormList}>К списку форм</Li
+          +nk>                                                           
+       98          </Button>
+       99        </PageMessage>
+      100      );
+
+● Update(src\pages\form-analytics-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      34  
+      35  function AnalyticsHeader({ form }: FormProps) {
+      36    return (
+      37 -    <FormPageHeader title={form.title} summary="Analytics">    
+      37 +    <FormPageHeader title={form.title} summary="Аналитика">    
+      38        <Button variant="outline" size="sm" asChild>
+      39          <Link to={buildFormEditPath(form.id)}>
+      40            <PencilIcon />
+      41 -          Edit                                                 
+      41 +          Редактировать                                        
+      42          </Link>
+      43        </Button>
+      44  
+      45        <Button variant="outline" size="sm" asChild>
+      46          <Link to={buildFormResponsesPath(form.id)}>
+      47            <InboxIcon />
+      48 -          Responses                                            
+      48 +          Ответы                                               
+      49          </Link>
+      50        </Button>
+      51      </FormPageHeader>
+
+● Update(src\pages\form-analytics-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      55  function EmptyAnalytics({ form }: FormProps) {
+      56    return (
+      57      <div className="grid justify-items-center gap-3 rounded-lg 
+          border border-dashed px-4 py-16 text-center">
+      58 -      <p className="font-medium">No visits yet</p>             
+      58 +      <p className="font-medium">Посещений пока нет</p>        
+      59  
+      60        {form.published ? (
+      61          <>
+      62            <p className="text-sm text-muted-foreground">
+      63 -            Share the public link with students. The funnel app
+         -ears after the first visit.                                    
+      63 +            Отправьте публичную ссылку студентам. Воронка появи
+         +тся после первого посещения.                                   
+      64            </p>
+      65  
+      66            <CopyLinkButton url={buildPublicFormUrl(form.slug)} /
+          >
+      67          </>
+      68        ) : (
+      69          <p className="text-sm text-muted-foreground">
+      70 -          This form is a draft. Publish it in the builder to st
+         -art collecting visits.                                         
+      70 +          Это черновик. Опубликуйте форму в конструкторе, чтобы
+         + начать собирать статистику.                                   
+      71          </p>
+      72        )}
+      73      </div>
+
+● Update(src\pages\form-analytics-page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      79    const state = useApiData(load);
+      80  
+      81    if (state.status === 'loading') {
+      82 -    return <PageMessage title="Loading analytics…" />;         
+      82 +    return <PageMessage title="Загружаем аналитику…" />;       
+      83    }
+      84  
+      85    if (state.status === 'failed') {
+
+● Update(src\pages\form-analytics-page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      85    if (state.status === 'failed') {
+      86      return (
+      87        <PageMessage
+      88 -        title={isMissingResourceError(state.error) ? 'Form not 
+         -found' : 'Could not load analytics'}                           
+      88 +        title={isMissingResourceError(state.error) ? 'Форма не 
+         +найдена' : 'Не удалось загрузить аналитику'}                   
+      89          description={state.message}
+      90        >
+      91          <Button variant="outline" asChild>
+      92 -          <Link to={RoutePath.AdminFormList}>Back to forms</Lin
+         -k>                                                             
+      92 +          <Link to={RoutePath.AdminFormList}>К списку форм</Lin
+         +k>                                                             
+      93          </Button>
+      94        </PageMessage>
+      95      );
+
+● Update(src\pages\form-list-page.tsx)
+  ⎿  Added 1 line, removed 1 line
+      19      <Button asChild>
+      20        <Link to={RoutePath.AdminFormNew}>
+      21          <PlusIcon />
+      22 -        New form                                               
+      22 +        Новая форма                                            
+      23        </Link>
+      24      </Button>
+      25    );
+
+● Update(src\pages\form-list-page.tsx)
+  ⎿  Added 4 lines, removed 4 lines
+      29    const state = useApiData(listForms);
+      30  
+      31    if (state.status === 'loading') {
+      32 -    return <PageMessage title="Loading forms…" />;             
+      32 +    return <PageMessage title="Загружаем формы…" />;           
+      33    }
+      34  
+      35    if (state.status === 'failed') {
+      36 -    return <PageMessage title="Could not load forms" descriptio
+         -n={state.message} />;                                          
+      36 +    return <PageMessage title="Не удалось загрузить формы" desc
+         +ription={state.message} />;                                    
+      37    }
+      38  
+      39    if (state.data.length === 0) {
+      40      return (
+      41        <PageMessage
+      42 -        title="No forms yet"                                   
+      43 -        description="Create an application form, publish it, an
+         -d share the link with students."                               
+      42 +        title="Форм пока нет"                                  
+      43 +        description="Создайте анкету, опубликуйте её и отправьт
+         +е ссылку студентам."                                           
+      44        >
+      45          <NewFormButton />
+      46        </PageMessage>
+
+● Update(src\pages\form-list-page.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      51      <main className="mx-auto grid max-w-3xl gap-6 px-4 py-10">
+      52        <div className="flex items-center justify-between gap-4">
+      53          <div>
+      54 -          <h1 className="text-2xl font-semibold">Forms</h1>    
+      54 +          <h1 className="text-2xl font-semibold">Формы</h1>    
+      55  
+      56            <p className="text-sm text-muted-foreground">
+      57 -            Build application forms, share the link, and see wh
+         -ere students drop off.                                         
+      57 +            Создавайте анкеты, делитесь ссылкой и смотрите, где
+         + студенты бросают заполнение.                                  
+      58            </p>
+      59          </div>
+      60  
+
+● Update(src\pages\form-builder-page.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      17    const state = useApiData(loadForm);
+      18  
+      19    if (state.status === 'loading') {
+      20 -    return <PageMessage title="Loading form…" />;              
+      20 +    return <PageMessage title="Загружаем форму…" />;           
+      21    }
+      22  
+      23    if (state.status === 'failed') {
+      24      return (
+      25        <PageMessage
+      26 -        title={isMissingResourceError(state.error) ? 'Form not 
+         -found' : 'Could not load the form'}                            
+      26 +        title={isMissingResourceError(state.error) ? 'Форма не 
+         +найдена' : 'Не удалось загрузить форму'}                       
+      27          description={state.message}
+      28        >
+      29          <Button variant="outline" asChild>
+      30 -          <Link to={RoutePath.AdminFormList}>Back to forms</Lin
+         -k>                                                             
+      30 +          <Link to={RoutePath.AdminFormList}>К списку форм</Lin
+         +k>                                                             
+      31          </Button>
+      32        </PageMessage>
+      33      );
+● Now the builder and shared components:
+
+● Update(src\lib\form-draft.ts)
+  ⎿  Added 1 line, removed 1 line
+       4  export type FormDetails = Pick<FormInput, 'title' | 'descriptio
+          n'>;
+       5  
+       6  const FIELD_ID_BYTES = 6;
+       7 -const DEFAULT_OPTIONS = ['Option 1', 'Option 2'];              
+       7 +const DEFAULT_OPTIONS = ['Вариант 1', 'Вариант 2'];            
+       8  const PLACEHOLDER_FIELD_TYPES: readonly FieldType[] = [
+       9    'text',
+      10    'textarea',
+
+● Update(src\lib\form-draft.ts)
+  ⎿  Added 7 lines, removed 7 lines
+      14  ];
+      15  
+      16  export const FIELD_TYPE_LABELS: Readonly<Record<FieldType, stri
+          ng>> = {
+      17 -  text: 'Short text',                                          
+      18 -  textarea: 'Long text',                                       
+      17 +  text: 'Короткий текст',                                      
+      18 +  textarea: 'Длинный текст',                                   
+      19    email: 'Email',
+      20 -  number: 'Number',                                            
+      21 -  select: 'Dropdown',                                          
+      22 -  radio: 'Single choice',                                      
+      23 -  checkbox: 'Multiple choice',                                 
+      24 -  date: 'Date',                                                
+      20 +  number: 'Число',                                             
+      21 +  select: 'Выпадающий список',                                 
+      22 +  radio: 'Один вариант',                                       
+      23 +  checkbox: 'Несколько вариантов',                             
+      24 +  date: 'Дата',                                                
+      25  };
+      26  
+      27  export const EMPTY_FORM_INPUT: FormInput = {
+
+● Update(src\lib\analytics-view.ts)
+  ⎿  Added 3 lines, removed 3 lines
+       7  const MAX_AXIS_LABEL_LENGTH = 16;
+       8  
+       9  const FUNNEL_STEP_LABELS: Readonly<Record<FunnelStepName, strin
+          g>> = {
+      10 -  view: 'Opened the form',                                     
+      11 -  start: 'Began answering',                                    
+      12 -  submit: 'Submitted',                                         
+      10 +  view: 'Открыли форму',                                       
+      11 +  start: 'Начали заполнять',                                   
+      12 +  submit: 'Отправили',                                         
+      13  };
+      14  
+      15  const percentFormat = new Intl.NumberFormat(APP_LOCALE, {
+
+● Update(src\lib\analytics-view.ts)
+  ⎿  Added 1 line, removed 1 line
+      61  }
+      62  
+      63  export function joinQuotedLabels(labels: readonly string[]): st
+          ring {
+      64 -  return listFormat.format(labels.map((label) => `“${label}”`))
+         -;                                                              
+      64 +  return listFormat.format(labels.map((label) => `«${label}»`))
+         +;                                                              
+      65  }
+      66  
+      67  export function buildDropOffBars(
+
+● Update(src\lib\response-table.ts)
+  ⎿  Added 1 line, removed 1 line
+      3  
+      4  import { APP_LOCALE } from '@/lib/locale';
+      5  
+      6 -export const DELETED_FIELD_LABEL = '(deleted field)';           
+      6 +export const DELETED_FIELD_LABEL = '(удалённое поле)';          
+      7  const EMPTY_ANSWER = '—';
+      8  
+      9  export type ResponseColumn = {
+
+● Update(src\components\copy-link-button.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+       9  };
+      10  
+      11  const COPY_LABELS: Readonly<Record<CopyStatus, string>> = {
+      12 -  idle: 'Copy link',                                           
+      13 -  copied: 'Copied',                                            
+      14 -  failed: 'Copy failed',                                       
+      12 +  idle: 'Скопировать ссылку',                                  
+      13 +  copied: 'Скопировано',                                       
+      14 +  failed: 'Не удалось скопировать',                            
+      15  };
+      16  
+      17  export function CopyLinkButton({ url }: CopyLinkButtonProps) {
+
+● Update(src\components\form-page-header.tsx)
+  ⎿  Added 1 line, removed 1 line
+      17        <Button variant="ghost" size="sm" className="justify-self
+          -start" asChild>
+      18          <Link to={RoutePath.AdminFormList}>
+      19            <ArrowLeftIcon />
+      20 -          Forms                                                
+      20 +          Формы                                                
+      21          </Link>
+      22        </Button>
+      23  
+
+● Update(src\components\responses\responses-table.tsx)
+  ⎿  Added 1 line, removed 1 line
+      30        <Table>
+      31          <TableHeader>
+      32            <TableRow>
+      33 -            <TableHead>Submitted</TableHead>                   
+      33 +            <TableHead>Отправлено</TableHead>                  
+      34  
+      35              {columns.map((column) => (
+      36                <TableHead
+
+● Update(src\components\form-renderer\form-preview.tsx)
+  ⎿  Added 1 line, removed 1 line
+      22      <div className="grid gap-6">
+      23        <FormHeading title={form.title} description={form.descrip
+          tion} />
+      24        {form.fields.length === 0 ? (
+      25 -        <p className="text-sm text-muted-foreground">Add a ques
+         -tion to see it here.</p>                                       
+      25 +        <p className="text-sm text-muted-foreground">Добавьте в
+         +опрос, и он появится здесь.</p>                                
+      26        ) : (
+      27          form.fields.map((field) => (
+      28            <FormField
+
+● Update(src\components\form-renderer\form-preview.tsx)
+  ⎿  Added 1 line, removed 1 line
+      34          ))
+      35        )}
+      36        <Button type="button" className="justify-self-start" disa
+          bled>
+      37 -        Submit                                                 
+      37 +        Отправить                                              
+      38        </Button>
+      39      </div>
+      40    );
+
+● Update(src\components\form-renderer\form-field.tsx)
+  ⎿  Added 1 line, removed 1 line
+       8    readonly error?: string;
+       9  };
+      10  
+      11 -const UNTITLED_QUESTION = 'Untitled question';                 
+      11 +const UNTITLED_QUESTION = 'Вопрос без названия';               
+      12  
+      13  export function FormField({ field, value, onChange, error }: Fo
+          rmFieldProps) {
+      14    return (
+
+  Read 2 files (ctrl+o to expand)
+
+● Update(src\components\public-form\public-form.tsx)
+  ⎿  Added 1 line, removed 1 line
+      75  
+      76              <div className="flex flex-wrap items-center gap-x-4
+           gap-y-2">
+      77                <Button type="submit" disabled={formState.isSubmi
+          tting}>
+      78 -                {formState.isSubmitting ? 'Sending…' : 'Submit'
+         -}                                                              
+      78 +                {formState.isSubmitting ? 'Отправляем…' : 'Отпр
+         +авить'}                                                        
+      79                </Button>
+      80  
+      81                <p className="text-sm text-muted-foreground">
+
+● Update(src\components\public-form\public-form.tsx)
+  ⎿  Added 1 line, removed 1 line
+      79                </Button>
+      80  
+      81                <p className="text-sm text-muted-foreground">
+      82 -                Your answers are saved in this browser until yo
+         -u submit.                                                      
+      82 +                Ответы сохраняются в этом браузере до отправки.
+      83                </p>
+      84              </div>
+      85            </div>
+
+● Update(src\components\form-list\form-list-item.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      30  
+      31          <CardDescription className="flex items-center gap-2">
+      32            <Badge variant={form.published ? 'default' : 'seconda
+          ry'}>
+      33 -            {form.published ? 'Published' : 'Draft'}           
+      33 +            {form.published ? 'Опубликована' : 'Черновик'}     
+      34            </Badge>
+      35  
+      36 -          <span>Responses: {form.responseCount}</span>         
+      36 +          <span>Ответов: {form.responseCount}</span>           
+      37          </CardDescription>
+      38        </CardHeader>
+      39  
+
+● Update(src\components\form-list\form-list-item.tsx)
+  ⎿  Added 1 line, removed 1 line
+      41          {form.published ? (
+      42            <CopyLinkButton url={buildPublicFormUrl(form.slug)} /
+          >
+      43          ) : (
+      44 -          <span className="text-xs text-muted-foreground">Publi
+         -sh to get a shareable link</span>                              
+      44 +          <span className="text-xs text-muted-foreground">Опубл
+         +икуйте, чтобы получить ссылку</span>                           
+      45          )}
+      46  
+      47          <Button variant="outline" size="sm" asChild>
+
+● Update(src\components\form-list\form-list-item.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      47          <Button variant="outline" size="sm" asChild>
+      48            <Link to={buildFormEditPath(form.id)}>
+      49              <PencilIcon />
+      50 -            Edit                                               
+      50 +            Редактировать                                      
+      51            </Link>
+      52          </Button>
+      53  
+      54          <Button variant="outline" size="sm" asChild>
+      55            <Link to={buildFormResponsesPath(form.id)}>
+      56              <InboxIcon />
+      57 -            Responses                                          
+      57 +            Ответы                                             
+      58            </Link>
+      59          </Button>
+      60  
+      61          <Button variant="outline" size="sm" asChild>
+      62            <Link to={buildFormAnalyticsPath(form.id)}>
+      63              <ChartColumnIcon />
+      64 -            Analytics                                          
+      64 +            Аналитика                                          
+      65            </Link>
+      66          </Button>
+      67        </CardContent>
+
+● Update(src\components\analytics\horizontal-bar-chart.tsx)
+  ⎿  Added 1 line, removed 1 line
+      15  const MUTED_COLOR = 'var(--muted-foreground)';
+      16  
+      17  const chartConfig = {
+      18 -  sessions: { label: 'Students', color: 'var(--primary)' },    
+      18 +  sessions: { label: 'Студенты', color: 'var(--primary)' },    
+      19  } satisfies ChartConfig;
+      20  
+      21  type HorizontalBarChartProps = {
+
+● Update(src\components\form-renderer\form-heading.tsx)
+  ⎿  Added 1 line, removed 1 line
+      2  
+      3  type FormHeadingProps = Pick<FormInput, 'title' | 'description'>
+         ;
+      4  
+      5 -const UNTITLED_FORM = 'Untitled form';                          
+      5 +const UNTITLED_FORM = 'Форма без названия';                     
+      6  
+      7  export function FormHeading({ title, description }: FormHeadingP
+         rops) {
+      8    return (
+
+● Update(src\components\form-renderer\select-control.tsx)
+  ⎿  Added 1 line, removed 1 line
+       9  import { buildControlId } from '@/lib/control-ids';
+      10  import { getFilledOptions, readTextValue } from '@/lib/field-co
+          ntrol-utils';
+      11  
+      12 -const DEFAULT_PLACEHOLDER = 'Choose an option';                
+      12 +const DEFAULT_PLACEHOLDER = 'Выберите вариант';                
+      13  
+      14  export function SelectControl({ field, value, onChange, isInval
+          id }: FieldControlProps) {
+      15    return (
+● Update(src\components\builder\form-builder.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      21    'savedForm' | 'isSaving' | 'hasErrors' | 'requestError' | 'ha
+          sUnsavedChanges'
+      22  >;
+      23  
+      24 -const UNTITLED_FORM = 'Untitled form';                         
+      24 +const UNTITLED_FORM = 'Форма без названия';                    
+      25  
+      26  function getSaveStatus(builder: SaveStatusInput): SaveStatus {
+      27    if (builder.isSaving) {
+      28 -    return { text: 'Saving…', isError: false };                
+      28 +    return { text: 'Сохраняем…', isError: false };             
+      29    }
+      30  
+      31    if (builder.hasErrors) {
+      32 -    return { text: 'Fix the highlighted fields to save', isErro
+         -r: true };                                                     
+      32 +    return { text: 'Исправьте выделенные поля, чтобы сохранить'
+         +, isError: true };                                             
+      33    }
+      34  
+      35    if (builder.requestError) {
+
+● Update(src\components\builder\form-builder.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      37    }
+      38  
+      39    if (builder.hasUnsavedChanges) {
+      40 -    return { text: 'Unsaved changes', isError: false };        
+      40 +    return { text: 'Есть несохранённые изменения', isError: fal
+         +se };                                                          
+      41    }
+      42  
+      43 -  return { text: builder.savedForm ? 'All changes saved' : 'Not
+         - saved yet', isError: false };                                 
+      43 +  return { text: builder.savedForm ? 'Все изменения сохранены' 
+         +: 'Ещё не сохранено', isError: false };                        
+      44  }
+      45  
+      46  export function FormBuilder({ initialForm }: FormBuilderProps) 
+          {
+
+● Update(src\components\builder\form-builder.tsx)
+  ⎿  Added 1 line, removed 1 line
+      64        />
+      65  
+      66        <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 l
+          g:grid-cols-2">
+      67 -        <section aria-label="Form editor" className="grid conte
+         -nt-start gap-4">                                               
+      67 +        <section aria-label="Редактор формы" className="grid co
+         +ntent-start gap-4">                                            
+      68            <FormDetailsCard details={draft} errors={errors} onCh
+          ange={builder.updateDetails} />
+      69  
+      70            {savedForm && (
+
+● Update(src\components\builder\form-builder.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+       97            <AddFieldPanel onAdd={builder.addField} />
+       98          </section>
+       99  
+      100 -        <aside aria-label="Live preview" className="lg:sticky 
+          -lg:top-20 lg:self-start">                                     
+      100 +        <aside aria-label="Предпросмотр" className="lg:sticky 
+          +lg:top-20 lg:self-start">                                     
+      101            <p className="mb-2 text-xs font-medium tracking-wide
+            text-muted-foreground uppercase">
+      102 -            Live preview                                      
+      102 +            Предпросмотр                                      
+      103            </p>
+      104  
+      105            <div className="rounded-xl border bg-card p-6 lg:max
+           -h-[calc(100vh-7rem)] lg:overflow-y-auto">
+
+● Update(src\components\builder\builder-header.tsx)
+  ⎿  Added 1 line, removed 1 line
+      24    readonly onSave: () => void;
+      25  };
+      26  
+      27 -const LEAVE_CONFIRMATION = 'Leave without saving? Your changes 
+         -will be lost.';                                                
+      27 +const LEAVE_CONFIRMATION = 'Уйти без сохранения? Изменения буду
+         +т потеряны.';                                                  
+      28  
+      29  export function BuilderHeader({
+      30    title,
+
+● Update(src\components\builder\builder-header.tsx)
+  ⎿  Added 1 line, removed 1 line
+      48          <Button variant="ghost" size="sm" asChild>
+      49            <Link to={RoutePath.AdminFormList} onClick={handleBac
+          kClick}>
+      50              <ArrowLeftIcon />
+      51 -            Forms                                              
+      51 +            Формы                                              
+      52            </Link>
+      53          </Button>
+      54  
+
+● Update(src\components\builder\builder-header.tsx)
+  ⎿  Added 1 line, removed 1 line
+      74              onCheckedChange={(isChecked) => (isChecked ? onPubl
+          ish() : onUnpublish())}
+      75            />
+      76  
+      77 -          <Label htmlFor="form-published">{isPublished ? 'Publi
+         -shed' : 'Draft'}</Label>                                       
+      77 +          <Label htmlFor="form-published">{isPublished ? 'Опубл
+         +икована' : 'Черновик'}</Label>                                 
+      78          </div>
+      79  
+      80          <Button type="button" disabled={isSaving || !hasUnsaved
+          Changes} onClick={onSave}>
+
+● Update(src\components\builder\builder-header.tsx)
+  ⎿  Added 1 line, removed 1 line
+      78          </div>
+      79  
+      80          <Button type="button" disabled={isSaving || !hasUnsaved
+          Changes} onClick={onSave}>
+      81 -          {isSaving ? 'Saving…' : 'Save'}                      
+      81 +          {isSaving ? 'Сохраняем…' : 'Сохранить'}              
+      82          </Button>
+      83        </div>
+      84      </header>
+
+● Update(src\components\builder\public-link-panel.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      31    return (
+      32      <Card>
+      33        <CardHeader>
+      34 -        <CardTitle>Public link</CardTitle>                     
+      34 +        <CardTitle>Публичная ссылка</CardTitle>                
+      35  
+      36          <CardDescription>
+      37            {form.published
+      38 -            ? 'Anyone with this link can fill in the form.'    
+      39 -            : 'Students see "form not found" at this link until
+         - you publish the form.'}                                       
+      38 +            ? 'Любой, у кого есть ссылка, может заполнить форму
+         +.'                                                             
+      39 +            : 'Пока форма не опубликована, по этой ссылке студе
+         +нты увидят «Форма недоступна».'}                               
+      40          </CardDescription>
+      41        </CardHeader>
+      42  
+
+● Update(src\components\builder\public-link-panel.tsx)
+  ⎿  Added 1 line, removed 1 line
+      44          <Input
+      45            readOnly
+      46            value={url}
+      47 -          aria-label="Public link"                             
+      47 +          aria-label="Публичная ссылка"                        
+      48            className="font-mono text-xs"
+      49            onFocus={(evt) => evt.target.select()}
+      50          />
+
+● Update(src\components\builder\public-link-panel.tsx)
+  ⎿  Added 1 line, removed 1 line
+      55            <Button variant="outline" size="sm" asChild>
+      56              <a href={url} target="_blank" rel="noreferrer">
+      57                <ExternalLinkIcon />
+      58 -              Open                                             
+      58 +              Открыть                                          
+      59              </a>
+      60            </Button>
+      61  
+
+● Update(src\components\builder\public-link-panel.tsx)
+  ⎿  Added 1 line, removed 1 line
+      63              <AlertDialogTrigger asChild>
+      64                <Button type="button" variant="outline" size="sm"
+           disabled={isRegenerating}>
+      65                  <RefreshCwIcon />
+      66 -                {isRegenerating ? 'Generating…' : 'Generate new
+         - link'}                                                        
+      66 +                {isRegenerating ? 'Создаём…' : 'Новая ссылка'} 
+      67                </Button>
+      68              </AlertDialogTrigger>
+      69  
+
+● Update(src\components\builder\public-link-panel.tsx)
+  ⎿  Added 5 lines, removed 5 lines
+      69  
+      70              <AlertDialogContent>
+      71                <AlertDialogHeader>
+      72 -                <AlertDialogTitle>Generate a new link?</AlertDi
+         -alogTitle>                                                     
+      72 +                <AlertDialogTitle>Создать новую ссылку?</AlertD
+         +ialogTitle>                                                    
+      73  
+      74                  <AlertDialogDescription>
+      75 -                  The current link stops working immediately, s
+         -o anyone you already sent it to will                           
+      76 -                  see "form not found". Responses collected so 
+         -far are kept.                                                  
+      75 +                  Текущая ссылка сразу перестанет работать: все
+         +, кому вы её уже отправили, увидят                             
+      76 +                  «Форма недоступна». Собранные ответы сохранят
+         +ся.                                                            
+      77                  </AlertDialogDescription>
+      78                </AlertDialogHeader>
+      79  
+      80                <AlertDialogFooter>
+      81 -                <AlertDialogCancel>Cancel</AlertDialogCancel>  
+      81 +                <AlertDialogCancel>Отмена</AlertDialogCancel>  
+      82  
+      83 -                <AlertDialogAction onClick={onRegenerate}>Gener
+         -ate new link</AlertDialogAction>                               
+      83 +                <AlertDialogAction onClick={onRegenerate}>Созда
+         +ть новую ссылку</AlertDialogAction>                            
+      84                </AlertDialogFooter>
+      85              </AlertDialogContent>
+      86            </AlertDialog>
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      62    return (
+      63      <Card>
+      64        <CardHeader>
+      65 -        <CardTitle>Question {position}</CardTitle>             
+      65 +        <CardTitle>Вопрос {position}</CardTitle>               
+      66  
+      67          <CardAction className="flex gap-1">
+      68            <Button
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      69              type="button"
+      70              variant="ghost"
+      71              size="icon-sm"
+      72 -            aria-label="Move question up"                      
+      72 +            aria-label="Переместить вопрос выше"               
+      73              disabled={isFirst}
+      74              onClick={onMoveUp}
+      75            >
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      80              type="button"
+      81              variant="ghost"
+      82              size="icon-sm"
+      83 -            aria-label="Move question down"                    
+      83 +            aria-label="Переместить вопрос ниже"               
+      84              disabled={isLast}
+      85              onClick={onMoveDown}
+      86            >
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      92              variant="ghost"
+      93              size="icon-sm"
+      94              className="text-destructive"
+      95 -            aria-label="Delete question"                       
+      95 +            aria-label="Удалить вопрос"                        
+      96              onClick={onDelete}
+      97            >
+      98              <Trash2Icon />
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      103        <CardContent className="grid gap-4">
+      104          <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)
+           _11rem]">
+      105            <div className="grid gap-2">
+      106 -            <Label htmlFor={`${editorId}-label`}>Question</Lab
+          -el>                                                           
+      106 +            <Label htmlFor={`${editorId}-label`}>Вопрос</Label
+          +>                                                             
+      107  
+      108              <Input
+      109                id={`${editorId}-label`}
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      109                id={`${editorId}-label`}
+      110                autoFocus={isNew}
+      111                value={field.label}
+      112 -              placeholder="e.g. Which university do you study 
+          -at?"                                                          
+      112 +              placeholder="Например, в каком университете вы у
+          +читесь?"                                                      
+      113                aria-invalid={Boolean(errors.label)}
+      114                onChange={(evt) => onChange({ ...field, label: e
+           vt.target.value })}
+      115              />
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      118            </div>
+      119  
+      120            <div className="grid content-start gap-2">
+      121 -            <Label htmlFor={`${editorId}-type`}>Answer type</L
+          -abel>                                                         
+      121 +            <Label htmlFor={`${editorId}-type`}>Тип ответа</La
+          +bel>                                                          
+      122  
+      123              <Select value={field.type} onValueChange={handleTy
+           peChange}>
+      124                <SelectTrigger id={`${editorId}-type`} className
+           ="w-full">
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      143  
+      144          {canHavePlaceholder(field.type) && (
+      145            <div className="grid gap-2">
+      146 -            <Label htmlFor={`${editorId}-placeholder`}>Hint in
+          -side the field (optional)</Label>                             
+      146 +            <Label htmlFor={`${editorId}-placeholder`}>Подсказ
+          +ка внутри поля (необязательно)</Label>                        
+      147  
+      148              <Input
+      149                id={`${editorId}-placeholder`}
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      148              <Input
+      149                id={`${editorId}-placeholder`}
+      150                value={field.placeholder ?? ''}
+      151 -              placeholder="e.g. Kazakh National University"   
+      151 +              placeholder="Например, КазНУ им. аль-Фараби"    
+      152                onChange={(evt) => onChange({ ...field, placehol
+           der: evt.target.value })}
+      153              />
+      154            </div>
+
+● Update(src\components\builder\field-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      170              onCheckedChange={(isRequired) => onChange({ ...fie
+           ld, required: isRequired })}
+      171            />
+      172  
+      173 -          <Label htmlFor={`${editorId}-required`}>Required</La
+          -bel>                                                          
+      173 +          <Label htmlFor={`${editorId}-required`}>Обязательный
+          + вопрос</Label>                                               
+      174          </div>
+      175        </CardContent>
+      176      </Card>
+
+● Update(src\components\builder\options-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      19    const canRemoveOption = options.length > 1;
+      20  
+      21    function addOption(): void {
+      22 -    onChange([...options, `Option ${options.length + 1}`]);    
+      22 +    onChange([...options, `Вариант ${options.length + 1}`]);   
+      23    }
+      24  
+      25    return (
+
+● Update(src\components\builder\options-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      24  
+      25    return (
+      26      <fieldset className="grid gap-2">
+      27 -      <legend className="mb-2 text-sm font-medium">Options</leg
+         -end>                                                           
+      27 +      <legend className="mb-2 text-sm font-medium">Варианты отв
+         +ета</legend>                                                   
+      28  
+      29        {options.map((option, index) => {
+      30          const position = index + 1;
+
+● Update(src\components\builder\options-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      34            <div key={`${editorId}-option-${index}`} className="g
+          rid gap-1">
+      35              <div className="flex gap-2">
+      36                <Input
+      37 -                aria-label={`Option ${position}`}              
+      37 +                aria-label={`Вариант ${position}`}             
+      38                  value={option}
+      39                  aria-invalid={Boolean(error)}
+      40                  onChange={(evt) =>
+
+● Update(src\components\builder\options-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      46                  type="button"
+      47                  variant="ghost"
+      48                  size="icon"
+      49 -                aria-label={`Remove option ${position}`}       
+      49 +                aria-label={`Удалить вариант ${position}`}     
+      50                  disabled={!canRemoveOption}
+      51                  onClick={() => onChange(removeItemAt(options, i
+          ndex))}
+      52                >
+
+● Update(src\components\builder\options-editor.tsx)
+  ⎿  Added 1 line, removed 1 line
+      69          onClick={addOption}
+      70        >
+      71          <PlusIcon />
+      72 -        Add option                                             
+      72 +        Добавить вариант                                       
+      73        </Button>
+      74      </fieldset>
+      75    );
+
+● Update(src\components\builder\form-details-card.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      16    return (
+      17      <Card>
+      18        <CardHeader>
+      19 -        <CardTitle>Form details</CardTitle>                    
+      19 +        <CardTitle>О форме</CardTitle>                         
+      20        </CardHeader>
+      21  
+      22        <CardContent className="grid gap-4">
+      23          <div className="grid gap-2">
+      24 -          <Label htmlFor="form-title">Title</Label>            
+      24 +          <Label htmlFor="form-title">Название</Label>         
+      25  
+      26            <Input
+      27              id="form-title"
+
+● Update(src\components\builder\form-details-card.tsx)
+  ⎿  Added 1 line, removed 1 line
+      26            <Input
+      27              id="form-title"
+      28              value={details.title}
+      29 -            placeholder="e.g. Summer internship 2026"          
+      29 +            placeholder="Например, Летняя стажировка 2026"     
+      30              aria-invalid={Boolean(errors.title)}
+      31              onChange={(evt) => onChange({ ...details, title: ev
+          t.target.value })}
+      32            />
+
+● Update(src\components\builder\form-details-card.tsx)
+  ⎿  Added 1 line, removed 1 line
+      35          </div>
+      36  
+      37          <div className="grid gap-2">
+      38 -          <Label htmlFor="form-description">Description (option
+         -al)</Label>                                                    
+      38 +          <Label htmlFor="form-description">Описание (необязате
+         +льно)</Label>                                                  
+      39  
+      40            <Textarea
+      41              id="form-description"
+
+● Update(src\components\builder\form-details-card.tsx)
+  ⎿  Added 1 line, removed 1 line
+      40            <Textarea
+      41              id="form-description"
+      42              value={details.description ?? ''}
+      43 -            placeholder="What is this form for, and what happen
+         -s after students apply?"                                       
+      43 +            placeholder="Для чего эта форма и что будет после т
+         +ого, как студент подаст заявку?"                               
+      44              onChange={(evt) => onChange({ ...details, descripti
+          on: evt.target.value })}
+      45            />
+      46          </div>
+
+● Update(src\components\builder\add-field-panel.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      14    return (
+      15      <Card>
+      16        <CardHeader>
+      17 -        <CardTitle>Add a question</CardTitle>                  
+      17 +        <CardTitle>Добавить вопрос</CardTitle>                 
+      18  
+      19 -        <CardDescription>Pick the kind of answer you expect fro
+         -m students.</CardDescription>                                  
+      19 +        <CardDescription>Выберите, какой ответ вы ждёте от студ
+         +ентов.</CardDescription>                                       
+      20        </CardHeader>
+      21  
+      22        <CardContent className="grid grid-cols-2 gap-2 sm:grid-co
+          ls-4">
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 1 line, removed 1 line
+      26    return (
+      27      <Card>
+      28        <CardHeader>
+      29 -        <CardDescription>Conversion rate</CardDescription>     
+      29 +        <CardDescription>Конверсия</CardDescription>           
+      30          <CardTitle className="text-4xl tabular-nums">
+      31            {formatPercent(analytics.conversionRate)}
+      32          </CardTitle>
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      33        </CardHeader>
+      34  
+      35        <CardContent className="text-sm text-muted-foreground">
+      36 -        {submitStep.sessions} of {viewStep.sessions} students w
+         -ho opened the form submitted it.{' '}                          
+      37 -        {analytics.abandonedSessions} started answering and qui
+         -t.                                                             
+      36 +        Отправили форму {submitStep.sessions} из {viewStep.sess
+         +ions} открывших. Начали заполнять и                            
+      37 +        бросили: {analytics.abandonedSessions}.                
+      38        </CardContent>
+      39      </Card>
+      40    );
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 2 lines, removed 2 lines
+      44    return (
+      45      <Card>
+      46        <CardHeader>
+      47 -        <CardTitle>Funnel</CardTitle>                          
+      47 +        <CardTitle>Воронка</CardTitle>                         
+      48          <CardDescription>
+      49 -          Unique visits at each step. Percentages show conversi
+         -on from the previous step.                                     
+      49 +          Уникальные посещения на каждом шаге. Проценты — конве
+         +рсия из предыдущего шага.                                      
+      50          </CardDescription>
+      51        </CardHeader>
+      52  
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 1 line, removed 1 line
+      62    const [topField] = topFields;
+      63    if (!topField) {
+      64      return (
+      65 -      <p className="text-sm text-muted-foreground">Nobody has q
+         -uit after starting to answer yet.</p>                          
+      65 +      <p className="text-sm text-muted-foreground">Пока никто н
+         +е бросил заполнение.</p>                                       
+      66      );
+      67    }
+      68  
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      68  
+      69    return (
+      70      <p className="text-sm">
+      71 -      <span className="font-semibold">{formatPercent(topField.s
+         -hareOfAbandoned)}</span> of students                           
+      72 -      who quit stopped at{' '}                                 
+      71 +      <span className="font-semibold">{formatPercent(topField.s
+         +hareOfAbandoned)}</span> бросивших                             
+      72 +      заполнение остановились на {topFields.length > 1 ? 'каждо
+         +м из полей' : 'поле'}{' '}                                     
+      73        <span className="font-semibold">
+      74          {joinQuotedLabels(topFields.map((field) => findFieldLab
+          el(fields, field.fieldId)))}
+      75        </span>
+      76 -      {topFields.length > 1 && ' each'}.                       
+      76 +      .                                                        
+      77      </p>
+      78    );
+      79  }
+
+● Update(src\components\analytics\analytics-cards.tsx)
+  ⎿  Added 3 lines, removed 3 lines
+      82    return (
+      83      <Card>
+      84        <CardHeader>
+      85 -        <CardTitle>Last field before quitting</CardTitle>      
+      85 +        <CardTitle>Последнее поле перед уходом</CardTitle>     
+      86          <CardDescription>
+      87 -          For students who started but didn’t submit: the field
+         - they were on when they left. This                             
+      88 -          includes students who may still be filling in the for
+         -m.                                                             
+      87 +          Для студентов, которые начали, но не отправили форму:
+         + поле, на котором они остановились.                            
+      88 +          Сюда входят и те, кто, возможно, ещё заполняет форму.
+      89          </CardDescription>
+      90        </CardHeader>
+      91  
+
+● All strings are swapped. Next I'll record the language rule in CLAUDE.md so
+  the README and later steps follow it. Then I'll check for leftover English
+  text and run the build checks.
+
+● Update(CLAUDE.md)  ⎿  Added 4 lines
+       8  
+       9  "Thoughtfulness of the solution matters more than the number of
+           features." Prefer fewer, well-reasoned features.
+      10  
+      11 +## Language                                                    
+      12 +                                                               
+      13 +All user-facing text is in **Russian**: UI copy, aria-labels, v
+         +alidation messages (zod uses its `ru` locale via `shared/zod.ts
+         +`), API error messages, and the README. Code, identifiers, comm
+         +ents, commit messages and server logs stay in English.         
+      14 +                                                               
+      15  ## Hard constraints (the submission is rejected if any of these
+           fail)
+      16  
+      17  - Node.js 20+ (any Node 20, not just 20.19+). Do not use APIs t
+          hat only exist in Node 22+ (no `node:sqlite`, no native TS type
+           stripping). Check the `engines` field of every dependency we a
+          dd — it must accept Node 20.0.
+
+  Searched for 2 patterns (ctrl+o to expand)
+
+● The only English left is a developer-only error. One more sweep for standalone
+  JSX text lines, then the checks:
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Typecheck, lint and build pass. Prettier flagged the lines I lengthened.
+  ui/button.tsx was already flagged before my changes, so I'll leave it alone
+  and format only my files:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Everything is clean. Last, a runtime check that the server starts and zod
+  returns Russian messages, including the built-in ones from the locale:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Those responses are in English, which shouldn't happen with the new code.
+  Checking which process actually answered on that port:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The new server is now up on that port, so the first requests probably reached
+  something else that was starting at the same moment. Retrying against it:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The server returns Russian now, including zod's built-in messages ("Неверный
+  ввод: ожидалось boolean…"). Stopping the test server:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Everything user-facing is now in Russian: the admin pages, the public form,
+  the analytics and the error messages. Typecheck, lint and the production build
+  pass. A test server returned Russian errors, including zod's built-in ones. I
+  haven't committed anything.
+
+  What changed
+  - UI text: every label, button, empty state, placeholder, confirm dialog,
+    aria-label, field type name and funnel step. The page title is now
+    «Конструктор форм» and index.html has lang="ru", so the browser's date
+    picker shows Russian too.
+  - Validation messages: our own messages are translated. Zod's built-in ones,
+    like length limits and wrong types, used to come out in English. I added
+    shared/zod.ts, which switches zod to its built-in Russian locale. All
+    shared/* files now import z from it, so the client and server get the same
+    Russian messages.
+  - API errors: translated too, because the UI shows them directly (for example
+    «Форма не найдена»).
+  - Two sentences reworded to avoid number agreement. In Russian the noun
+    changes with the number: «1 студент», «3 студента», «5 студентов». So the
+    conversion card now puts the numbers where the noun doesn't change:
+    «Отправили форму 3 из 10 открывших. Начали заполнять и бросили: 4.» The
+    drop-off headline reads «45% бросивших заполнение остановились на поле «…»».
+  - Quotes are now «», and the deleted-field column is «(удалённое поле)».
+
+  Left in English on purpose: code, comments, commit messages and the server
+  startup log. I added a "Language" section to CLAUDE.md saying this, and that
+  the README should be in Russian. Tell me if you want the README in English
+  instead.
+
+  When you run the next step's checks, also make sure nothing is left on port
+  3000. A process from earlier was still running there.
+
+  Remember to export this session (/export) into docs/ai-log/.
+
+> /conventional-commit
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I'd make this one commit, because every change serves the same goal: switching
+  user-facing text to Russian. Splitting the zod locale setup into its own
+  commit would leave a commit with half-English validation messages. CLAUDE.md
+  is listed in .git/info/exclude, so it isn't tracked and won't be committed.
+
+  Proposed commits (1):
+
+  [1] feat(i18n): translate user-facing text to Russian
+
+  The app targets Russian-speaking managers and students, so all UI copy,
+  aria-labels, validation messages and API error messages are now in
+  Russian. Zod's built-in messages switch to its ru locale through
+  shared/zod.ts, which every shared schema imports, so client and server
+  report the same text. Counts are phrased with colons ("Ответов: 3") to
+  avoid Russian plural agreement, quotes use «», and index.html declares
+  lang="ru" so native date inputs follow the locale.
+
+  Files: index.html, server/api.ts, server/http.ts, server/public-routes.ts,
+  shared/zod.ts, shared/analytics.ts, shared/event.ts, shared/form.ts,
+  shared/response.ts, src/App.tsx, src/components/** (20 files),
+  src/lib/analytics-view.ts, src/lib/api-client.ts, src/lib/form-draft.ts,
+  src/lib/response-table.ts, src/pages/** (5 files)
+
+  Continue? [y/n]
+
+> y
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Committed as 9009078 feat(i18n): translate user-facing text to Russian, and
+  the working tree is clean. The warnings are from Git's line-ending setting and
+  don't affect the commit.
+
+  The next step is the README, in Russian as now noted in CLAUDE.md. Remember to
+  /export this session into docs/ai-log/ first.

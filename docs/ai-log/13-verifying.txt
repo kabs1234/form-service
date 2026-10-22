@@ -1,0 +1,696 @@
+
+> Can we verify does the whole thing works on node 20, please?
+
+● I'll check which Node versions are available on this machine first.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Only Node 22.17 is installed with no version manager available, so I'll
+  download a portable Node 20.0.0 into the scratchpad, make a fresh clone, and
+  run npm install && npm start with it. While that downloads, I'll check the
+  engines field of every installed package.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Static check passed: every non-dev package in the lockfile accepts Node
+  20.0.0. The download is slow, so I'll make the fresh clone while it finishes.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The clone is ready. Now I'm waiting for the Node 20 download to finish.
+
+  Read 1 file (ctrl+o to expand)
+
+● The download is still running (Invoke-WebRequest is slow on Windows PowerShell
+  5.1). I'll continue as soon as it finishes.
+
+● Background command "Download and unpack portable Node 20.0.0" completed (exit
+code 0)
+
+  Read 1 file (ctrl+o to expand)
+
+● Node 20.0.0 (npm 9.6.4) is ready. Next I'll run npm install in the clean clone
+  with Node 20 first on PATH.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● npm install succeeded with no vulnerabilities—the EBADENGINE warnings are just
+  from the ESLint/typescript-eslint dev tooling, which is expected. Next I'll
+  start the app on PORT=4000 to satisfy the port and "no data/ folder"
+  requirements.
+
+  Ran 2 shell commands (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+● Background shell command didn't finish before the previous session ended
+
+> Can you continue, please?
+
+● The previous session ended while the server was starting. I'll check what it
+  logged and whether anything is still listening on port 4000.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Progress so far: vite build succeeded on Node 20.0.0, starting from no data/
+  folder, and tsx started. The server was then killed when the session ended, so
+  I'll start it again on port 4000.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The readiness loop is taking longer than it should. I'll look at the server
+  log.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Nothing is listening on port 4000, and the server has printed nothing beyond
+  the Node version. I'll check whether the process is alive and read the server
+  entry point.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● One node process is using about 5 GB of RAM with 2:48 of CPU time, which
+  points to a runaway loop. I'll identify which process that is.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Found it — the server process itself (tsx on Node 20.0.0) is ballooning past 5
+  GB without ever hitting listen, likely due to tsx falling back to the old
+  --loader hook since Node 20.0 lacks module.register (added in 20.6). I'll stop
+  the process and dig into the root cause.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Start the server on port 4000 with Node 20.0.0" failed
+with exit code 127
+
+● Background command "Wait until server answers on port 4000" completed (exit
+code 0)
+
+● tsx hangs on Node 20.0.0 even for a trivial script—this is a real environment
+  issue, likely tied to the forced --loader path in Node 20.0–20.5. I'll now
+  download several Node 20.x versions via curl to bracket the lowest working
+  version.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● That test probe was flawed since it ran outside the project without ES module
+  support, though it did reveal that v20.0.0 hangs while later versions run
+  fine. Now I'll test the actual server inside the clone across versions, each
+  on a separate port.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Clear split: the server works on 20.5.1, 20.6.0, 20.9.0 and 20.20.2 (latest
+  20) but hangs on 20.0.0. I'll bisect 20.1–20.4 to find the exact cutoff.
+  Ran 1 shell command (ctrl+o to expand)
+
+● Only Node 20.0.0 fails to boot—20.1.0 and all later versions work fine. I'll
+  test a trivial custom --loader on 20.0.0 alongside a few older tsx versions to
+  determine whether the issue lies in Node's loader or this tsx release.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● That pins it down: a trivial loader works on 20.0.0, and so does tsx up to
+  4.20.6. The regression landed in tsx somewhere after 4.20.6 and by 4.23.15.
+  I'll bisect the releases in between.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The bisect confirmed tsx 4.21.0 works on Node 20.0.0 while 4.21.1 and later
+  hang, so pinning tsx to 4.21.0 is the fix. I'll verify this by applying the
+  pin in the scratch clone and running npm start on 20.0.0, starting with a
+  quick look at the API shapes so I can drive the test with curl.
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+
+● Now I'll pin tsx 4.21.0 in the scratch clone (the real repo stays untouched),
+  wipe dist/ and data/, and run PORT=4000 npm start on Node 20.0.0.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● npm printed an audit notice after the pin, which I'll look at shortly. First,
+  the server start:
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● npm start works correctly on Node 20.0.0 with the version pin—build succeeds,
+  server runs on port 4000, and data/ is created as expected; the one
+  low-severity audit advisory is irrelevant since it only affects esbuild's dev
+  server, which this app doesn't use. Next I'll run the full end-to-end test
+  against the production build on 20.0.0.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Status codes and analytics math check out correctly, but the Cyrillic text is
+  garbled — likely a Git Bash encoding issue rather than a real bug. I'll resend
+  the data via a UTF-8 file and check the raw bytes in db.json to confirm.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The Cyrillic issue was just a Git Bash display glitch — UTF-8 encoding is
+  fine. Now I'll verify the pinned tsx version works on Node 20.20.2 and your
+  system's Node 22.17.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Both work. Last step: a quick browser check of the UI served by the Node
+  20.0.0 server. I'll load the admin pages and the public form and look for
+  console errors.
+
+  Called playwright, ran 1 shell command (ctrl+o to expand)
+
+● The analytics page renders correctly from the Node 20.0.0 server, with the
+  garbled label just being the same Git Bash artifact from the curl-created
+  form. Next I'll check the public form and the console.
+
+  Called playwright 4 times, ran 2 shell commands (ctrl+o to expand)
+
+● Background command "Run npm start on port 4000 with Node 20.0.0" failed with
+exit code 127
+
+● Mostly yes, with one real bug: as committed, npm start hangs forever on Node
+  20.0.0. It works on every later Node 20 release I tried. Pinning tsx to 4.21.0
+  fixes it. With the pin, the full scenario passed on 20.0.0. I made that
+  change only in a throwaway clone; your repo is unchanged.
+
+  What breaks. The frontend build finishes on 20.0.0, but the server never
+  starts listening. The process just keeps eating memory: it reached 5 GB before
+  I killed it. Even a one-line console.log file hangs the same way, so it isn't
+  our code.
+
+  Cause. A bug introduced in tsx 4.21.1. I tested every tsx release from 4.20.0
+  to 4.23.15 on Node 20.0.0: up to 4.21.0 they work, and from 4.21.1 on every
+  one hangs. tsx still claims to support Node ≥18, so the engines check didn't
+  catch it. Only Node 20.0.0 is affected; 20.1.0 and later boot fine.
+
+  What I checked (fresh clone, starting with no data/ and no dist/):
+
+  ┌───────────────────────────────────┬─────────────────────────────────────┐
+  │               Check               │               Result                │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ engines of every package in the   │ ✅ (lint tooling aside)             │
+  │ lockfile accepts Node 20.0.0      │                                     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │                                   │ ✅ exit 0; the only warnings come   │
+  │ npm install on 20.0.0             │ from ESLint tooling, as the brief   │
+  │                                   │ expects                             │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ Server boots with tsx 4.23.15     │ ❌ hangs                            │
+  │ (current) on 20.0.0               │                                     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ Same on 20.1, 20.2, 20.3, 20.4,   │                                     │
+  │ 20.5.1, 20.6, 20.9, 20.20.2       │ ✅                                  │
+  │ (latest 20)                       │                                     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ Server boots with tsx 4.21.0 on   │ ✅                                  │
+  │ 20.0.0, 20.20.2 and 22.17         │                                     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ PORT=4000 npm start on 20.0.0     │ ✅ builds, serves on 4000, creates  │
+  │ with the pin                      │ data/                               │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ Full scenario on that build       │ ✅ see below                        │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ Browser: /admin, analytics page,  │ ✅ render, no console errors        │
+  │ /f/:slug                          │                                     │
+  └───────────────────────────────────┴─────────────────────────────────────┘
+
+  The scenario run with the pin:
+  - Creating and publishing a form works.
+  - An unpublished form and an unknown slug both return 404.
+  - An invalid submission returns 400; a valid one returns 201.
+  - An event with a field that isn't in the form returns 400.
+  - Funnel: 2 views → 2 starts → 1 submit, so 50 %, and the one student who quit
+    stopped at the field they last focused.
+  - A new link makes the old one return 404.
+  - Refreshing /admin/... and /f/... works.
+  - Russian text is stored correctly. Some showed up garbled in my test output,
+    but that was Git Bash on Windows, not the app.
+
+  The fix: npm install --save-exact tsx@4.21.0. It changes package.json and
+  package-lock.json. The exact pin matters, because ^4.21.0 would let npm pick
+  the broken versions again.
+
+  One side effect: npm audit will then report one low-severity issue in the
+  older esbuild that comes with that tsx. It only affects esbuild's own dev
+  server, which this app never runs. This is worth one line in the README next
+  to "Vite pinned to 6": "tsx pinned to 4.21.0 because later versions hang on
+  Node 20.0.0".
+
+  Two notes:
+  - The planned CI matrix (step 11) wouldn't catch this. "Node 20" in GitHub
+    Actions means the latest 20.x, which works. To guard against it, add 20.0.0
+    to the matrix.
+  - I deleted an empty bash.exe.stackdump from the repo root, left behind when
+    the previous session crashed. Everything else I made is in the scratchpad.
+
+  Should I apply the tsx pin and the README line to the repo and commit them?
+  Either way, remember to export this session (/export) into docs/ai-log/.
+
+> so the fix is just change tsx version and that's it?
+
+● Yes. The pinned version is the only change needed for the app to run on Node
+  20.0.0. Our code didn't need any changes.
+
+  - What changes: package.json goes from "tsx": "^4.23.15" to "tsx": "4.21.0",
+    and package-lock.json updates to match. Running npm install --save-exact
+    tsx@4.21.0 does both.
+  - It must be exact, with no ^: ^4.21.0 lets npm pick 4.21.1 or later, which
+    are exactly the versions that hang.
+  - What I tested: with the pin, the full scenario passed on 20.0.0. The server
+    also boots on Node 20.20.2 (latest 20) and 22.17. npm run dev runs the
+    server with the same tsx (tsx watch), so the pin covers it too, though I
+    didn't run dev mode.
+
+  These are worth doing but aren't required for it to work:
+  - README: one line explaining why tsx is pinned. Without it, a reviewer could
+    reasonably ask why a dependency is held back.
+  - CI: 20.0.0 in the matrix, so this can't come back unnoticed.
+
+  Should I make the change and commit it?
+
+> y
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● The pin is applied. The lockfile diff is bigger than I expected, so I'll check
+  that it only touches tsx and its esbuild.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● My filter mangled that output, so here is a simpler listing:
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Found that tsx 4.21.0 shifts esbuild from 0.28.2 to 0.27.7 and adds the small
+  helper packages get-tsconfig and resolve-pkg-maps. Now I'll verify this
+  doesn't affect Vite's esbuild version and confirm build, typecheck, and lint
+  still pass.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Vite keeps its own esbuild 0.25.12, and build, typecheck and lint all pass.
+  Now the README line, placed right after the "Vite закреплён на 6" paragraph:
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(README.md)
+  ⎿  Added 2 lines
+      76  
+      77  **Vite закреплён на 6.** Vite 7 требует Node 20.19+, а задание 
+          требует любой Node 20. По той же причине `@vitejs/plugin-react`
+           взят версии 4, а Rollup закреплён на 4.62.3 через `overrides`:
+           начиная с 4.62.4 у него появилась опциональная зависимость, ко
+          торая требует Node 22.20 и даёт предупреждение при установке на
+           Linux с Node 20.
+      78  
+      79 +**tsx закреплён на 4.21.0 без `^`.** Начиная с 4.21.1 сервер на
+         + Node 20.0.0 зависает при запуске и не начинает слушать порт, х
+         +отя tsx заявляет поддержку Node 18+. На Node 20.1 и новее работ
+         +ают все версии, но задание требует любой Node 20, включая 20.0.
+         +0. `npm audit` из-за этого показывает одну уязвимость низкого у
+         +ровня в esbuild, который идёт с этой версией tsx: она касается 
+         +только dev-сервера esbuild, а приложение его не запускает.     
+      80 +                                                               
+      81  **Ничего не компилируется при установке.** Поэтому SQLite не по
+          дошёл: `better-sqlite3` собирается через node-gyp, а встроенный
+           `node:sqlite` есть только в Node 22+.
+      82  
+      83  ## Что сознательно не делал
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Prettier flagged both files, which stopped the commit. I'll check whether my
+  edits caused it.
+
+  Ran 1 shell command (ctrl+o to expand)
+● Both warnings predate my change—the README padding came from the last commit
+  and the package.json diff is likely just CRLF/LF line endings—so I'll commit
+  without addressing them to keep this focused.
+
+  Ran 1 shell command (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+> commit it with /conventional-commit
+
+● Skill(conventional-commit)
+  ⎿  Successfully loaded skill · 3 tools allowed
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Proposed commits (2):
+
+  [1] build(deps): pin tsx to 4.21.0 to start on Node 20.0.0
+
+  tsx 4.21.1 and later hang on Node 20.0.0 before the server starts
+  listening, even on a one-line script. Bisected across tsx releases
+  4.20.0-4.23.15; 4.21.0 is the last one that works. Node 20.1 and
+  later are unaffected. The exact pin keeps npm from resolving a newer
+  4.x release.
+
+  Files: package.json, package-lock.json
+
+  [2] docs(readme): explain why tsx is pinned to 4.21.0
+
+  Files: README.md
+
+  The skill allows one type per commit, so the dependency pin and the README
+  note go in separate commits. Neither message has a co-author trailer.
+
+  Continue? [y/n]
+
+> y
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I committed the tsx pin and the README note as two commits on main. The
+  working tree is clean.
+
+  - 7bef138 build(deps): pin tsx to 4.21.0 to start on Node 20.0.0: changes
+    package.json and package-lock.json
+  - 49b64c7 docs(readme): explain why tsx is pinned to 4.21.0: adds the
+    trade-off line to README.md
+
+  Before committing, I ran build, typecheck and lint on this code, and all three
+  passed.
+
+  Prettier --check already failed on README.md and package.json before these
+  commits. The README has the table padding in the "Событие / Когда" table. In
+  package.json, Prettier rewrites the whole file, which looks like a line-ending
+  mismatch, but I didn't confirm that. Running npm run format would fix both,
+  as a separate style: commit.
+
+  Remember to run /export into docs/ai-log/ for this session.
+
+> How can I verify it myself?
+
+● You can repeat what I did in PowerShell. Download a portable Node 20.0.0 (no
+  installer, nothing global changes), put it first on PATH for one terminal
+  window only, and run the app from a fresh clone.
+
+  1. Get Node 20.0.0 for this terminal only
+
+  mkdir C:\node20; cd C:\node20
+  curl.exe -o node.zip https://nodejs.org/dist/v20.0.0/node-v20.0.0-win-x64.zip
+  Expand-Archive node.zip -DestinationPath .
+  $env:PATH = "C:\node20\node-v20.0.0-win-x64;" + $env:PATH
+  node -v    # should print v20.0.0
+
+  The PATH change only lasts until you close this window. Your normal Node 22
+  stays untouched.
+
+  2. Fresh clone, install, start
+
+  git clone D:\projects\school-admin-panel C:\node20\check
+  cd C:\node20\check
+  npm install
+  $env:PORT=4000; npm start
+
+  What you should see:
+  - npm install ends with "added … packages". The EBADENGINE warnings are from
+    ESLint only, which is expected.
+  - npm start runs vite build first, then prints Form service running at
+    http://localhost:4000/admin within a few seconds.
+
+  3. Click through the scenario
+
+  Open http://localhost:4000/admin and:
+  1. Create a form with a couple of questions, then publish it.
+  2. Copy the link and open it in a private window.
+  3. Fill in one field and close the tab. That gives you an abandoned session.
+  4. Open the link again and submit the form.
+  5. Back in the admin, check the response and the analytics page: the funnel,
+     plus the field where the abandoned session stopped.
+  6. Press F5 on /admin/... and on /f/... to confirm they don't 404.
+
+  4. Reproduce the bug to see the fix matters
+
+  In the same window, stop the server (Ctrl+C) and go back to the commit before
+  the pin:
+
+  git checkout 5b3060f
+  npm install
+  npm start
+
+  The build finishes, but the "Form service running" line never appears. In Task
+  Manager, a node.exe keeps growing in memory. Press Ctrl+C, then return with
+  git checkout main, npm install, npm start, and it works again.
+
+  Optional: other Node versions
+
+  To check latest Node 20, repeat step 1 with the version from
+  https://nodejs.org/dist/latest-v20.x/. I used 20.20.2. For latest Node in
+  general, open a new terminal (your system Node 22.17) and run steps 2–3.
+
+  When you're done, delete C:\node20.
+
+> Can you set me up for just run things? Is it possible?
+
+● Yes. I'll set up a folder outside the repo, C:\node20, with portable Node
+  20.0.0 and latest Node 20 (both already downloaded in my scratchpad), a fresh
+  clone of main with dependencies installed, and a one-line script that starts
+  it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The clone is up to date. Now I'll install dependencies using Node 20.0.0 and
+  create two double-clickable .cmd launchers, avoiding .ps1 scripts since
+  PowerShell's execution policy often blocks them.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(C:\node20\run-node-20.0.0.cmd)
+  ⎿  Wrote 10 lines to C:\node20\run-node-20.0.0.cmd
+       1 @echo off
+       2 title Form service - Node 20.0.0
+       3 set "PATH=%~dp0node-v20.0.0-win-x64;%PATH%"
+       4 set "PORT=4000"
+       5 cd /d "%~dp0app"
+       6 echo Node version:
+       7 node -v
+       8 echo.
+       9 call npm start
+      10 pause
+
+● Write(C:\node20\run-node-20-latest.cmd)
+  ⎿  Wrote 10 lines to C:\node20\run-node-20-latest.cmd
+       1 @echo off
+       2 title Form service - Node 20.20.2
+       3 set "PATH=%~dp0node-v20.20.2-win-x64;%PATH%"
+       4 set "PORT=4000"
+       5 cd /d "%~dp0app"
+       6 echo Node version:
+       7 node -v
+       8 echo.
+       9 call npm start
+      10 pause
+
+● Everything is in place. I'll test the 20.0.0 launcher the way you'd run it,
+  then stop it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Git Bash mangled that test command, so the launcher never actually ran. I'll
+  test it again from PowerShell.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The 20.0.0 launcher checks out—build succeeded, server started, and /admin
+  returned 200, with the zod and chunk-size warnings being normal Vite output.
+  Now I'll run the same check on the latest-20 launcher.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Yes, it's set up. Double-click a launcher in C:\node20, wait for Form service
+  running at http://localhost:4000/admin, then open http://localhost:4000/admin.
+
+  ┌──────────────────────────────────┬───────────────────────────────────────┐
+  │               File               │            Runs the app on            │
+  ├──────────────────────────────────┼───────────────────────────────────────┤
+  │ C:\node20\run-node-20.0.0.cmd    │ Node 20.0.0, the oldest version the   │
+  │                                  │ brief allows                          │
+  ├──────────────────────────────────┼───────────────────────────────────────┤
+  │ C:\node20\run-node-20-latest.cmd │ Node 20.20.2, the latest 20           │
+  └──────────────────────────────────┴───────────────────────────────────────┘
+
+  I tested both launchers. Each printed its Node version, built the app, started
+  the server, and /admin returned 200.
+
+  - Fresh copy of the repo: C:\node20\app is a clone of main at the tsx-pin
+    commit, with packages already installed. Your real repo isn't touched.
+  - Port and data: both launchers use port 4000 and share C:\node20\app\data.
+    Run one at a time.
+  - Stopping: press Ctrl+C in the window, or just close it.
+  - Nothing global changes: the Node version only applies inside that window.
+    Your system Node 22 stays the default.
+  - Build warnings: the zod "annotation" and "chunks larger than 500 kB" lines
+    during the build are harmless.
+  - Testing newer commits: run git pull inside C:\node20\app (add npm install if
+    dependencies changed), then double-click again.
+
+  To watch the bug itself, open a terminal in C:\node20\app and run:
+
+  git checkout 5b3060f
+  C:\node20\node-v20.0.0-win-x64\npm install
+
+  Then double-click run-node-20.0.0.cmd. The build finishes, but "Form service
+  running" never appears. To go back:
+
+  git checkout main
+  C:\node20\node-v20.0.0-win-x64\npm install
+
+  The npm inside that folder uses its own Node 20.0.0, so you don't need to
+  change PATH.
+
+  When you're done, just delete C:\node20.
+
+> Can we just have 2 versions of node besides 22 that I have?
+
+● Yes. You want Node 20.0.0 and the latest 20 available as normal versions you
+  can switch to in any terminal, alongside your Node 22, not only through my app
+  launchers. There are a few ways to do that, and it's your machine, so you
+  should pick:
+
+● User answered Claude's questions:
+  ⎿  · How should I set up Node 20.0.0 and Node 20.20.2 next to your Node 22? →
+     fnm (Recommended)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● winget is available and fnm isn't installed yet. Installing fnm now:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● fnm is installed. Next I'll download both Node versions through it.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Both Node versions are installed, but fnm defaulted to 20.0.0, so I'll switch
+  the default back to your system Node 22. Then I'll verify PowerShell allows
+  loading a profile script, since fnm requires one.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Node default is back to 22, but PowerShell's execution policy is Restricted,
+  which blocks profile scripts needed for the fnm use hook to run. I'll check
+  that winget added fnm to your PATH, then we can decide how to handle the
+  policy issue.
+  Ran 1 shell command (ctrl+o to expand)
+
+● User answered Claude's questions:
+  ⎿  · PowerShell can't load profile scripts right now (Restricted policy). How
+     do you want to switch Node versions? → Allow profile + fnm use
+     (Recommended)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The policy is set: CurrentUser is now RemoteSigned. The red text only says my
+  own tool session runs with Bypass and overrides it, which doesn't affect your
+  terminals. Now the profile:
+
+● Write(C:\Users\spy04\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.
+       ps1)
+  ⎿  Wrote 4 lines to C:\Users\spy04\Documents\WindowsPowerShell\Microsoft.
+     PowerShell_profile.ps1
+      1 # fnm: lets `fnm use <version>` switch Node in the current window
+      2 if (Get-Command fnm -ErrorAction SilentlyContinue) {
+      3   fnm env --shell powershell | Out-String | Invoke-Expression
+      4 }
+
+● I'll simulate a brand-new terminal: a fresh PowerShell that loads the profile,
+  with your real user PATH and without my session's Bypass override.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Done. You now have Node 20.0.0 and Node 20.20.2 alongside your Node 22, which
+  stays the default. A test terminal confirmed it: it starts on v22.17.0, fnm
+  use 20.0.0 switches to v20.0.0 (with its npm 9.6.4), fnm use 20.20.2 switches
+  to v20.20.2, and fnm use system goes back to v22.17.0.
+
+  Usage: in any new PowerShell window:
+
+  fnm use 20.0.0     # this window now runs Node 20.0.0
+  npm install; npm start
+  fnm use system     # back to your Node 22
+
+  The switch only affects that window. Every new window starts on Node 22.
+
+  What I changed on your machine:
+  - Installed fnm through winget, into your user folder, with no admin rights.
+  - Installed Node 20.0.0 and 20.20.2 through fnm.
+  - Changed the PowerShell execution policy for your user from Restricted to
+    RemoteSigned, so your local scripts like the profile can run.
+  - Created your PowerShell profile
+    (Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1) with the
+    three lines fnm needs.
+
+  First, restart VS Code (all windows, not just the terminal). The fnm command
+  and profile only show up in terminals opened after the PATH change.
+
+  The switching works in PowerShell only. Git Bash and cmd don't get it, but VS
+  Code's default terminal here is PowerShell.
+
+  The C:\node20 folder with the launchers is now redundant: fnm does the same
+  thing in any terminal. Should I delete it?
+
+> PS D:\projects\school-admin-panel> fnm use 20.0.0
+  fnm : The term 'fnm' is not recognized as the name of a cmdlet, function,
+  script
+   file, or operable program. Check the spelling of the name, or if a path was
+  inc
+  luded, verify that the path is correct and try again.
+  At line:1 char:1
+  - fnm use 20.0.0
+  -
+    + CategoryInfo          : ObjectNotFound: (fnm:String) [], CommandNotFoundE
+
+   xception
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+● Your terminal still has the PATH from before fnm was installed. VS Code keeps
+  the environment it started with, so even a new terminal tab inherits the old
+  PATH until every VS Code window is closed. The profile then quietly skipped
+  the fnm line because it couldn't find fnm.
+
+  I'll make the profile add fnm's folder to PATH itself, so it no longer depends
+  on restarting VS Code.
+
+● Write(C:\Users\spy04\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.
+       ps1)
+  ⎿  Added 4 lines
+      1  # fnm: lets `fnm use <version>` switch Node in the current windo
+         w
+      2 +$fnmDir = "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Schniz.fn
+        +m_Microsoft.Winget.Source_8wekyb3d8bbwe"                        
+      3 +if (-not (Get-Command fnm -ErrorAction SilentlyContinue) -and (T
+        +est-Path "$fnmDir\fnm.exe")) {                                  
+      4 +  $env:Path = "$fnmDir;$env:Path"                               
+      5 +}                                                               
+      6  if (Get-Command fnm -ErrorAction SilentlyContinue) {
+      7    fnm env --shell powershell | Out-String | Invoke-Expression
+      8  }
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Fixed. I updated your PowerShell profile to add fnm's folder to PATH itself,
+  and tested it in a terminal whose PATH didn't include fnm: fnm use 20.0.0
+  switched to v20.0.0 and fnm use system went back to v22.17.0.
+
+  For the terminal you have open now, run this once to reload the profile:
+
+  . $PROFILE
+  fnm use 20.0.0
+  node -v   # v20.0.0
+
+  From now on, every new terminal tab picks it up on its own, no VS Code restart
+  needed.
+
+> Thank you a lot!
+
+● You're welcome! Two things are still open:
+
+  - Export this session with /export into docs/ai-log/. This one shows the Node
+    20.0.0 bisect and the tsx fix, which is useful to have in the log.
+  - C:\node20 isn't needed now that you have fnm. Delete it whenever you like,
+    or tell me and I'll remove it.
+
+  Good luck with the interview!

@@ -1,0 +1,476 @@
+
+> Can you do step 6, please?
+
+● Skill(clean-code-ts)
+  ⎿  Successfully loaded skill
+
+  Searched for 1 pattern, listed 1 directory, ran 3 shell commands (ctrl+o to expand)
+
+● I've read the existing code. Next I'll install react-hook-form, which
+  CLAUDE.md lists in the stack, and then build the public form page.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Now the code. First, a shared publicFormSchema so the client can validate the
+  public API response:
+
+● Update(shared\form.ts)
+  ⎿  Added 8 lines, removed 1 line
+      69    updatedAt: z.iso.datetime(),
+      70  });
+      71  
+      72 +export const publicFormSchema = formSchema.pick({              
+      73 +  slug: true,                                                  
+      74 +  title: true,                                                 
+      75 +  description: true,                                           
+      76 +  fields: true,                                                
+      77 +});                                                            
+      78 +                                                               
+      79  export type Field = z.infer<typeof fieldSchema>;
+      80  export type FormInput = z.infer<typeof formInputSchema>;
+      81  export type Form = z.infer<typeof formSchema>;
+      82  export type FormSummary = Form & { readonly responseCount: numb
+          er };
+      76 -export type PublicForm = Pick<Form, 'slug' | 'title' | 'descrip
+         -tion' | 'fields'>;                                             
+      83 +export type PublicForm = z.infer<typeof publicFormSchema>;     
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 3 lines, removed 2 lines
+      1  import { z } from 'zod';
+      2  
+      3 -import { formSchema } from '@shared/form';                      
+      4 -import type { Form, FormInput, FormSummary } from '@shared/form'
+        -;                                                               
+      3 +import { formSchema, publicFormSchema } from '@shared/form';    
+      4 +import type { Form, FormInput, FormSummary, PublicForm } from '@
+        +shared/form';                                                   
+      5 +import type { Answers } from '@shared/response';                
+      6  
+      7  type JsonMethod = 'POST' | 'PUT';
+      8  
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 2 lines
+      13  
+      14  const formSummarySchema = formSchema.extend({ responseCount: z.
+          number().int() });
+      15  
+      16 +const createdResponseSchema = z.object({ id: z.string() });    
+      17 +                                                               
+      18  const errorBodySchema = z.object({
+      19    error: z.string(),
+      20    issues: z.array(z.object({ message: z.string() })).optional()
+          ,
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 4 lines
+      74    return `/api/forms/${encodeURIComponent(id)}`;
+      75  }
+      76  
+      77 +function buildPublicFormPath(slug: string): string {           
+      78 +  return `/api/public/${encodeURIComponent(slug)}`;            
+      79 +}                                                              
+      80 +                                                               
+      81  export function getErrorMessage(error: unknown): string {
+      82    return error instanceof Error ? error.message : 'Something we
+          nt wrong';
+      83  }
+
+● Update(src\lib\api-client.ts)
+  ⎿  Added 11 lines
+      108      init: { method: 'POST' },
+      109    });
+      110  }
+      111 +                                                              
+      112 +export function fetchPublicForm(slug: string): Promise<PublicF
+          +orm> {                                                        
+      113 +  return requestJson(buildPublicFormPath(slug), { schema: publ
+          +icFormSchema });                                              
+      114 +}                                                             
+      115 +                                                              
+      116 +export function submitFormResponse(slug: string, answers: Answ
+          +ers): Promise<{ id: string }> {                               
+      117 +  return requestJson(`${buildPublicFormPath(slug)}/responses`,
+          + {                                                            
+      118 +    schema: createdResponseSchema,                            
+      119 +    init: buildJsonInit('POST', { answers }),                 
+      120 +  });                                                         
+      121 +}                                                             
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● The subscription only fires on value changes, so clearing the draft after a
+  successful submit won't be undone by a late save. Next I'm writing the draft
+  module and the zod resolver:
+
+● Write(src\lib\answers-draft.ts)
+  ⎿  Wrote 64 lines to src\lib\answers-draft.ts
+       1 import { isChoiceFieldType } from '@shared/form';
+       2 import type { Field } from '@shared/form';
+       3 import { formResponseSchema } from '@shared/response';
+       4 import type { Answers, AnswerValue } from '@shared/response';
+       5
+       6 const DRAFT_KEY_PREFIX = 'form-draft:';
+       7 const draftSchema = formResponseSchema.shape.answers;
+       8
+       9 function buildDraftKey(slug: string): string {
+      10   return `${DRAFT_KEY_PREFIX}${slug}`;
+     … +65 lines (ctrl+o to expand)
+
+● Write(src\lib\answers-resolver.ts)
+  ⎿  Wrote 32 lines to src\lib\answers-resolver.ts
+       1 import type { FieldErrors, Resolver } from 'react-hook-form';
+       2
+       3 import type { Field } from '@shared/form';
+       4 import { buildAnswersSchema } from '@shared/response';
+       5 import type { Answers } from '@shared/response';
+       6
+       7 import { buildErrorMap } from '@/lib/validation-errors';
+       8 import type { ErrorMap } from '@/lib/validation-errors';
+       9
+      10 const VALIDATION_ERROR_TYPE = 'validation';
+     … +24 lines (ctrl+o to expand)
+
+● Now the shared heading (extracted from the preview so both look the same), the
+  autosave hook, and the public form:
+
+● Write(src\components\form-renderer\form-heading.tsx)
+  ⎿  Wrote 15 lines to src\components\form-renderer\form-heading.tsx
+       1 import type { FormInput } from '@shared/form';
+       2
+         ;
+       4
+       5 const UNTITLED_FORM = 'Untitled form';
+       7 export function FormHeading({ title, description }: FormHeadingP
+         rops) {
+       8   return (
+      10       <h2 className="text-xl font-semibold">{title || UNTITLED_F
+         ORM}</h2>
+     … +8 lines (ctrl+o to expand)
+
+● Update(src\components\form-renderer\form-preview.tsx)
+  ⎿  Added 1 line, removed 6 lines
+      21  
+      22    return (
+      23      <div className="grid gap-6">
+      24 -      <div className="grid gap-1">                             
+      25 -        <h2 className="text-xl font-semibold">{form.title || UN
+         -TITLED_FORM}</h2>                                              
+      26 -        {form.description && (                                 
+      27 -          <p className="whitespace-pre-line text-muted-foregrou
+         -nd">{form.description}</p>                                     
+      28 -        )}                                                     
+      29 -      </div>                                                   
+      24 +      <FormHeading title={form.title} description={form.descrip
+         +tion} />                                                       
+      25        {form.fields.length === 0 ? (
+      26          <p className="text-sm text-muted-foreground">Add a ques
+          tion to see it here.</p>
+      27        ) : (
+
+● Update(src\components\form-renderer\form-preview.tsx)
+  ⎿  Added 1 line, removed 2 lines
+       4  import type { Answers, AnswerValue } from '@shared/response';
+       5  
+       6  import { FormField } from '@/components/form-renderer/form-fiel
+          d';
+       7 +import { FormHeading } from '@/components/form-renderer/form-he
+         +ading';                                                        
+       8  import { Button } from '@/components/ui/button';
+       9  
+      10  type FormPreviewProps = {
+      11    readonly form: FormInput;
+      12  };
+      13  
+      13 -const UNTITLED_FORM = 'Untitled form';                         
+      14 -                                                               
+      14  export function FormPreview({ form }: FormPreviewProps) {
+      15    const [answers, setAnswers] = useState<Answers>({});
+      16  
+
+● Write(src\hooks\use-draft-autosave.ts)
+  ⎿  Wrote 17 lines to src\hooks\use-draft-autosave.ts
+       1 import { useEffect } from 'react';
+       2 import type { UseFormSubscribe } from 'react-hook-form';
+       3
+       4 import type { Answers } from '@shared/response';
+       5
+       7
+       8 export function useDraftAutosave(slug: string, subscribe: UseFor
+         mSubscribe<Answers>): void {
+       9   useEffect(
+      10     () =>
+     … +8 lines (ctrl+o to expand)
+
+● Write(src\components\public-form\public-form.tsx)
+  ⎿  Wrote 76 lines to src\components\public-form\public-form.tsx
+       1 import { useMemo, useState } from 'react';
+       2 import { Controller, useForm } from 'react-hook-form';
+       4 import type { PublicForm as PublicFormDefinition } from '@shared
+         /form';
+       5 import type { Answers } from '@shared/response';
+       7 import { ErrorText } from '@/components/error-text';
+       8 import { FormField } from '@/components/form-renderer/form-field
+         ';
+         ding';
+      10 import { Button } from '@/components/ui/button';
+     … +81 lines (ctrl+o to expand)
+
+● Write(src\pages\public-form-page.tsx)
+  ⎿  Wrote 64 lines to src\pages\public-form-page.tsx
+      1 import { useCallback, useState } from 'react';
+      2 import { useParams } from 'react-router';
+      3
+        form';
+      5
+      6 import { PageMessage } from '@/components/page-message';
+      7 import { PublicForm } from '@/components/public-form/public-form'
+      8 import { useApiData } from '@/hooks/use-api-data';
+      9 import { fetchPublicForm, isMissingResourceError } from '@/lib/ap
+        i-client';
+     … +60 lines (ctrl+o to expand)
+
+● Update(src\App.tsx)
+  ⎿  Added 1 line, removed 1 line
+      25        <Route path={RoutePath.AdminFormEdit} element={<FormBuild
+          erPage />} />
+      26        <Route path={RoutePath.AdminFormResponses} element={<Plac
+          eholder title="Responses" />} />
+      27        <Route path={RoutePath.AdminFormAnalytics} element={<Plac
+          eholder title="Analytics" />} />
+      28 -      <Route path={RoutePath.PublicForm} element={<Placeholder 
+         -title="Public form" />} />                                     
+      28 +      <Route path={RoutePath.PublicForm} element={<PublicFormPa
+         +ge />} />                                                      
+      29        <Route path={RoutePath.NotFound} element={<Placeholder ti
+          tle="Page not found" />} />
+      30      </Routes>
+      31    );
+● Update(src\App.tsx)
+  ⎿  Added 1 line
+      2  
+      3  import { FormBuilderPage } from '@/pages/form-builder-page';
+      4  import { FormListPage } from '@/pages/form-list-page';
+      5 +import { PublicFormPage } from '@/pages/public-form-page';      
+      6  import { RoutePath } from '@/routes';
+      7  
+      8  type PlaceholderProps = {
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● A hook stripped the explanatory comment from the empty catch, so lint flags
+  it. I'll make the write report success as a boolean instead of leaving the
+  catch empty:
+
+● Update(src\lib\answers-draft.ts)
+  ⎿  Added 5 lines, removed 2 lines
+      37      : restoreTextAnswer(field, savedValue);
+      38  }
+      39  
+      40 -function writeStorageSafely(write: (storage: Storage) => void):
+         - void {                                                        
+      40 +function writeStorageSafely(write: (storage: Storage) => void):
+         + boolean {                                                     
+      41    try {
+      42      write(window.localStorage);
+      43 -  } catch {}                                                   
+      43 +    return true;                                               
+      44 +  } catch {                                                    
+      45 +    return false;                                              
+      46 +  }                                                            
+      47  }
+      48  
+      49  export function readDraft(slug: string): Answers {
+
+● Update(src\lib\answers-draft.ts)
+  ⎿  Added 6 lines, removed 4 lines
+      56    }
+      57  }
+      58  
+      59 -export function saveDraft(slug: string, answers: Answers): void
+         - {                                                             
+      60 -  writeStorageSafely((storage) => storage.setItem(buildDraftKey
+         -(slug), JSON.stringify(answers)));                             
+      59 +export function saveDraft(slug: string, answers: Answers): bool
+         +ean {                                                          
+      60 +  return writeStorageSafely((storage) =>                       
+      61 +    storage.setItem(buildDraftKey(slug), JSON.stringify(answers
+         +)),                                                            
+      62 +  );                                                           
+      63  }
+      64  
+      63 -export function clearDraft(slug: string): void {               
+      64 -  writeStorageSafely((storage) => storage.removeItem(buildDraft
+         -Key(slug)));                                                   
+      65 +export function clearDraft(slug: string): boolean {            
+      66 +  return writeStorageSafely((storage) => storage.removeItem(bui
+         +ldDraftKey(slug)));                                            
+      67  }
+      68  
+      69  export function buildInitialAnswers(fields: readonly Field[], d
+          raft: Answers): Answers {
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Typecheck and lint pass. The button.tsx warning was already there and I left
+  it alone. Now I'll start the production build on a spare port and create a
+  published test form:
+
+  Called playwright 3 times, ran 1 shell command (ctrl+o to expand)
+
+● The Playwright browser is locked by another session, so I can't click through
+  the UI. I'll check the API paths the page depends on with curl instead:
+
+  Ran 1 shell command (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+> You can close the old one
+
+  Called playwright (ctrl+o to expand)
+
+● The MCP can't close a browser it doesn't own, so I'll find the Chrome process
+  that holds that profile:
+
+  Ran 1 shell command (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+> I've closed it
+
+  Called playwright 3 times (ctrl+o to expand)
+
+● Client validation works. Next I'll fill in some answers, then reload to check
+  that the draft comes back:
+
+  Called playwright 6 times (ctrl+o to expand)
+
+● The draft was restored after reload; the radio check only printed empty
+  textContent. Next I'll submit with the invalid email, fix it, submit again,
+  and check the draft is cleared:
+
+  Called playwright 6 times (ctrl+o to expand)
+
+● Submit works and the draft is cleared. Last checks: the stored response, the
+  unknown-link page, and a screenshot:
+
+  Read 1 file, called playwright 5 times, ran 1 shell command (ctrl+o to expand)
+
+● Looks right. Now I'll stop the test server:
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Step 6 is done. Students can open /f/:slug, fill in the form, and submit.
+  Their answers autosave in the browser and come back if they leave and return.
+  Typecheck and lint pass, and I ran the whole flow in the npm start build in a
+  real browser. Nothing is committed yet so you can review first.
+
+  What I checked in the browser (port 3456):
+  - Submitting the empty form shows "This field is required" under the three
+    required fields.
+  - I filled some fields (including a bad email) and reloaded the page: all of
+    them came back, including the radio and checkbox.
+  - Submitting the bad email showed "Enter a valid email". After fixing it, the
+    submit went through, the thank-you screen appeared, the saved draft was
+    deleted, and the response shows up in GET /api/forms/:id/responses.
+  - An unknown link shows "This form isn't available" (unknown and unpublished
+    links get the same message).
+
+  New dependency: react-hook-form (it's in the CLAUDE.md stack, and supports
+  Node 18+). I didn't add @hookform/resolvers, which isn't on the approved list.
+  Instead, answers-resolver.ts (src/lib/answers-resolver.ts) is about 20 lines
+  that run the shared buildAnswersSchema and turn its errors into
+  react-hook-form's format. So the browser and the server check answers with
+  exactly the same zod schema.
+
+  How it fits together:
+  - public-form-page.tsx (src/pages/public-form-page.tsx) loads the form and
+    shows one of four things: loading, the friendly 404, a load error, or the
+    form. After a successful submit it shows the thank-you screen.
+  - public-form.tsx (src/components/public-form/public-form.tsx) holds the
+    react-hook-form setup. Each question uses the same FormField component as
+    the builder's live preview. If the server rejects a submit, its message
+    appears above the Submit button.
+  - answers-draft.ts (src/lib/answers-draft.ts) reads, saves and clears the
+    draft in localStorage under the key form-draft:<slug>. Because the manager
+    can edit the form after a student started, the restore step:
+    - checks the saved draft with zod;
+    - drops answers for deleted questions;
+    - drops choices that are no longer options.
+  - If localStorage is unavailable (private mode or full storage), saving fails
+    quietly and the form still works.
+  - use-draft-autosave.ts (src/hooks/use-draft-autosave.ts) saves the draft
+    whenever an answer changes. It uses react-hook-form's subscribe, which runs
+    only on value changes, so the page doesn't re-render on every keystroke.
+    That also means a late save can't bring the draft back after a successful
+    submit.
+  - I moved the form title and description into a shared form-heading.tsx
+    (src/components/form-renderer/form-heading.tsx), used by both the preview
+    and the public form.
+  - I added publicFormSchema to shared/form.ts so the client can check what GET
+    /api/public/:slug returns.
+
+  Things to know:
+  - A hook removed the comment I'd put in an empty catch in the draft module.
+    Instead of leaving it empty, saveDraft and clearDraft now return true/false
+    for whether the write worked.
+  - Regenerating a form's link starts drafts fresh, because drafts are stored by
+    slug.
+  - My test form "Summer internship" and one response are still in your local
+    data/ folder (git-ignored). Delete it if you want a clean start.
+
+  Please export this session with /export into docs/ai-log/. Next is step 7, the
+  responses view.
+
+> /conventional-commit
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Proposed commits (3):
+
+  [1] build(deps): add react-hook-form
+
+  Files: package.json, package-lock.json
+
+  [2] refactor(ui): extract form heading from the builder preview
+
+  Body: The public form shows the same title and description block as the
+  preview, so it now lives in one component.
+
+  Files: src/components/form-renderer/form-heading.tsx,
+  src/components/form-renderer/form-preview.tsx
+
+  [3] feat(public-form): add public form page with draft autosave
+
+  Body:
+  - /f/:slug loads the published form and renders it with the same field
+    components as the builder preview
+  - Answers are validated with the shared zod schema through a small
+    react-hook-form resolver, so client and server checks match
+  - Answers autosave to localStorage per slug, are restored on return (dropping
+    deleted questions and removed options), and are cleared after a successful
+    submit
+  - Success screen after submit; unknown and unpublished links get the same
+    friendly message
+
+  Files: shared/form.ts, src/lib/api-client.ts, src/lib/answers-draft.ts,
+  src/lib/answers-resolver.ts, src/hooks/use-draft-autosave.ts,
+  src/components/public-form/public-form.tsx, src/pages/public-form-page.tsx,
+  src/App.tsx
+
+  Continue? [y/n]
+
+> y
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I've made all three commits on main, and nothing is left uncommitted:
+
+  - 961240e build(deps): add react-hook-form
+  - 74f2f21 refactor(ui): extract form heading from the builder preview
+  - d58eb31 feat(public-form): add public form page with draft autosave
+
+  Git printed warnings that it will convert line endings in these files from LF
+  to CRLF. Earlier commits got the same warning, so this isn't new.
+
+  Please export this session with /export into docs/ai-log/ before we start step
+  7, the responses view.
