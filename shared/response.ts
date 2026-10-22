@@ -1,5 +1,6 @@
 import { z } from './zod';
 
+import { hasUniqueValues } from './form';
 import type { Field, FieldType } from './form';
 
 const MAX_ANSWER_LENGTH = 5000;
@@ -61,10 +62,9 @@ function buildTextAnswerSchema(field: Field, rule: AnswerRule): z.ZodType<string
 }
 
 function buildCheckboxAnswerSchema(field: Field): z.ZodType<string[]> {
-  const selection = z.array(
-    z.enum(field.options ?? [], 'Выберите из предложенных вариантов'),
-    REQUIRED_MESSAGE,
-  );
+  const selection = z
+    .array(z.enum(field.options ?? [], 'Выберите из предложенных вариантов'), REQUIRED_MESSAGE)
+    .refine(hasUniqueValues, 'Варианты не должны повторяться');
   return field.required ? selection.min(1, REQUIRED_MESSAGE) : selection.default([]);
 }
 
