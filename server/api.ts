@@ -7,6 +7,13 @@ import { createPublicRouter } from './public-routes';
 
 type ClientError = Error & { status: number };
 
+const DEFAULT_CLIENT_ERROR_MESSAGE = 'Некорректный запрос';
+const CLIENT_ERROR_MESSAGES: Readonly<Partial<Record<number, string>>> = {
+  [HttpStatus.BadRequest]: 'Тело запроса не является корректным JSON',
+  [HttpStatus.PayloadTooLarge]: 'Слишком большой запрос',
+  [HttpStatus.UnsupportedMediaType]: 'Неподдерживаемая кодировка запроса',
+};
+
 function isClientError(error: unknown): error is ClientError {
   return (
     error instanceof Error &&
@@ -15,6 +22,10 @@ function isClientError(error: unknown): error is ClientError {
     error.status >= HttpStatus.BadRequest &&
     error.status < HttpStatus.InternalServerError
   );
+}
+
+function getClientErrorMessage(status: number): string {
+  return CLIENT_ERROR_MESSAGES[status] ?? DEFAULT_CLIENT_ERROR_MESSAGE;
 }
 
 function sendUnknownEndpoint(_request: Request, response: Response): void {
@@ -28,7 +39,7 @@ export function sendApiError(
   _next: NextFunction,
 ): void {
   if (isClientError(error)) {
-    response.status(error.status).json({ error: error.message });
+    response.status(error.status).json({ error: getClientErrorMessage(error.status) });
     return;
   }
 

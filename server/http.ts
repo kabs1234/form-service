@@ -6,6 +6,8 @@ export const HttpStatus = {
   Created: 201,
   BadRequest: 400,
   NotFound: 404,
+  PayloadTooLarge: 413,
+  UnsupportedMediaType: 415,
   InternalServerError: 500,
 } as const;
 
