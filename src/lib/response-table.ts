@@ -16,8 +16,26 @@ function buildCurrentColumn(field: Field): ResponseColumn {
   return { fieldId: field.id, label: field.label, isDeleted: false };
 }
 
-function buildDeletedColumn(fieldId: string): ResponseColumn {
-  return { fieldId, label: DELETED_FIELD_LABEL, isDeleted: true };
+export function sortByRecentSubmission(responses: readonly FormResponse[]): FormResponse[] {
+  return [...responses].sort((first, second) =>
+    second.submittedAt.localeCompare(first.submittedAt),
+  );
+}
+
+function findSavedLabel(responses: readonly FormResponse[], fieldId: string): string {
+  const latestWithLabel = sortByRecentSubmission(responses).find((response) =>
+    Object.hasOwn(response.fieldLabels, fieldId),
+  );
+  return latestWithLabel ? latestWithLabel.fieldLabels[fieldId] : '';
+}
+
+function buildDeletedColumnLabel(savedLabel: string): string {
+  return savedLabel ? `${savedLabel} ${DELETED_FIELD_LABEL}` : DELETED_FIELD_LABEL;
+}
+
+function buildDeletedColumn(responses: readonly FormResponse[], fieldId: string): ResponseColumn {
+  const label = buildDeletedColumnLabel(findSavedLabel(responses, fieldId));
+  return { fieldId, label, isDeleted: true };
 }
 
 function collectAnsweredFieldIds(responses: readonly FormResponse[]): Set<string> {
@@ -29,17 +47,11 @@ export function buildResponseColumns(
   responses: readonly FormResponse[],
 ): ResponseColumn[] {
   const currentFieldIds = new Set(fields.map((field) => field.id));
-  const deletedFieldIds = [...collectAnsweredFieldIds(responses)].filter(
-    (fieldId) => !currentFieldIds.has(fieldId),
-  );
+  const deletedColumns = [...collectAnsweredFieldIds(responses)]
+    .filter((fieldId) => !currentFieldIds.has(fieldId))
+    .map((fieldId) => buildDeletedColumn(responses, fieldId));
 
-  return [...fields.map(buildCurrentColumn), ...deletedFieldIds.map(buildDeletedColumn)];
-}
-
-export function sortByRecentSubmission(responses: readonly FormResponse[]): FormResponse[] {
-  return [...responses].sort((first, second) =>
-    second.submittedAt.localeCompare(first.submittedAt),
-  );
+  return [...fields.map(buildCurrentColumn), ...deletedColumns];
 }
 
 function joinAnswerValue(value: AnswerValue): string {

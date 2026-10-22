@@ -12,6 +12,7 @@ export const formResponseSchema = z.object({
   id: z.string().min(1),
   formId: z.string().min(1),
   answers: z.record(z.string(), answerValueSchema),
+  fieldLabels: z.record(z.string(), z.string()).default({}),
   submittedAt: z.iso.datetime(),
 });
 

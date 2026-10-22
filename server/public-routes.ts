@@ -26,6 +26,10 @@ function buildSubmissionSchema(fields: readonly Field[]) {
   return z.object({ answers: buildAnswersSchema(fields) });
 }
 
+function buildFieldLabels(fields: readonly Field[]): Record<string, string> {
+  return Object.fromEntries(fields.map((field) => [field.id, field.label]));
+}
+
 function hasKnownField(event: EventInput, form: Form): boolean {
   return event.type !== 'field_focus' || form.fields.some((field) => field.id === event.fieldId);
 }
@@ -57,6 +61,7 @@ async function submitResponse(request: Request<SlugParams>, response: Response):
     id: randomUUID(),
     formId: form.id,
     answers: result.data.answers,
+    fieldLabels: buildFieldLabels(form.fields),
     submittedAt: new Date().toISOString(),
   };
   await addResponse(formResponse);
