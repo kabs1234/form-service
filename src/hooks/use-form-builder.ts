@@ -47,6 +47,7 @@ export function useFormBuilder(initialForm?: Form): FormBuilderState {
     initialForm ? extractFormInput(initialForm) : EMPTY_FORM_INPUT,
   );
   const [hasTriedSave, setHasTriedSave] = useState(false);
+  const [isPublishAttempt, setIsPublishAttempt] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [requestError, setRequestError] = useState('');
@@ -54,7 +55,9 @@ export function useFormBuilder(initialForm?: Form): FormBuilderState {
 
   const savedInput = savedForm ? extractFormInput(savedForm) : EMPTY_FORM_INPUT;
   const hasUnsavedChanges = !isSameFormInput(draft, savedInput);
-  const errors = hasTriedSave ? validateDraft(draft) : NO_ERRORS;
+  const errors = hasTriedSave
+    ? validateDraft({ ...draft, published: isPublishAttempt })
+    : NO_ERRORS;
   const hasErrors = Object.keys(errors).length > 0;
 
   function updateFields(update: (fields: readonly Field[]) => Field[]): void {
@@ -81,6 +84,7 @@ export function useFormBuilder(initialForm?: Form): FormBuilderState {
 
   async function persistDraft(input: FormInput): Promise<void> {
     setHasTriedSave(true);
+    setIsPublishAttempt(input.published);
     const result = formInputSchema.safeParse(input);
     if (!result.success) {
       return;

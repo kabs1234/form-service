@@ -6,6 +6,7 @@ import type { SaveStatus } from '@/components/builder/builder-header';
 import { FieldEditor } from '@/components/builder/field-editor';
 import { FormDetailsCard } from '@/components/builder/form-details-card';
 import { PublicLinkPanel } from '@/components/builder/public-link-panel';
+import { ErrorText } from '@/components/error-text';
 import { FormPreview } from '@/components/form-renderer/form-preview';
 import { useFormBuilder } from '@/hooks/use-form-builder';
 import type { FormBuilderState } from '@/hooks/use-form-builder';
@@ -96,6 +97,8 @@ export function FormBuilder({ initialForm }: FormBuilderProps) {
               </li>
             ))}
           </ol>
+
+          <ErrorText message={errors.fields} />
 
           <AddFieldPanel onAdd={builder.addField} />
         </section>

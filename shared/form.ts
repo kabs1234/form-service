@@ -26,8 +26,15 @@ export function isChoiceFieldType(type: FieldType): type is ChoiceFieldType {
   return CHOICE_FIELD_TYPES.some((choiceType) => choiceType === type);
 }
 
-function hasUniqueValues(values: readonly string[]): boolean {
+export function hasUniqueValues(values: readonly string[]): boolean {
   return new Set(values).size === values.length;
+}
+
+function hasFieldsWhenPublished(form: {
+  readonly published: boolean;
+  readonly fields: readonly unknown[];
+}): boolean {
+  return !form.published || form.fields.length > 0;
 }
 
 const idSchema = z.string().min(1).max(MAX_ID_LENGTH);
@@ -58,14 +65,19 @@ const fieldsSchema = z
     'Идентификаторы полей должны быть уникальными',
   );
 
-export const formInputSchema = z.object({
+const formContentSchema = z.object({
   title: z.string().trim().min(1, 'Введите название формы').max(MAX_TITLE_LENGTH),
   description: z.string().trim().max(MAX_DESCRIPTION_LENGTH).optional(),
   fields: fieldsSchema,
   published: z.boolean(),
 });
 
-export const formSchema = formInputSchema.extend({
+export const formInputSchema = formContentSchema.refine(hasFieldsWhenPublished, {
+  message: 'Добавьте хотя бы один вопрос, чтобы опубликовать форму',
+  path: ['fields'],
+});
+
+export const formSchema = formContentSchema.extend({
   id: idSchema,
   slug: idSchema,
   createdAt: z.iso.datetime(),
